@@ -26,6 +26,8 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.slf4j:slf4j-api:2.0.11")
+	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
