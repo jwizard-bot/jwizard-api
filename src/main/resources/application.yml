@@ -1,3 +1,12 @@
 spring:
   banner:
     location: classpath:spring/banner.txt
+
+jwizard:
+  i18n:
+    default-locale: en-US
+    available-locales:
+      - en-US
+      - pl
+    locale-bundles:
+      - i18n-command/messages
