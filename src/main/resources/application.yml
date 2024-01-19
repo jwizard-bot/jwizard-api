@@ -10,3 +10,5 @@ jwizard:
       - pl
     locale-bundles:
       - i18n-command/messages
+  command:
+    resource-file: classpath:assets/bot-commands.json
