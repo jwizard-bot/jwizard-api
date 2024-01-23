@@ -32,15 +32,16 @@ class CommandService(
 		val categories = _botCommands.mapValues { (key, _) ->
 			_i18nService.getMessage("pl.jwizard.command.category.${key}")
 		}
-		val commands = _botCommands.mapValues { (_, commands) ->
-			commands.mapValues { (key, command) ->
-				CommandDetailsDto(
-					command.aliases.split(","),
-					_i18nService.getMessage("pl.jwizard.command.description.${key}"),
+		val flattedCommands = _botCommands.flatMap { (category, commandsMap) ->
+			commandsMap.map { (name, data) ->
+				name to CommandDetailsDto(
+					data.aliases.split(","),
+					category,
+					_i18nService.getMessage("pl.jwizard.command.description.$name")
 				)
 			}
 		}
-		return CommandsResDto(categories, commands)
+		return CommandsResDto(categories, flattedCommands.toMap())
 	}
 
 	companion object {

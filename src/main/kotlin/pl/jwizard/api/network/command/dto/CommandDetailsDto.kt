@@ -6,11 +6,12 @@ package pl.jwizard.api.network.command.dto
 
 data class CommandsResDto(
 	val categories: Map<String, String>,
-	val commmands: Map<String, Map<String, CommandDetailsDto>>,
+	val commmands: Map<String, CommandDetailsDto>,
 )
 
 data class CommandDetailsDto(
 	val aliases: List<String>,
+	val category: String,
 	val description: String,
 )
 
