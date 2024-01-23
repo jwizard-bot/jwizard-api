@@ -15,8 +15,8 @@
 		"setdjrole": {
 			"aliases": "sdjr"
 		},
-		"setlang": {
-			"aliases": "slng"
+		"setlocale": {
+			"aliases": "slcl"
 		},
 		"settrackrep": {
 			"aliases": "strrep"
