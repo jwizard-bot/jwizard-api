@@ -15,7 +15,9 @@ plugins {
 
 group = "pl.jwizard.api"
 version = "1.0.0"
+
 java.sourceCompatibility = jvmVersion
+java.targetCompatibility = jvmVersion
 
 repositories {
 	mavenCentral()
