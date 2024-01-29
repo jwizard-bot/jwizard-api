@@ -32,6 +32,8 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
+	implementation("org.apache.commons:commons-lang3:3.14.0")
+
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test")
