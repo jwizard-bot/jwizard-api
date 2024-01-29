@@ -5,6 +5,7 @@
 .idea/libraries/
 .idea/dataSources/
 .idea/dataSources.local.xml
+.idea/shelf/
 
 .gradle
 build/
