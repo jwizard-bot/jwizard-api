@@ -4,6 +4,7 @@
  */
 package pl.jwizard.api.exception
 
+import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,6 +13,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.servlet.NoHandlerFoundException
+import org.springframework.web.servlet.resource.NoResourceFoundException
 import pl.jwizard.api.i18n.I18nService
 import pl.jwizard.api.i18n.set.ApiLocaleSet
 import pl.jwizard.api.scaffold.AbstractLoggingBean
@@ -21,26 +24,38 @@ class ExceptionListener(
 	private val i18nService: I18nService,
 ) : AbstractLoggingBean(ExceptionListener::class) {
 
+	@ExceptionHandler(NoResourceFoundException::class, NoHandlerFoundException::class)
+	fun noHandlerFound(
+		ex: ServletException,
+		req: HttpServletRequest
+	): ResponseEntity<MessageExceptionRes> = MessageExceptionRes(
+		message = i18nService.getMessage(ApiLocaleSet.EXC_AUTHENTICATION_EXCEPTION),
+		httpStatus = HttpStatus.FORBIDDEN,
+		req,
+	).buildResponseEntity()
+
 	@ExceptionHandler(AbstractRestException::class)
 	fun restException(
 		ex: AbstractRestException,
 		req: HttpServletRequest
-	): ResponseEntity<MessageExceptionRes> {
-		val message = i18nService.getMessage(ex.placeholder, ex.variables)
-		return MessageExceptionRes(message, ex.httpStatus, req).buildResponseEntity()
-	}
+	): ResponseEntity<MessageExceptionRes> = MessageExceptionRes(
+		message = i18nService.getMessage(ex.placeholder, ex.variables),
+		ex.httpStatus,
+		req
+	).buildResponseEntity()
 
 	@ExceptionHandler(MissingServletRequestParameterException::class)
 	fun missingQueryParameter(
 		ex: MissingServletRequestParameterException,
 		req: HttpServletRequest,
-	): ResponseEntity<MessageExceptionRes> {
-		val message = i18nService.getMessage(
+	): ResponseEntity<MessageExceptionRes> = MessageExceptionRes(
+		message = i18nService.getMessage(
 			ApiLocaleSet.EXC_MISSING_REQUEST_PARAMETER,
 			mapOf(Pair("parameter", "${ex.parameterName}:${ex.parameterType}"))
-		)
-		return MessageExceptionRes(message, HttpStatus.BAD_REQUEST, req).buildResponseEntity()
-	}
+		),
+		HttpStatus.BAD_REQUEST,
+		req
+	).buildResponseEntity()
 
 	@ExceptionHandler(MethodArgumentNotValidException::class)
 	fun methodArgumentNotValid(

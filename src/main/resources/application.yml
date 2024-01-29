@@ -3,6 +3,8 @@ spring:
     name: jwizard-api
   banner:
     location: classpath:spring/banner.txt
+  mvc:
+    throw-exception-if-no-handler-found: true
   config:
     import:
       - optional:vault://
