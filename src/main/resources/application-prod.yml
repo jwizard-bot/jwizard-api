@@ -1,0 +1,9 @@
+jwizard:
+  security:
+    standalone-clients:
+      - app-id: ${V_JDA_PROD_APP_ID}
+        app-secret: ${V_JDA_PROD_SECRET}
+    jwt-audience:
+      standalone-client: proxy://standalone-prod
+      web-client: https://jwizard.pl
+    jwt-issuer: https://api.jwizard.pl

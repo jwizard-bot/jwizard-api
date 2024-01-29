@@ -1,6 +1,20 @@
 spring:
+  application:
+    name: jwizard-api
   banner:
     location: classpath:spring/banner.txt
+  config:
+    import:
+      - optional:vault://
+  cloud:
+    vault:
+      uri: ${ENV_VAULT_URI:http://localhost:8761}
+      token: ${ENV_VAULT_TOKEN}
+      authentication: TOKEN
+      kv:
+        backend: jwizard
+        default-context: common
+        application-name: ${spring.application.name}
 
 jwizard:
   i18n:
@@ -12,3 +26,8 @@ jwizard:
       - i18n-command/messages
   command:
     resource-file: classpath:assets/bot-commands.json
+  security:
+    jwt-secret: ${V_JWT_SECRET_KEY:4c9RiR9iwCMTC7NVLr69yP8D5U9PopevQWgGyrNFHkDvO60kzo}
+    life:
+      access-minutes: 5
+      refresh-days: 30
