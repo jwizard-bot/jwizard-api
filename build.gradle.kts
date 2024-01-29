@@ -29,6 +29,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.slf4j:slf4j-api:2.0.11")
+	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test")
