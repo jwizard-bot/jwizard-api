@@ -6,20 +6,19 @@ package pl.jwizard.api.network.command
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.slf4j.Logger
 import org.springframework.stereotype.Service
 import pl.jwizard.api.i18n.I18nService
-import pl.jwizard.api.logger.logger
 import pl.jwizard.api.network.command.dto.CommandDetailsDto
 import pl.jwizard.api.network.command.dto.CommandDetailsMapperDto
 import pl.jwizard.api.network.command.dto.CommandsResDto
+import pl.jwizard.api.scaffold.AbstractLoggingBean
 
 @Service
 class CommandService(
 	private val _i18nService: I18nService,
 	commandProperties: CommandProperties,
 	objectMapper: ObjectMapper,
-) : ICommandService {
+) : ICommandService, AbstractLoggingBean(CommandService::class) {
 	private var _botCommands: Map<String, Map<String, CommandDetailsMapperDto>> = emptyMap()
 
 	init {
@@ -42,9 +41,5 @@ class CommandService(
 			}
 		}
 		return CommandsResDto(categories, flattedCommands.toMap())
-	}
-
-	companion object {
-		private val _log: Logger = logger<CommandService>()
 	}
 }

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class I18nService(
-	private val _i18nConfiguration: I18nConfiguration
+	private val i18nConfiguration: I18nConfiguration
 ) {
-	fun getMessage(placeholder: String, params: Map<String, Any>): String {
-		val messageSource = _i18nConfiguration.messageSource()
+	fun getMessage(placeholder: String?, params: Map<String, Any>): String {
+		val messageSource = i18nConfiguration.messageSource()
 		var text: String
 		try {
+			if (placeholder == null) {
+				return ""
+			}
 			text = messageSource.getMessage(placeholder, null, LocaleContextHolder.getLocale())
 			if (text.isBlank()) {
 				return text
@@ -25,9 +28,16 @@ class I18nService(
 			}
 			return text
 		} catch (ex: NoSuchMessageException) {
-			return placeholder
+			return placeholder ?: ""
 		}
 	}
 
 	fun getMessage(placeholder: String): String = getMessage(placeholder, emptyMap())
+
+	fun getMessage(placeholder: ILocaleSet): String = getMessage(placeholder.getPlaceholder(), emptyMap())
+
+	fun getMessage(
+		placeholder: ILocaleSet,
+		variables: Map<String, Any>
+	): String = getMessage(placeholder.getPlaceholder(), variables)
 }

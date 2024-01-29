@@ -16,14 +16,14 @@ import java.util.*
 
 @Configuration
 class I18nConfiguration(
-	private val _i18nProperties: I18nProperties
-) {
+	private val i18nProperties: I18nProperties
+) : AbstractLoggingBean(I18nConfiguration::class) {
 	private final var defaultLocale: Locale = Locale.ENGLISH
 	private final var availableLocales = listOf<Locale>()
 
 	init {
-		defaultLocale = Locale.forLanguageTag(_i18nProperties.defaultLocale)
-		availableLocales = _i18nProperties.availableLocales.map { locale -> Locale.forLanguageTag(locale) }
+		defaultLocale = Locale.forLanguageTag(i18nProperties.defaultLocale)
+		availableLocales = i18nProperties.availableLocales.map { locale -> Locale.forLanguageTag(locale) }
 	}
 
 	@Primary
@@ -44,10 +44,10 @@ class I18nConfiguration(
 	}
 
 	private fun createLocaleBundlePaths(): Array<String> {
-		val basenames = arrayOfNulls<String>(_i18nProperties.localeBundles.size + 1)
+		val basenames = arrayOfNulls<String>(i18nProperties.localeBundles.size + 1)
 		basenames[0] = "i18n/messages"
-		_i18nProperties.localeBundles.toTypedArray().copyInto(basenames, destinationOffset = 1)
-		_log.info("Successfully loaded messageSource bean context: {}", basenames)
+		i18nProperties.localeBundles.toTypedArray().copyInto(basenames, destinationOffset = 1)
+		log.info("Successfully loaded messageSource bean context: {}", basenames)
 		return basenames.requireNoNulls()
 	}
 }
