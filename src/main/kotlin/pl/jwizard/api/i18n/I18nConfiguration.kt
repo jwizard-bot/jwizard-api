@@ -4,17 +4,15 @@
  */
 package pl.jwizard.api.i18n
 
-import java.nio.charset.StandardCharsets
-import java.util.*
-import org.slf4j.Logger
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.web.servlet.LocaleResolver
-import pl.jwizard.api.logger.logger
-import pl.jwizard.api.network.command.CommandService
+import pl.jwizard.api.scaffold.AbstractLoggingBean
+import java.nio.charset.StandardCharsets
+import java.util.*
 
 @Configuration
 class I18nConfiguration(
@@ -51,9 +49,5 @@ class I18nConfiguration(
 		_i18nProperties.localeBundles.toTypedArray().copyInto(basenames, destinationOffset = 1)
 		_log.info("Successfully loaded messageSource bean context: {}", basenames)
 		return basenames.requireNoNulls()
-	}
-
-	companion object {
-		private val _log: Logger = logger<CommandService>()
 	}
 }
