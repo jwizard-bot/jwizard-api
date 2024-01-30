@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RefreshTokenRepository : MongoRepository<RefreshTokenDocument, ObjectId> {
-	fun findByRefreshTokenAndUserDcId(refreshToken: String, serDcId: String): RefreshTokenDocument?
-	fun existsByRefreshTokenAndUserDcId(refreshToken: String, serDcId: String): Boolean
-	fun deleteByRefreshTokenAndUserDcId(refreshToken: String, serDcId: String)
+	fun findByUserDcId(userDcId: String): RefreshTokenDocument?
+	fun findByRefreshTokenAndUserDcId(refreshToken: String, userDcId: String): RefreshTokenDocument?
 }

@@ -4,9 +4,7 @@
  */
 package pl.jwizard.api.network.identity.standalone
 
-import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.jwizard.api.network.identity.standalone.dto.LoginReqDto
@@ -27,12 +25,4 @@ class StandaloneIdentityController(
 	fun refresh(
 		@Valid @RequestBody reqDto: RefreshReqDto
 	): ResponseEntity<TokenDataResDto> = ResponseEntity.ok(identityService.refresh(reqDto))
-
-	@DeleteMapping("/logout")
-	fun logout(
-		req: HttpServletRequest,
-	): ResponseEntity<Unit> {
-		identityService.logout(req)
-		return ResponseEntity(HttpStatus.NO_CONTENT)
-	}
 }

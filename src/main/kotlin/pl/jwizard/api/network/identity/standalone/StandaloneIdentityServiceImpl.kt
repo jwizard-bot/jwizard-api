@@ -5,13 +5,10 @@
 package pl.jwizard.api.network.identity.standalone
 
 import io.jsonwebtoken.Claims
-import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import pl.jwizard.api.domain.jwtblacklist.JwtBlacklistDocument
-import pl.jwizard.api.domain.jwtblacklist.JwtBlacklistRepository
 import pl.jwizard.api.domain.refreshtoken.RefreshTokenDocument
 import pl.jwizard.api.domain.refreshtoken.RefreshTokenRepository
 import pl.jwizard.api.exception.app.IdentityException
@@ -30,7 +27,6 @@ class StandaloneIdentityServiceImpl(
 	private val jwtService: JwtService,
 	private val securityProperties: SecurityProperties,
 	private val refreshTokenRepository: RefreshTokenRepository,
-	private val jwtBlacklistRepository: JwtBlacklistRepository,
 ) : StandaloneIdentityService, AbstractLoggingBean(StandaloneIdentityServiceImpl::class) {
 
 	override fun login(reqDto: LoginReqDto): TokenDataResDto {
@@ -41,12 +37,17 @@ class StandaloneIdentityServiceImpl(
 		val (access) = jwtService.generateStandaloneAppAccessToken(reqDto.appId)
 		val (refresh, refreshExpiredAt) = jwtService.generateRefreshToken()
 
-		val refreshToken = RefreshTokenDocument(
+		var persistedRefreshToken = refreshTokenRepository.findByUserDcId(reqDto.appId)
+
+		persistedRefreshToken = persistedRefreshToken?.copy(
+			refreshToken = refresh,
+			expiredAt = DateUtil.toLocalDateTime(refreshExpiredAt)
+		) ?: RefreshTokenDocument(
 			refreshToken = refresh,
 			expiredAt = DateUtil.toLocalDateTime(refreshExpiredAt),
-			userDcId = reqDto.appId
+			userDcId = reqDto.appId,
 		)
-		refreshTokenRepository.save(refreshToken)
+		refreshTokenRepository.save(persistedRefreshToken)
 
 		log.info("Successfully login standalone app with ID: {}", reqDto.appId)
 		return TokenDataResDto(
@@ -60,9 +61,9 @@ class StandaloneIdentityServiceImpl(
 		val appId = claims.subject
 		var refresh = reqDto.refreshToken
 
-		val refreshDocument = (refreshTokenRepository
+		val refreshDocument = refreshTokenRepository
 			.findByRefreshTokenAndUserDcId(refresh, appId)
-			?: throw IdentityException.RefreshTokenNotExistException(refresh, appId))
+			?: throw IdentityException.RefreshTokenNotExistException(refresh, appId)
 
 		val (access) = jwtService.generateStandaloneAppAccessToken(appId)
 
@@ -82,28 +83,6 @@ class StandaloneIdentityServiceImpl(
 			accessToken = access,
 			refreshToken = refresh,
 		)
-	}
-
-	override fun logout(req: HttpServletRequest) {
-		val accessToken = jwtService.extractAccessFromRequest(req)
-		val refreshToken = jwtService.extractRefreshFromRequest(req)
-
-		val claims = extractAppIdAndCheckClient(accessToken)
-		val appId = claims.subject
-
-		if (!refreshTokenRepository.existsByRefreshTokenAndUserDcId(refreshToken, appId)) {
-			throw IdentityException.RefreshTokenNotExistException(refreshToken, appId)
-		}
-		val jwtBlacklistDocument = JwtBlacklistDocument(
-			jwt = accessToken,
-			expiredAt = DateUtil.toLocalDateTime(claims.expiration)
-		)
-		jwtBlacklistRepository.save(jwtBlacklistDocument)
-
-		refreshTokenRepository.deleteByRefreshTokenAndUserDcId(refreshToken, appId)
-		SecurityContextHolder.clearContext()
-
-		log.info("Successfully logout standalone app from session with ID: {}", appId)
 	}
 
 	private fun extractAppIdAndCheckClient(token: String): Claims {
