@@ -1,6 +1,13 @@
 server:
   port: 8670
 
+spring:
+  devtools:
+    livereload:
+      port: 35731
+    restart:
+      log-condition-evaluation-delta: false
+
 jwizard:
   security:
     standalone-clients:

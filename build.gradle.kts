@@ -39,6 +39,7 @@ dependencies {
 	implementation("org.apache.commons:commons-lang3:3.14.0")
 
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
