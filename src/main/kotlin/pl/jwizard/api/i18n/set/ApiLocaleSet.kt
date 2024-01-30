@@ -4,9 +4,9 @@
  */
 package pl.jwizard.api.i18n.set
 
-import pl.jwizard.api.i18n.ILocaleSet
+import pl.jwizard.api.i18n.LocaleSet
 
-enum class ApiLocaleSet(private val placeholder: String) : ILocaleSet {
+enum class ApiLocaleSet(private val placeholder: String) : LocaleSet {
 	EXC_UNKNOW_SERVER_EXCEPTION("jwizard.api.exc.unknowServerException"),
 	EXC_AUTHENTICATION_EXCEPTION("jwizard.api.exc.authenticationException"),
 	EXC_MISSING_REQUEST_PARAMETER("jwizard.api.exc.missingRequestParameter"),

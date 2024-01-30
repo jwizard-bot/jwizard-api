@@ -4,6 +4,6 @@
  */
 package pl.jwizard.api.i18n
 
-interface ILocaleSet {
+interface LocaleSet {
 	fun getPlaceholder(): String
 }

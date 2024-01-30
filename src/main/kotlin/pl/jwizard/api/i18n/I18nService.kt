@@ -34,10 +34,10 @@ class I18nService(
 
 	fun getMessage(placeholder: String): String = getMessage(placeholder, emptyMap())
 
-	fun getMessage(placeholder: ILocaleSet): String = getMessage(placeholder.getPlaceholder(), emptyMap())
+	fun getMessage(placeholder: LocaleSet): String = getMessage(placeholder.getPlaceholder(), emptyMap())
 
 	fun getMessage(
-		placeholder: ILocaleSet,
+		placeholder: LocaleSet,
 		variables: Map<String, Any>
 	): String = getMessage(placeholder.getPlaceholder(), variables)
 }

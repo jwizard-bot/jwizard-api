@@ -13,7 +13,7 @@ import pl.jwizard.api.network.command.dto.CommandsResDto
 @RestController
 @RequestMapping("/api/v1/command")
 class CommandController(
-	private val commandService: ICommandService
+	private val commandService: CommandService
 ) {
 	@GetMapping("/all")
 	fun getAllCommands(): ResponseEntity<CommandsResDto> {
