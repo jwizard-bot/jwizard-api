@@ -17,6 +17,15 @@ spring:
         backend: jwizard
         default-context: common
         application-name: ${spring.application.name}
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: ${ENV_MONGO_PORT:8762}
+      database: jwizard
+      username: ${V_MONGODB_USERNAME}
+      password: ${V_MONGODB_PASSWORD}
+      field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
 
 jwizard:
   i18n:

@@ -1,0 +1,14 @@
+/*
+ * Copyright (c) 2024 by JWizard
+ * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
+ */
+package pl.jwizard.api.domain.jwtblacklist
+
+import org.bson.types.ObjectId
+import org.springframework.data.mongodb.repository.MongoRepository
+import java.time.LocalDateTime
+
+interface JwtBlacklistRepository : MongoRepository<JwtBlacklistDocument, ObjectId> {
+	fun existsByJwt(jwt: String): Boolean
+	fun deleteAllByExpiredAtBefore(now: LocalDateTime)
+}
