@@ -6,12 +6,12 @@ package pl.jwizard.api.exception
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
-import pl.jwizard.api.i18n.ILocaleSet
+import pl.jwizard.api.i18n.LocaleSet
 import kotlin.reflect.KClass
 
 abstract class AbstractRestException(
 	val httpStatus: HttpStatus,
-	val placeholder: ILocaleSet,
+	val placeholder: LocaleSet,
 	clazz: KClass<*>,
 	logMessage: String,
 	val variables: Map<String, Any>
@@ -19,14 +19,14 @@ abstract class AbstractRestException(
 
 	constructor(
 		httpStatus: HttpStatus,
-		placeholder: ILocaleSet,
+		placeholder: LocaleSet,
 		clazz: KClass<*>,
 		logMessage: String,
 	) : this(httpStatus, placeholder, clazz, logMessage, mapOf())
 
 	constructor(
 		httpStatus: HttpStatus,
-		placeholder: ILocaleSet,
+		placeholder: LocaleSet,
 	) : this(httpStatus, placeholder, AbstractRestException::class, "", mapOf())
 
 	init {
