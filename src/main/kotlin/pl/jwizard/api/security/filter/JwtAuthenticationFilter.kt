@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
 import org.springframework.util.AntPathMatcher
+import pl.jwizard.api.domain.jwtblacklist.JwtBlacklistRepository
 import pl.jwizard.api.exception.app.IdentityException
 import pl.jwizard.api.security.SecurityProperties
 import pl.jwizard.api.security.SpringSecurityConfigurer
@@ -26,6 +27,7 @@ class JwtAuthenticationFilter(
 	private val userDetailsService: UserDetailsService,
 	private val jwtService: JwtService,
 	private val securityProperties: SecurityProperties,
+	private val jwtBlacklistRepository: JwtBlacklistRepository,
 ) : AbstractFilterBean(JwtAuthenticationFilter::class) {
 
 	private val antPathMatcher = AntPathMatcher()
@@ -36,7 +38,7 @@ class JwtAuthenticationFilter(
 		chain: FilterChain
 	) {
 		val token = jwtService.extractAccessFromRequest(req)
-		if (token.isBlank()) {
+		if (token.isBlank() || jwtBlacklistRepository.existsByJwt(token)) {
 			chain.doFilter(req, res)
 			return
 		}
