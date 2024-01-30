@@ -7,3 +7,7 @@ jwizard:
       standalone-client: proxy://standalone-prod
       web-client: https://jwizard.pl
     jwt-issuer: https://api.jwizard.pl
+
+logging:
+  file:
+    path: .log/prod
