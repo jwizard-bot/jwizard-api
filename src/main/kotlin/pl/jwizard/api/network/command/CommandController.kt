@@ -16,7 +16,7 @@ class CommandController(
 	private val commandService: CommandService
 ) {
 	@GetMapping("/all")
-	fun getAllCommands(): ResponseEntity<CommandsResDto> {
+	fun getAllCommands(): ResponseEntity<Map<String, CommandsResDto>> {
 		return ResponseEntity.ok(commandService.getCommandsBaseLang())
 	}
 }

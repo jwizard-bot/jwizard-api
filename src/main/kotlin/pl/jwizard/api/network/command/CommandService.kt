@@ -7,5 +7,5 @@ package pl.jwizard.api.network.command
 import pl.jwizard.api.network.command.dto.CommandsResDto
 
 interface CommandService {
-	fun getCommandsBaseLang(): CommandsResDto
+	fun getCommandsBaseLang(): Map<String, CommandsResDto>
 }

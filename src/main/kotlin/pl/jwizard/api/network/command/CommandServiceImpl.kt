@@ -4,42 +4,64 @@
  */
 package pl.jwizard.api.network.command
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Service
+import pl.jwizard.api.i18n.I18nProperties
 import pl.jwizard.api.i18n.I18nService
+import pl.jwizard.api.network.command.dto.CommandArgumentDto
 import pl.jwizard.api.network.command.dto.CommandDetailsDto
-import pl.jwizard.api.network.command.dto.CommandDetailsMapperDto
 import pl.jwizard.api.network.command.dto.CommandsResDto
+import pl.jwizard.api.network.guild.GuildDefaultProperties
 import pl.jwizard.api.scaffold.AbstractLoggingBean
+import java.util.*
 
 @Service
 class CommandServiceImpl(
-	private val _i18nService: I18nService,
-	commandProperties: CommandProperties,
-	objectMapper: ObjectMapper,
+	private val i18nService: I18nService,
+	private val i18nProperties: I18nProperties,
+	private val commandProperties: CommandProperties,
+	private val guildDefaultProperties: GuildDefaultProperties,
 ) : CommandService, AbstractLoggingBean(CommandServiceImpl::class) {
-	private var _botCommands: Map<String, Map<String, CommandDetailsMapperDto>> = emptyMap()
 
-	init {
-		_botCommands = objectMapper.readValue(
-			commandProperties.resourceFile?.inputStream,
-			object : TypeReference<Map<String, Map<String, CommandDetailsMapperDto>>>() {})
+	override fun getCommandsBaseLang(): Map<String, CommandsResDto> {
+		val allLocales = i18nProperties.availableLocales.associateWith { Locale.forLanguageTag(it) }
+		val createCommandsForLanguage: (locale: Locale) -> CommandsResDto = { locale ->
+			CommandsResDto(
+				categories = CommandCategory.entries.associate {
+					it.regularName to i18nService.getMessage("pl.jwizard.command.category.${it.regularName}", locale)
+				},
+				commmands = CommandCategory.entries
+					.map { it.commandSupplier(commandProperties) }
+					.flatMap { (category, commands) -> commands.map { mapToCommandDetails(it, category, locale) } }
+					.toMap(),
+				modules = guildDefaultProperties.modules
+					.associateWith { i18nService.getMessage("pl.jwizard.command.module.$it") }
+			)
+		}
+		return allLocales.mapValues { createCommandsForLanguage(it.value) }
 	}
 
-	override fun getCommandsBaseLang(): CommandsResDto {
-		val categories = _botCommands.mapValues { (key, _) ->
-			_i18nService.getMessage("pl.jwizard.command.category.${key}")
+	private fun mapToCommandDetails(
+		command: Command,
+		category: String,
+		locale: Locale
+	): Pair<String, CommandDetailsDto> = command.name to CommandDetailsDto(
+		aliases = command.aliases.split(","),
+		category = category,
+		desc = i18nService.getMessage(
+			"pl.jwizard.command.description.${command.name}",
+			locale
+		),
+		argsDesc = if (command.arguments.isNotEmpty()) i18nService.getMessage(
+			"pl.jwizard.command.argument.description.${command.name}",
+			locale
+		) else null,
+		args = command.arguments.map { (argName, castedType, required) ->
+			CommandArgumentDto(
+				id = argName,
+				name = i18nService.getMessage("pl.jwizard.command.argument.${argName}", locale),
+				type = castedType,
+				req = required,
+			)
 		}
-		val flattedCommands = _botCommands.flatMap { (category, commandsMap) ->
-			commandsMap.map { (name, data) ->
-				name to CommandDetailsDto(
-					data.aliases.split(","),
-					category,
-					_i18nService.getMessage("pl.jwizard.command.description.$name")
-				)
-			}
-		}
-		return CommandsResDto(categories, flattedCommands.toMap())
-	}
+	)
 }
