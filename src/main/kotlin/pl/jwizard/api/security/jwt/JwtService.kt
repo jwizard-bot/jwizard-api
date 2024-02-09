@@ -12,7 +12,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import pl.jwizard.api.scaffold.AbstractLoggingBean
 import pl.jwizard.api.security.SecurityProperties
-import pl.jwizard.api.util.DateUtil
+import pl.jwizard.api.util.DateApiUtils
 import java.security.Key
 import java.security.SignatureException
 import java.util.*
@@ -28,7 +28,7 @@ class JwtService(
 	}
 
 	fun generateStandaloneAppAccessToken(appId: String): TokenData {
-		val expiredAt = DateUtil.addMinutesToNow(securityProperties.life.accessMinutes)
+		val expiredAt = DateApiUtils.addMinutesToNow(securityProperties.life.accessMinutes)
 		return TokenData(
 			token = generateBaseToken(appId, securityProperties.jwtAudience.standaloneClient, expiredAt).compact(),
 			expiredAt,
@@ -37,7 +37,7 @@ class JwtService(
 
 	fun generateRefreshToken(): TokenData = TokenData(
 		token = UUID.randomUUID().toString(),
-		expiredAt = DateUtil.addDaysToNow(securityProperties.life.refreshDays),
+		expiredAt = DateApiUtils.addDaysToNow(securityProperties.life.refreshDays),
 	)
 
 	fun validate(token: String): JwtValidateState {

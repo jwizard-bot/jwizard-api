@@ -6,7 +6,7 @@ package pl.jwizard.api.exception
 
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
-import pl.jwizard.api.util.DateUtil
+import pl.jwizard.api.util.DateApiUtils
 
 abstract class AbstractServerExceptionResDto(
 	val timestamp: String,
@@ -15,7 +15,7 @@ abstract class AbstractServerExceptionResDto(
 	val method: String
 ) {
 	constructor(httpStatus: HttpStatus, req: HttpServletRequest) : this(
-		DateUtil.nowUtcToIsoInstant(),
+		DateApiUtils.nowUtcToIsoInstant(),
 		httpStatus.value(),
 		req.servletPath,
 		req.method

@@ -9,7 +9,7 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-object DateUtil {
+object DateApiUtils {
 	fun nowUtcToIsoInstant(): String {
 		val now = ZonedDateTime.now(ZoneOffset.UTC)
 		return now.format(DateTimeFormatter.ISO_INSTANT)
