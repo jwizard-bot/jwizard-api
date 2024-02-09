@@ -42,6 +42,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.5")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	implementation("org.apache.commons:commons-lang3:3.14.0")
+	implementation("org.modelmapper:modelmapper:3.2.0")
 
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 	compileOnly("io.mongock:mongock-springboot-v3:5.4.0")
