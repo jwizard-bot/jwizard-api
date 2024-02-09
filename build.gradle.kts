@@ -44,6 +44,8 @@ dependencies {
 	implementation("org.apache.commons:commons-lang3:3.14.0")
 
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
+	compileOnly("io.mongock:mongock-springboot-v3:5.4.0")
+	compileOnly("io.mongock:mongodb-springdata-v4-driver:5.4.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	testImplementation("org.jetbrains.kotlin:kotlin-test")

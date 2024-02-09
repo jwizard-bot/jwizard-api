@@ -293,3 +293,5 @@ jwizard:
             casted-type: INTEGER
             required: false
 
+mongock:
+  migration-scan-package: pl.jwizard.api.migrations
