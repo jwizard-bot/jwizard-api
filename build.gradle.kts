@@ -11,6 +11,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	kotlin("jvm") version "1.9.21"
 	kotlin("plugin.spring") version "2.0.0-Beta3"
+	kotlin("plugin.noarg") version "1.9.22"
 }
 
 group = "pl.jwizard.api"
@@ -23,6 +24,10 @@ repositories {
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/milestone") }
 	maven { url = uri("https://repo.spring.io/snapshot") }
+}
+
+noArg {
+	annotation("pl.jwizard.api.config.annotation.NoArgConstructor")
 }
 
 dependencies {
