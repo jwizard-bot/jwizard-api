@@ -18,7 +18,7 @@ import pl.jwizard.api.network.identity.standalone.dto.TokenDataResDto
 import pl.jwizard.api.scaffold.AbstractLoggingBean
 import pl.jwizard.api.security.SecurityProperties
 import pl.jwizard.api.security.jwt.JwtService
-import pl.jwizard.api.util.DateUtil
+import pl.jwizard.api.util.DateApiUtils
 import java.time.LocalDateTime
 
 @Service
@@ -41,10 +41,10 @@ class StandaloneIdentityServiceImpl(
 
 		persistedRefreshToken = persistedRefreshToken?.copy(
 			refreshToken = refresh,
-			expiredAt = DateUtil.toLocalDateTime(refreshExpiredAt)
+			expiredAt = DateApiUtils.toLocalDateTime(refreshExpiredAt)
 		) ?: RefreshTokenDocument(
 			refreshToken = refresh,
-			expiredAt = DateUtil.toLocalDateTime(refreshExpiredAt),
+			expiredAt = DateApiUtils.toLocalDateTime(refreshExpiredAt),
 			userDcId = reqDto.appId,
 		)
 		refreshTokenRepository.save(persistedRefreshToken)
@@ -73,7 +73,7 @@ class StandaloneIdentityServiceImpl(
 			refreshTokenRepository.save(
 				refreshDocument.copy(
 					refreshToken = token,
-					expiredAt = DateUtil.toLocalDateTime(refreshExpiredAt)
+					expiredAt = DateApiUtils.toLocalDateTime(refreshExpiredAt)
 				)
 			)
 			log.info("Renew refresh token for standalone app with ID: {}", appId)
