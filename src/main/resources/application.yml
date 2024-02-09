@@ -5,6 +5,7 @@ spring:
     location: classpath:spring/banner.txt
   mvc:
     throw-exception-if-no-handler-found: true
+    log-resolved-exception: off
   config:
     import:
       - optional:vault://
