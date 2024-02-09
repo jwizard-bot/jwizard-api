@@ -7,6 +7,9 @@ jwizard:
       standalone-client: proxy://standalone-prod
       web-client: https://jwizard.pl
     jwt-issuer: https://api.jwizard.pl
+  guild:
+    defaults:
+      legacy-prefix: '$'
 
 logging:
   file:

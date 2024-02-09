@@ -17,6 +17,9 @@ jwizard:
       standalone-client: proxy://standalone-dev
       web-client: http://localhost:5173
     jwt-issuer: http://localhost:${server.port}
+  guild:
+    defaults:
+      legacy-prefix: '?'
 
 logging:
   file:

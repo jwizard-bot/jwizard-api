@@ -38,10 +38,258 @@ jwizard:
       - pl
     locale-bundles:
       - i18n-command/messages
-  command:
-    resource-file: classpath:assets/bot-commands.json
   security:
     jwt-secret: ${V_JWT_SECRET_KEY:4c9RiR9iwCMTC7NVLr69yP8D5U9PopevQWgGyrNFHkDvO60kzo}
     life:
       access-minutes: 5
       refresh-days: 30
+  guild:
+    defaults:
+      dj-role-name: DJWizard
+      locale: pl
+      slash-enabled: true
+      inactivity:
+        leave-empty-channel-sec-all:
+          min: 10
+          defined: 30
+          max: 240
+        leave-no-tracks-channel-sec-all:
+          min: 10
+          defined: 30
+          max: 60
+      voting:
+        percentage-ratio: 50
+        time-to-finish-sec-all:
+          min: 10
+          defined: 30
+          max: 600
+      audio-player:
+        random-auto-choose: true
+        tracks-number-choose-all:
+          min: 2
+          defined: 10
+          max: 20
+        time-after-auto-choose-sec-all:
+          min: 10
+          defined: 20
+          max: 120
+        max-repeats-of-track-all:
+          min: 2
+          defined: 30
+          max: 100
+        default-volume-all:
+          min: 0
+          defined: 100
+          max: 150
+      modules:
+        - 'music'
+        - 'playlist'
+        - 'voting'
+        - 'settings'
+  commands:
+    others:
+      - name: help
+        aliases: h,hl
+      - name: helpme
+        aliases: hm,hlm
+      - name: debug
+        aliases: db,dbg
+    music:
+      - name: play
+        aliases: p,pl
+        arguments:
+          - arg-name: track
+            casted-type: STRING
+            required: true
+      - name: pause
+        aliases: ps
+      - name: resume
+        aliases: rs
+      - name: repeat
+        aliases: rp
+        arguments:
+          - arg-name: count
+            casted-type: INTEGER
+            required: true
+      - name: repeatcls
+        aliases: rpcl
+      - name: loop
+        aliases: lp
+      - name: playing
+        aliases: cp
+      - name: paused
+        aliases: cps
+      - name: getvolume
+        aliases: gvl
+      - name: queue
+        aliases: qt
+    dj:
+      - name: setvolume
+        aliases: svl
+        arguments:
+          - arg-name: volume
+            casted-type: INTEGER
+            required: true
+      - name: volumecls
+        aliases: cvl
+      - name: join
+        aliases: jchn
+      - name: tracksrm
+        aliases: rtr
+        arguments:
+          - arg-name: member
+            casted-type: MENTIONABLE
+            required: true
+      - name: shuffle
+        aliases: shq
+      - name: skipto
+        aliases: skt
+        arguments:
+          - arg-name: pos
+            casted-type: INTEGER
+            required: true
+      - name: skip
+        aliases: sk
+      - name: clear
+        aliases: cl
+      - name: stop
+        aliases: st
+      - name: move
+        aliases: mv
+        arguments:
+          - arg-name: fromPos
+            casted-type: INTEGER
+            required: true
+          - arg-name: toPos
+            casted-type: INTEGER
+            required: true
+      - name: infinite
+        aliases: inf
+    playlist:
+      - name: addtrackpl
+        aliases: apt
+        arguments:
+          - arg-name: playlistNameOrId
+            casted-type: STRING
+            required: true
+      - name: addqueuepl
+        aliases: apq
+        arguments:
+          - arg-name: playlistNameOrId
+            casted-type: STRING
+            required: true
+      - name: addplaylist
+        aliases: addpl
+        arguments:
+          - arg-name: playlistName
+            casted-type: STRING
+            required: true
+      - name: playpl
+        aliases: plpl
+        arguments:
+          - arg-name: playlistNameOrId
+            casted-type: STRING
+            required: true
+      - name: showmempl
+        aliases: smmpl
+        arguments:
+          - arg-name: member
+            casted-type: MENTIONABLE
+            required: true
+      - name: showmypl
+        aliases: smpl
+      - name: showplsongs
+        aliases: splsg
+        arguments:
+          - arg-name: playlistNameOrId
+            casted-type: STRING
+            required: true
+    vote:
+      - name: vshuffle
+        aliases: vshq
+      - name: vskip
+        aliases: vsk
+      - name: vskipto
+        aliases: vsto
+        arguments:
+          - arg-name: pos
+            casted-type: INTEGER
+            required: true
+      - name: vclear
+        aliases: vcl
+      - name: vstop
+        aliases: vst
+    settings:
+      - name: setaudiochn
+        aliases: sadch
+        arguments:
+          - arg-name: textChannel
+            casted-type: CHANNEL
+            required: false
+      - name: setdjrole
+        aliases: sdjr
+        arguments:
+          - arg-name: roleName
+            casted-type: STRING
+            required: false
+      - name: setlocale
+        aliases: slcl
+        arguments:
+          - arg-name: localeCode
+            casted-type: STRING
+            required: false
+      - name: settrackrep
+        aliases: strrep
+        arguments:
+          - arg-name: repeats
+            casted-type: INTEGER
+            required: false
+      - name: setdefvol
+        aliases: sdfv
+        arguments:
+          - arg-name: volume
+            casted-type: INTEGER
+            required: false
+      - name: setskratio
+        aliases: ssrt
+        arguments:
+          - arg-name: ratio
+            casted-type: INTEGER
+            required: false
+      - name: settimevot
+        aliases: stev
+        arguments:
+          - arg-name: seconds
+            casted-type: INTEGER
+            required: false
+      - name: settleavem
+        aliases: stlech
+        arguments:
+          - arg-name: seconds
+            casted-type: INTEGER
+            required: false
+      - name: settleavetr
+        aliases: stlntch
+        arguments:
+          - arg-name: seconds
+            casted-type: INTEGER
+            required: false
+      - name: settchossng
+        aliases: sttcs
+        arguments:
+          - arg-name: seconds
+            casted-type: INTEGER
+            required: false
+      - name: setrchossng
+        aliases: srtcs
+        arguments:
+          - arg-name: logic
+            casted-type: BOOLEAN
+            required: false
+      - name: setcchossng
+        aliases: sctcs
+        arguments:
+          - arg-name: count
+            casted-type: INTEGER
+            required: false
+
