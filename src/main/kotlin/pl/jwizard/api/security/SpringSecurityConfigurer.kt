@@ -44,6 +44,11 @@ class SpringSecurityConfigurer(
 			"/api/v1/identity/standalone/login",
 			"/api/v1/identity/standalone/refresh",
 		)
+		val standaloneSecuredMatchers = arrayOf(
+			"/api/v1/command/all",
+			"/api/v1/guild/standalone/{guildId}",
+			"/api/v1/guild/standalone/settings/music-channel/guild/{guildId}",
+		)
 	}
 
 	@Bean
@@ -62,7 +67,7 @@ class SpringSecurityConfigurer(
 			.authorizeHttpRequests {
 				it
 					.requestMatchers(*unsecuredMatchers).permitAll()
-					.requestMatchers("/api/v1/command/all").hasRole(STANDALONE_CLIENT)
+					.requestMatchers(*standaloneSecuredMatchers).hasRole(STANDALONE_CLIENT)
 					.anyRequest().authenticated()
 			}
 			.sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

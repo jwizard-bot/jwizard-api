@@ -12,6 +12,7 @@ enum class ApiLocaleSet(private val placeholder: String) : LocaleSet {
 	EXC_MISSING_REQUEST_PARAMETER("jwizard.api.exc.missingRequestParameter"),
 	EXC_STANDALONE_APP_NOT_EXIST("jwizard.api.exc.standaloneAppNotExist"),
 	EXC_REFRESH_TOKEN_NOT_EXIST("jwizard.api.exc.refreshTokenNotExist"),
+	EXC_GUILD_NOT_EXIST("jwizard.api.exc.guildNotExist"),
 
 	JWT_INVALID("jwizard.api.jwt.invalid"),
 	JWT_EXPIRED("jwizard.api.jwt.expired"),
