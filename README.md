@@ -1,5 +1,5 @@
 <p align="center">
-    <img src=".github/gh-banner.png" alt="">
+    <img src=".github/banner.png" alt="">
 </p>
 
 This repo contains API for web client and JWizard core. Represens bridge between core and web client data flow module.
