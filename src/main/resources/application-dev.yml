@@ -7,6 +7,24 @@ spring:
       port: 35731
     restart:
       log-condition-evaluation-delta: false
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: ${ENV_MONGO_PORT:8762}
+      database: jwizard
+  cloud:
+    vault:
+      uri: ${ENV_VAULT_URI:http://localhost:8761}
+      token: ${ENV_VAULT_TOKEN}
+      authentication: TOKEN
+      kv:
+        backend: jwizard
+        default-context: common
+        application-name: api
+  config:
+    import:
+      - optional:vault://
 
 jwizard:
   security:

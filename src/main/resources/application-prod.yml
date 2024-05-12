@@ -1,3 +1,27 @@
+server:
+  port: 6061
+
+spring:
+  devtools:
+    add-properties: false
+  data:
+    mongodb:
+      host: mongo2.small.pl
+      port: 27017
+      database: mo1486_jwizard
+  cloud:
+    vault:
+      uri: https://vault.miloszgilga.pl
+      token: ${ENV_VAULT_TOKEN}
+      authentication: TOKEN
+      kv:
+        backend: jwizard
+        default-context: common
+        application-name: api
+  config:
+    import:
+      - optional:vault://
+
 jwizard:
   security:
     jwt-audience:
