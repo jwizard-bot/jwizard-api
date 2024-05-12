@@ -31,6 +31,9 @@ spring:
     resources:
       add-mappings: false
 
+mongock:
+  migration-scan-package: pl.jwizard.api.migrations
+
 jwizard:
   i18n:
     default-locale: en-US
@@ -296,6 +299,3 @@ jwizard:
           - arg-name: count
             casted-type: INTEGER
             required: false
-
-mongock:
-  migration-scan-package: pl.jwizard.api.migrations
