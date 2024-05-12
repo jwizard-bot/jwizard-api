@@ -40,6 +40,9 @@ jwizard:
     locale-bundles:
       - i18n-command/messages
   security:
+    standalone-clients:
+      - app-id: ${V_JDA_APP_ID}
+        app-secret: ${V_JDA_SECRET}
     jwt-secret: ${V_JWT_SECRET_KEY:4c9RiR9iwCMTC7NVLr69yP8D5U9PopevQWgGyrNFHkDvO60kzo}
     life:
       access-minutes: 5

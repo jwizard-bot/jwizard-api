@@ -10,9 +10,6 @@ spring:
 
 jwizard:
   security:
-    standalone-clients:
-      - app-id: ${V_JDA_DEV_APP_ID}
-        app-secret: ${V_JDA_DEV_SECRET}
     jwt-audience:
       standalone-client: proxy://standalone-dev
       web-client: http://localhost:5173
