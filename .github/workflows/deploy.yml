@@ -82,7 +82,7 @@ jobs:
           VM_API_MEM_MAX: ${{ vars.GH_XMX_API }}
         run: |
           sudo nohup java \
-            -Xmx$VM_API_MEM_MIN \
+            -Xms$VM_API_MEM_MIN \
             -Xmx$VM_API_MEM_MAX \
             -XX:MaxRAM=$VM_API_MEM_MAX \
             -Dspring.profiles.active=prod \
