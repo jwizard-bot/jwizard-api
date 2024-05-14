@@ -11,6 +11,8 @@ defaults:
 jobs:
   pre-build:
     runs-on: self-hosted
+    env:
+      JAR_PATH: ${{ vars.GH_API_JAR_PATH }}
 
     steps:
       - name: Kill existing process
@@ -48,7 +50,7 @@ jobs:
       ACT_VAULT_ADDR: ${{ vars.GH_VAULT_ADDR }}
       ACT_VAULT_TOKEN: ${{ secrets.GH_VAULT_TOKEN }}
       ENV_PATH: /opt/gh-action-runners/jwizard/.env
-      JAR_PATH: /opt/gh-action-runners/jwizard/_work/jwizard-api/jwizard-api/build/libs/jwizard-api.jar
+      JAR_PATH: ${{ vars.GH_API_JAR_PATH }}
 
     steps:
       - name: Revoke Vault key
