@@ -79,5 +79,5 @@ jobs:
             -Dspring.profiles.active=prod \
             -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault-key }} \
             -DJWIZARD_API_BUILD_VERSION=${{ steps.deployment.outputs.sha_short }}_${{ github.run_number }} \
-            -DJWIZARD_API_BUILD_DATE=${{ steps.deployment.outputs.build_date }} \
+            -DJWIZARD_API_BUILD_DATE="${{ steps.deployment.outputs.build_date }}" \
             -jar $JAR_PATH &
