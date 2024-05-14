@@ -63,9 +63,11 @@ jobs:
           JWIZARD_API_PID=$(pgrep -f "$JAR_PATH") && [ -n "$JWIZARD_API_PID" ] && \
           sudo kill -9 $JWIZARD_API_PID || echo "Process not running."
 
-      - name: Determinate build version
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Determinate deployment properties
+        id: deployment
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "build_date=$(date +'%Y-%m-%dT%H:%M:%S%z %Z')" >> $GITHUB_OUTPUT
 
       - name: Re-run process
         env:
@@ -76,5 +78,6 @@ jobs:
             -XX:MaxRAM=$VM_API_XMX \
             -Dspring.profiles.active=prod \
             -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault-key }} \
-            -DJWIZARD_API_BUILD_VERSION=${{ steps.vars.outputs.sha_short }}_${{ github.run_number }} \
+            -DJWIZARD_API_BUILD_VERSION=${{ steps.deployment.outputs.sha_short }}_${{ github.run_number }} \
+            -DJWIZARD_API_BUILD_DATE=${{ steps.deployment.outputs.build_date }} \
             -jar $JAR_PATH &

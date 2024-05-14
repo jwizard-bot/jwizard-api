@@ -19,6 +19,9 @@ mongock:
   migration-scan-package: pl.jwizard.api.migrations
 
 jwizard:
+  deployment:
+    build-version: ${JWIZARD_API_BUILD_VERSION:UNKNOWN}
+    last-build-date: ${JWIZARD_API_BUILD_DATE:UNKNOWN}
   i18n:
     default-locale: en-US
     available-locales:
