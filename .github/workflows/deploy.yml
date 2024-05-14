@@ -23,6 +23,7 @@ jobs:
           jdkFile: /opt/openlogic-openjdk-17.0.11+9-linux-x64.tar.gz
           architecture: x64
           cache: gradle
+          overwrite-settings: false
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
