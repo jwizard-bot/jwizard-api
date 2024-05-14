@@ -3,6 +3,7 @@
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 var jvmVersion = JavaVersion.VERSION_17
 
@@ -55,6 +56,10 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<BootJar> {
+	archiveFileName = "jwizard-api.jar"
 }
 
 tasks.withType<KotlinCompile> {
