@@ -9,8 +9,18 @@ defaults:
     shell: bash
 
 jobs:
+  pre-build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Kill existing process
+        run: |
+          JWIZARD_API_PID=$(pgrep -f "$JAR_PATH") && [ -n "$JWIZARD_API_PID" ] && \
+          sudo kill -9 $JWIZARD_API_PID || echo "Process not running."
+
   build:
     runs-on: self-hosted
+    needs: pre-build
 
     steps:
       - uses: actions/checkout@v3
@@ -19,11 +29,8 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'jdkfile'
-          jdkFile: /opt/openlogic-openjdk-17.0.11+9-linux-x64.tar.gz
-          architecture: x64
+          distribution: 'adopt'
           cache: gradle
-          overwrite-settings: false
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -59,12 +66,7 @@ jobs:
           export JWIZARD_TOKEN=$(vault token create -policy=jwizard-readonly -ttl=30d -renewable=false --format=json | jq -r '.auth.client_token')
           sed -i "s/^ENV_API_VAULT_TOKEN=.*$/ENV_API_VAULT_TOKEN=$JWIZARD_TOKEN/" $ENV_PATH
           echo "::add-mask::$JWIZARD_TOKEN"
-          echo "vault-key=$JWIZARD_TOKEN" >> "$GITHUB_OUTPUT"
-
-      - name: Kill existing process
-        run: |
-          JWIZARD_API_PID=$(pgrep -f "$JAR_PATH") && [ -n "$JWIZARD_API_PID" ] && \
-          sudo kill -9 $JWIZARD_API_PID || echo "Process not running."
+          echo "vault_key=$JWIZARD_TOKEN" >> "$GITHUB_OUTPUT"
 
       - name: Determinate deployment properties
         id: deployment
@@ -80,7 +82,7 @@ jobs:
             -Xmx$VM_API_XMX \
             -XX:MaxRAM=$VM_API_XMX \
             -Dspring.profiles.active=prod \
-            -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault-key }} \
+            -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault_key }} \
             -DJWIZARD_API_BUILD_VERSION=${{ steps.deployment.outputs.sha_short }}_${{ github.run_number }} \
             -DJWIZARD_API_BUILD_DATE="${{ steps.deployment.outputs.build_date }}" \
             -jar $JAR_PATH &
