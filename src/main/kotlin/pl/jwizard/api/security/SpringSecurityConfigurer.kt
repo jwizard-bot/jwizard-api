@@ -43,7 +43,6 @@ class SpringSecurityConfigurer(
 		val unsecuredMatchers = arrayOf(
 			"/api/v1/identity/standalone/login",
 			"/api/v1/identity/standalone/refresh",
-			"/api/v1/deployment",
 		)
 		val standaloneSecuredMatchers = arrayOf(
 			"/api/v1/command/all",
