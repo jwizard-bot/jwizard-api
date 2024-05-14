@@ -33,7 +33,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           check-latest: false
-          cache: gradle
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -79,11 +78,13 @@ jobs:
 
       - name: Re-run process
         env:
-          VM_API_XMX: ${{ vars.GH_XMX_API }}
+          VM_API_MEM_MIN: ${{ vars.GH_XMS_API }}
+          VM_API_MEM_MAX: ${{ vars.GH_XMX_API }}
         run: |
           sudo nohup java \
-            -Xmx$VM_API_XMX \
-            -XX:MaxRAM=$VM_API_XMX \
+            -Xmx$VM_API_MEM_MIN \
+            -Xmx$VM_API_MEM_MAX \
+            -XX:MaxRAM=$VM_API_MEM_MAX \
             -Dspring.profiles.active=prod \
             -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault_key }} \
             -DJWIZARD_API_BUILD_VERSION=${{ steps.deployment.outputs.sha_short }}_${{ github.run_number }} \
