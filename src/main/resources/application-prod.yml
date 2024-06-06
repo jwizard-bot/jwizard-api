@@ -31,6 +31,11 @@ jwizard:
   guild:
     defaults:
       legacy-prefix: '$'
+      inactivity:
+        leave-empty-channel-sec-all:
+          defined: 180
+        leave-no-tracks-channel-sec-all:
+          defined: 180
 
 logging:
   file:
