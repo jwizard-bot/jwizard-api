@@ -13,6 +13,5 @@ enum class CommandCategory(
 	PLAYLIST("playlist", { properties -> "music" to properties.playlist }),
 	DJ("dj", { properties -> "dj" to properties.dj }),
 	VOTE("vote", { properties -> "vote" to properties.vote }),
-	SETTINGS("settings", { properties -> "vote" to properties.settings }),
 	;
 }
