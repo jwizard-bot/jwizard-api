@@ -10,14 +10,9 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @ConfigurationProperties(prefix = "jwizard.guild.defaults")
 data class GuildDefaultProperties(
-	var legacyPrefix: String = "$",
-	var djRoleName: String = "DJWizard",
-	var locale: String = "pl",
-	var slashEnabled: Boolean = true,
 	var inactivity: InactivityProperties = InactivityProperties(),
 	var voting: VotingProperties = VotingProperties(),
 	var audioPlayer: AudioPlayerProperties = AudioPlayerProperties(),
-	var modules: List<String> = emptyList(),
 )
 
 data class InactivityProperties(
