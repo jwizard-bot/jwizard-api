@@ -23,8 +23,6 @@ java.targetCompatibility = jvmVersion
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://repo.spring.io/milestone") }
-	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 noArg {
@@ -35,7 +33,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
 	implementation("org.springframework.cloud:spring-cloud-vault-config:4.1.0")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.slf4j:slf4j-api:2.0.11")
@@ -44,9 +42,9 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	implementation("org.apache.commons:commons-lang3:3.14.0")
 	implementation("org.modelmapper:modelmapper:3.2.0")
+	implementation("com.mysql:mysql-connector-j:8.4.0")
+
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
-	compileOnly("io.mongock:mongock-springboot-v3:5.4.2")
-	compileOnly("io.mongock:mongodb-springdata-v4-driver:5.4.0")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.jetbrains.kotlin:kotlin-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
