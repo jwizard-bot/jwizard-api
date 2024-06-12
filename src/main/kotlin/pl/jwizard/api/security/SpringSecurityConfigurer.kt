@@ -10,11 +10,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
@@ -28,7 +26,6 @@ import pl.jwizard.api.security.resolver.SecurityChainResolver
 @Configuration
 @EnableWebSecurity
 class SpringSecurityConfigurer(
-	private val securityProperties: SecurityProperties,
 	private val middlewareExceptionFilter: MiddlewareExceptionFilter,
 	private val securityChainResolver: SecurityChainResolver,
 	private val accessDeniedResolver: AccessDeniedResolver,
@@ -36,21 +33,6 @@ class SpringSecurityConfigurer(
 	private val passwordEncoder: PasswordEncoder,
 	private val messageSource: MessageSource,
 ) : AbstractLoggingBean(SpringSecurityConfigurer::class) {
-
-	companion object {
-		const val STANDALONE_CLIENT = "STANDALONE_CLIENT"
-		const val USER = "USER"
-		val unsecuredMatchers = arrayOf(
-			"/api/v1/identity/standalone/login",
-			"/api/v1/identity/standalone/refresh",
-			"/api/v1/deployment",
-		)
-		val standaloneSecuredMatchers = arrayOf(
-			"/api/v1/command/all",
-			"/api/v1/guild/standalone/{guildId}",
-			"/api/v1/guild/standalone/settings/music-channel/guild/{guildId}",
-		)
-	}
 
 	@Bean
 	fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
@@ -67,8 +49,7 @@ class SpringSecurityConfigurer(
 			.securityMatcher("/api/v1/**")
 			.authorizeHttpRequests {
 				it
-					.requestMatchers(*unsecuredMatchers).permitAll()
-					.requestMatchers(*standaloneSecuredMatchers).hasRole(STANDALONE_CLIENT)
+					.requestMatchers("/api/v1/deployment").permitAll()
 					.anyRequest().authenticated()
 			}
 			.sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
@@ -77,29 +58,10 @@ class SpringSecurityConfigurer(
 	}
 
 	@Bean
-	fun authenticationManager(
-		httpSecurity: HttpSecurity,
-		statelessUserDetailsService: StatelessUserDetailsService,
-	): AuthenticationManager {
+	fun authenticationManager(httpSecurity: HttpSecurity): AuthenticationManager {
 		val provider = DaoAuthenticationProvider()
 		provider.setMessageSource(messageSource)
 		provider.setPasswordEncoder(passwordEncoder)
-		provider.setUserDetailsService(statelessUserDetailsService)
-
-		val builder = httpSecurity.getSharedObject(AuthenticationManagerBuilder::class.java)
-		builder.authenticationProvider(provider)
-
-		if (securityProperties.standaloneClients.isEmpty()) {
-			log.warn("WARNING! Not found any standalone clients configuration.")
-		}
-		securityProperties.standaloneClients
-			.map { StandaloneClient(it.appId, passwordEncoder.encode(it.appSecret)) }
-			.map { User.builder().username(it.appId).password(it.appSecret).roles(USER, STANDALONE_CLIENT) }
-			.map { it.build() }
-			.forEach {
-				builder.inMemoryAuthentication().withUser(it)
-				log.info("Successfully loaded standalone app with ID: {}", it.username)
-			}
 		return ProviderManager(provider)
 	}
 }

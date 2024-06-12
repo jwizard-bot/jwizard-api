@@ -6,42 +6,29 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
     log-resolved-exception: off
-  data:
-    mongodb:
-      username: ${V_MONGODB_USERNAME}
-      password: ${V_MONGODB_PASSWORD}
-      field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
+  datasource:
+    username: ${V_MYSQL_USERNAME}
+    password: ${V_MYSQL_PASSWORD}
   web:
     resources:
       add-mappings: false
-
-mongock:
-  migration-scan-package: pl.jwizard.api.migrations
 
 jwizard:
   deployment:
     build-version: ${JWIZARD_API_BUILD_VERSION:UNKNOWN}
     last-build-date: ${JWIZARD_API_BUILD_DATE:UNKNOWN}
   i18n:
-    default-locale: en-US
+    default-locale: pl
     available-locales:
-      - en-US
+      - en
       - pl
-    locale-bundles:
-      - i18n-command/messages
   security:
-    standalone-clients:
-      - app-id: ${V_JDA_APP_ID}
-        app-secret: ${V_JDA_SECRET}
     jwt-secret: ${V_JWT_SECRET_KEY:4c9RiR9iwCMTC7NVLr69yP8D5U9PopevQWgGyrNFHkDvO60kzo}
     life:
       access-minutes: 5
       refresh-days: 30
   guild:
     defaults:
-      dj-role-name: DJWizard
-      locale: pl
-      slash-enabled: true
       inactivity:
         leave-empty-channel-sec-all:
           min: 10
@@ -58,7 +45,6 @@ jwizard:
           defined: 30
           max: 600
       audio-player:
-        random-auto-choose: true
         tracks-number-choose-all:
           min: 2
           defined: 10
@@ -75,140 +61,3 @@ jwizard:
           min: 0
           defined: 100
           max: 150
-      modules:
-        - 'music'
-        - 'playlist'
-        - 'voting'
-  commands:
-    others:
-      - name: help
-        aliases: h,hl
-      - name: helpme
-        aliases: hm,hlm
-      - name: debug
-        aliases: db,dbg
-    music:
-      - name: play
-        aliases: p,pl
-        arguments:
-          - arg-name: track
-            casted-type: STRING
-            required: true
-      - name: pause
-        aliases: ps
-      - name: resume
-        aliases: rs
-      - name: repeat
-        aliases: rp
-        arguments:
-          - arg-name: count
-            casted-type: INTEGER
-            required: true
-      - name: repeatcls
-        aliases: rpcl
-      - name: loop
-        aliases: lp
-      - name: playing
-        aliases: cp
-      - name: paused
-        aliases: cps
-      - name: getvolume
-        aliases: gvl
-      - name: queue
-        aliases: qt
-    dj:
-      - name: setvolume
-        aliases: svl
-        arguments:
-          - arg-name: volume
-            casted-type: INTEGER
-            required: true
-      - name: volumecls
-        aliases: cvl
-      - name: join
-        aliases: jchn
-      - name: tracksrm
-        aliases: rtr
-        arguments:
-          - arg-name: member
-            casted-type: MENTIONABLE
-            required: true
-      - name: shuffle
-        aliases: shq
-      - name: skipto
-        aliases: skt
-        arguments:
-          - arg-name: pos
-            casted-type: INTEGER
-            required: true
-      - name: skip
-        aliases: sk
-      - name: clear
-        aliases: cl
-      - name: stop
-        aliases: st
-      - name: move
-        aliases: mv
-        arguments:
-          - arg-name: fromPos
-            casted-type: INTEGER
-            required: true
-          - arg-name: toPos
-            casted-type: INTEGER
-            required: true
-      - name: infinite
-        aliases: inf
-    playlist:
-      - name: addtrackpl
-        aliases: apt
-        arguments:
-          - arg-name: playlistNameOrId
-            casted-type: STRING
-            required: true
-      - name: addqueuepl
-        aliases: apq
-        arguments:
-          - arg-name: playlistNameOrId
-            casted-type: STRING
-            required: true
-      - name: addplaylist
-        aliases: addpl
-        arguments:
-          - arg-name: playlistName
-            casted-type: STRING
-            required: true
-      - name: playpl
-        aliases: plpl
-        arguments:
-          - arg-name: playlistNameOrId
-            casted-type: STRING
-            required: true
-      - name: showmempl
-        aliases: smmpl
-        arguments:
-          - arg-name: member
-            casted-type: MENTIONABLE
-            required: true
-      - name: showmypl
-        aliases: smpl
-      - name: showplsongs
-        aliases: splsg
-        arguments:
-          - arg-name: playlistNameOrId
-            casted-type: STRING
-            required: true
-    vote:
-      - name: vshuffle
-        aliases: vshq
-      - name: vskip
-        aliases: vsk
-      - name: vskipto
-        aliases: vsto
-        arguments:
-          - arg-name: pos
-            casted-type: INTEGER
-            required: true
-      - name: vclear
-        aliases: vcl
-      - name: vstop
-        aliases: vst

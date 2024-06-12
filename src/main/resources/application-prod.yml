@@ -4,11 +4,8 @@ server:
 spring:
   devtools:
     add-properties: false
-  data:
-    mongodb:
-      host: mongo2.small.pl
-      port: 27017
-      database: mo1486_jwizard
+  datasource:
+    url: jdbc:mysql://mysql2.small.pl:3306/m1486_jwizard
   cloud:
     vault:
       uri: https://vault.miloszgilga.pl
