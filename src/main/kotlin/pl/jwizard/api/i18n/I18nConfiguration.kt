@@ -27,7 +27,7 @@ class I18nConfiguration(
 	}
 
 	@Primary
-	@Bean("messageSource")
+	@Bean
 	fun messageSource(): MessageSource {
 		val source = ResourceBundleMessageSource()
 		source.addBasenames(*createLocaleBundlePaths())
@@ -35,7 +35,7 @@ class I18nConfiguration(
 		return source
 	}
 
-	@Bean("localeResolver")
+	@Bean
 	fun localeResolver(): LocaleResolver {
 		val resolver = HeaderLocaleResolver(defaultLocale)
 		resolver.setDefaultLocale(defaultLocale)

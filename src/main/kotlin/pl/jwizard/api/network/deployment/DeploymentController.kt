@@ -12,9 +12,7 @@ import pl.jwizard.api.network.deployment.dto.DeploymentResDto
 
 @RestController
 @RequestMapping("/api/v1/deployment")
-class DeploymentController(
-	val deploymentService: DeploymentService
-) {
+class DeploymentController(val deploymentService: DeploymentService) {
 	@GetMapping
 	fun getDeploymentProperties(): ResponseEntity<DeploymentResDto> {
 		return ResponseEntity.ok(deploymentService.getDeploymentProperties())
