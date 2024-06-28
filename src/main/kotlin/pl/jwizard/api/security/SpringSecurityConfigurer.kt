@@ -50,6 +50,9 @@ class SpringSecurityConfigurer(
 			.authorizeHttpRequests {
 				it
 					.requestMatchers("/api/v1/deployment").permitAll()
+					.requestMatchers("/api/v1/contributor/all").permitAll()
+					.requestMatchers("/api/v1/home/stats").permitAll()
+					.requestMatchers("/api/v1/home/key-features").permitAll()
 					.anyRequest().authenticated()
 			}
 			.sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

@@ -18,49 +18,17 @@ spring:
 
 jwizard:
   deployment:
-    build-version: ${JWIZARD_API_BUILD_VERSION:UNKNOWN}
-    last-build-date: ${JWIZARD_API_BUILD_DATE:UNKNOWN}
+    build-version: ${JWIZARD_API_BUILD_VERSION:DEVELOPMENT}
+    last-build-date: ${JWIZARD_API_BUILD_DATE:DEVELOPMENT}
+  github-api:
+    url: https://api.github.com
+    organization-name: jwizard-bot
   i18n:
     default-locale: pl
     available-locales:
       - en
       - pl
-  security:
-    jwt-secret: ${V_JWT_SECRET_KEY:4c9RiR9iwCMTC7NVLr69yP8D5U9PopevQWgGyrNFHkDvO60kzo}
-    life:
-      access-minutes: 5
-      refresh-days: 30
-  guild:
-    defaults:
-      inactivity:
-        leave-empty-channel-sec-all:
-          min: 10
-          defined: 30
-          max: 240
-        leave-no-tracks-channel-sec-all:
-          min: 10
-          defined: 30
-          max: 60
-      voting:
-        percentage-ratio: 50
-        time-to-finish-sec-all:
-          min: 10
-          defined: 30
-          max: 600
-      audio-player:
-        tracks-number-choose-all:
-          min: 2
-          defined: 10
-          max: 20
-        time-after-auto-choose-sec-all:
-          min: 10
-          defined: 20
-          max: 120
-        max-repeats-of-track-all:
-          min: 2
-          defined: 30
-          max: 100
-        default-volume-all:
-          min: 0
-          defined: 100
-          max: 150
+
+logging:
+  level:
+    org.springframework.web.servlet.PageNotFound: ERROR
