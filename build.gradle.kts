@@ -43,6 +43,12 @@ dependencies {
 	implementation("org.apache.commons:commons-lang3:3.14.0")
 	implementation("org.modelmapper:modelmapper:3.2.0")
 	implementation("com.mysql:mysql-connector-j:8.4.0")
+	implementation("org.springframework.boot:spring-boot-starter-cache")
+	implementation("org.ehcache:ehcache:3.10.8")
+	implementation("javax.cache:cache-api:1.1.1")
+	implementation("org.apache.commons:commons-collections4:4.4")
+	implementation("javax.xml.bind:jaxb-api:2.3.1")
+	implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
 
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

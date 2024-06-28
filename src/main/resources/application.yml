@@ -12,6 +12,9 @@ spring:
   web:
     resources:
       add-mappings: false
+  cache:
+    jcache:
+      config: classpath:spring/ehcache.xml
 
 jwizard:
   deployment:
