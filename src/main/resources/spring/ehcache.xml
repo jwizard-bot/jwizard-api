@@ -1,0 +1,19 @@
+<!--
+  ~ Copyright (c) 2024 by JWizard
+  ~ Originally developed by Miłosz Gilga <https://miloszgilga.pl>
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.0.xsd">
+
+  <cache-template name="short-leave">
+    <expiry>
+      <ttl unit="hours">2</ttl>
+    </expiry>
+    <resources>
+      <offheap unit="MB">30</offheap>
+    </resources>
+  </cache-template>
+
+  <cache alias="ContributorsApiCall.Cache" uses-template="short-leave"/>
+</config>

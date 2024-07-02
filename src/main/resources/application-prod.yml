@@ -20,19 +20,9 @@ spring:
       - optional:vault://
 
 jwizard:
-  security:
-    jwt-audience:
-      standalone-client: proxy://standalone-prod
-      web-client: https://jwizard.pl
-    jwt-issuer: https://api.jwizard.pl
-  guild:
-    defaults:
-      legacy-prefix: '$'
-      inactivity:
-        leave-empty-channel-sec-all:
-          defined: 180
-        leave-no-tracks-channel-sec-all:
-          defined: 180
+  web:
+    client-urls:
+      - https://jwizard.pl
 
 logging:
   file:

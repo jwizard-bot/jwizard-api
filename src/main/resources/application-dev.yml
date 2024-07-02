@@ -1,5 +1,5 @@
 server:
-  port: 8670
+  port: 8763
 
 spring:
   devtools:
@@ -23,14 +23,11 @@ spring:
       - optional:vault://
 
 jwizard:
-  security:
-    jwt-audience:
-      standalone-client: proxy://standalone-dev
-      web-client: http://localhost:5173
-    jwt-issuer: http://localhost:${server.port}
-  guild:
-    defaults:
-      legacy-prefix: '?'
+  web:
+    client-urls:
+      - http://localhost:8764
+      - http://localhost:4173
+      - http://127.0.0.1:5500
 
 logging:
   file:

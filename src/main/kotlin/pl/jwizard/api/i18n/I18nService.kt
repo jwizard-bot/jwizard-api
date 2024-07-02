@@ -44,4 +44,6 @@ class I18nService(
 	): String = getMessage(placeholder.getPlaceholder(), variables, LocaleContextHolder.getLocale())
 
 	fun getMessage(placeholder: String, locale: Locale): String = getMessage(placeholder, emptyMap(), locale)
+
+	fun getCurrentLanguage(): String = LocaleContextHolder.getLocale().toLanguageTag()
 }
