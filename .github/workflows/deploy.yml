@@ -9,20 +9,8 @@ defaults:
     shell: bash
 
 jobs:
-  pre-build:
-    runs-on: self-hosted
-    env:
-      JAR_PATH: ${{ vars.GH_API_JAR_PATH }}
-
-    steps:
-      - name: Kill existing process
-        run: |
-          JWIZARD_API_PID=$(pgrep -f "$JAR_PATH") && [ -n "$JWIZARD_API_PID" ] && \
-          sudo kill -9 $JWIZARD_API_PID || echo "Process not running."
-
   build:
     runs-on: self-hosted
-    needs: pre-build
 
     steps:
       - uses: actions/checkout@v3
@@ -40,53 +28,70 @@ jobs:
       - name: Clean build dir
         run: ./gradlew clean --no-daemon
 
+      - name: Determinate build version
+        id: sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Package to JAR
-        run: ./gradlew bootJar --no-daemon
+        run: |
+          export JAR_SNAPSHOT_SHA=${{ steps.sha.outputs.sha_short }}_${{ github.run_number }}
+          ./gradlew bootJar --no-daemon
 
   deploy:
     runs-on: self-hosted
     needs: build
     env:
-      ACT_VAULT_ADDR: ${{ vars.GH_VAULT_ADDR }}
-      ACT_VAULT_TOKEN: ${{ secrets.GH_VAULT_TOKEN }}
-      ENV_PATH: /opt/gh-action-runners/jwizard/.env
-      JAR_PATH: ${{ vars.GH_API_JAR_PATH }}
+      RUNNER_ROOT_DIR: ${{ secrets.GH_RUNNER_ROOT_DIR }}
 
     steps:
       - name: Revoke Vault key
         run: |
-          export VAULT_ADDR=$ACT_VAULT_ADDR && echo "Set vault url as $ACT_VAULT_ADDR"
-          export VAULT_TOKEN=$ACT_VAULT_TOKEN
-          VAULT_API_TOKEN=$(grep '^ENV_API_VAULT_TOKEN=' $ENV_PATH | cut -d '=' -f 2-) && [ -n "VAULT_API_TOKEN" ] && \
+          export VAULT_ADDR=${{ secrets.GH_VAULT_ADDR }}
+          export VAULT_TOKEN=${{ secrets.GH_VAULT_TOKEN }}
+
+          VAULT_API_TOKEN=$(grep '^ENV_API_VAULT_TOKEN=' $RUNNER_ROOT_DIR/.env | cut -d '=' -f 2-) && \
+            [ -n "VAULT_API_TOKEN" ] && \
             vault token revoke $VAULT_API_TOKEN || echo "Token not exist."
+
+          unset VAULT_ADDR
+          unset VAULT_TOKEN
 
       - name: Generate and export Vault key
         id: vault-keygen
         run: |
-          export VAULT_ADDR=$ACT_VAULT_ADDR && echo "Set vault url as $ACT_VAULT_ADDR"
-          export VAULT_TOKEN=$ACT_VAULT_TOKEN
+          export VAULT_ADDR=${{ secrets.GH_VAULT_ADDR }}
+          export VAULT_TOKEN=${{ secrets.GH_VAULT_TOKEN }}
+
           export JWIZARD_TOKEN=$(vault token create -policy=jwizard-readonly -ttl=30d -renewable=false --format=json | jq -r '.auth.client_token')
-          sed -i "s/^ENV_API_VAULT_TOKEN=.*$/ENV_API_VAULT_TOKEN=$JWIZARD_TOKEN/" $ENV_PATH
+          sed -i "s/^ENV_API_VAULT_TOKEN=.*$/ENV_API_VAULT_TOKEN=$JWIZARD_TOKEN/" $RUNNER_ROOT_DIR/.env
+
           echo "::add-mask::$JWIZARD_TOKEN"
           echo "vault_key=$JWIZARD_TOKEN" >> "$GITHUB_OUTPUT"
 
+          unset VAULT_ADDR
+          unset VAULT_TOKEN
+
       - name: Determinate deployment properties
-        id: deployment
+        id: vars
         run: |
           echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "build_date=$(date +'%Y-%m-%dT%H:%M:%S%z %Z')" >> $GITHUB_OUTPUT
 
-      - name: Re-run process
-        env:
-          VM_API_MEM_MIN: ${{ vars.GH_XMS_API }}
-          VM_API_MEM_MAX: ${{ vars.GH_XMX_API }}
+      - name: Stop existing process
         run: |
-          sudo nohup java \
-            -Xms$VM_API_MEM_MIN \
-            -Xmx$VM_API_MEM_MAX \
-            -XX:MaxRAM=$VM_API_MEM_MAX \
-            -Dspring.profiles.active=prod \
-            -DJWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault_key }} \
-            -DJWIZARD_API_BUILD_VERSION=${{ steps.deployment.outputs.sha_short }}_${{ github.run_number }} \
-            -DJWIZARD_API_BUILD_DATE="${{ steps.deployment.outputs.build_date }}" \
-            -jar $JAR_PATH &
+          pm2 stop /root/ecosystem.config.js --only ${{ vars.PM2_API_NAME }} --silent
+          pm2 save
+
+      - name: Move compiled JAR file
+        run: |
+          rm -rf /var/www/jwizard-api/*
+          cp ${{ secrets.GH_RUNNER_ROOT_DIR }}/_work/jwizard-api/jwizard-api/.bin/*.jar /var/www/jwizard-api
+
+      - name: Start process
+        run: |
+          JWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault_key }} \
+          JWIZARD_API_BUILD_VERSION=${{ steps.vars.outputs.sha_short }}_${{ github.run_number }} \
+          JWIZARD_API_BUILD_DATE="${{ steps.vars.outputs.build_date }}" \
+          JWIZARD_API_SNAPSHOT_VERSION=${{ steps.vars.outputs.sha_short }} \
+          pm2 start /root/ecosystem.config.js --only ${{ vars.PM2_API_NAME }} --silent
+          pm2 save

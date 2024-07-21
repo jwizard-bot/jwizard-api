@@ -5,8 +5,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
-var jvmVersion = JavaVersion.VERSION_17
-
 plugins {
 	id("org.springframework.boot") version "3.2.1"
 	id("io.spring.dependency-management") version "1.1.4"
@@ -17,6 +15,9 @@ plugins {
 
 group = "pl.jwizard.api"
 version = "1.0.0"
+
+var jvmVersion = JavaVersion.VERSION_17
+var jarSnapshotSHA = System.getenv("JAR_SNAPSHOT_SHA") ?: version
 
 java.sourceCompatibility = jvmVersion
 java.targetCompatibility = jvmVersion
@@ -61,8 +62,18 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+tasks.named<Delete>("clean") {
+	doLast {
+		val binDir = file("$projectDir/.bin")
+		if (binDir.exists()) {
+			binDir.deleteRecursively()
+		}
+	}
+}
+
 tasks.withType<BootJar> {
-	archiveFileName = "jwizard-api.jar"
+	destinationDirectory = file("$projectDir/.bin")
+	archiveFileName = "jwizard-api-$jarSnapshotSHA.jar"
 }
 
 tasks.withType<KotlinCompile> {
