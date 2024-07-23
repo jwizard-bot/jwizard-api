@@ -2,10 +2,10 @@
  * Copyright (c) 2024 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
-package pl.jwizard.api.network.deployment
+package pl.jwizard.api.features.deployment
 
 import org.springframework.stereotype.Service
-import pl.jwizard.api.network.deployment.dto.DeploymentResDto
+import pl.jwizard.api.features.deployment.dto.DeploymentResDto
 import pl.jwizard.api.scaffold.AbstractLoggingBean
 
 @Service

@@ -2,7 +2,7 @@
  * Copyright (c) 2024 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
-package pl.jwizard.api.network.contributor
+package pl.jwizard.api.features.contributor
 
 import org.apache.commons.collections4.CollectionUtils
 import org.springframework.core.ParameterizedTypeReference
@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import pl.jwizard.api.cache.CacheEntity
 import pl.jwizard.api.cache.CacheService
+import pl.jwizard.api.features.contributor.dto.ContributorData
+import pl.jwizard.api.features.contributor.dto.ContributorDataResDto
+import pl.jwizard.api.features.contributor.dto.ContributorsDataResDto
 import pl.jwizard.api.github.GithubApiProperties
-import pl.jwizard.api.network.contributor.dto.ContributorData
-import pl.jwizard.api.network.contributor.dto.ContributorDataResDto
-import pl.jwizard.api.network.contributor.dto.ContributorsDataResDto
 import pl.jwizard.api.scaffold.AbstractLoggingBean
 
 @Service

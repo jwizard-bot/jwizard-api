@@ -2,13 +2,13 @@
  * Copyright (c) 2024 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
-package pl.jwizard.api.network.home
+package pl.jwizard.api.features.home
 
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
+import pl.jwizard.api.features.home.dto.KeyFeatureResDto
+import pl.jwizard.api.features.home.dto.StatsInfoResDto
 import pl.jwizard.api.i18n.I18nService
-import pl.jwizard.api.network.home.dto.KeyFeatureResDto
-import pl.jwizard.api.network.home.dto.StatsInfoResDto
 import pl.jwizard.api.scaffold.AbstractLoggingBean
 import pl.jwizard.api.util.JdbcUtils.parse
 
