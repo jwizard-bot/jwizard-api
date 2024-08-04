@@ -11,6 +11,8 @@ defaults:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      RUNNER_ROOT_DIR: ${{ secrets.GH_RUNNER_ROOT_DIR }}
 
     steps:
       - uses: actions/checkout@v3
@@ -31,13 +33,6 @@ jobs:
       - name: Package to JAR
         run: ./gradlew bootJar --no-daemon
 
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    env:
-      RUNNER_ROOT_DIR: ${{ secrets.GH_RUNNER_ROOT_DIR }}
-
-    steps:
       - name: Revoke Vault key
         run: |
           export VAULT_ADDR=${{ secrets.GH_VAULT_ADDR }}
@@ -71,6 +66,11 @@ jobs:
           JWIZARD_API_BUILD_VERSION=${{ steps.vars.outputs.sha_short }}_${{ github.run_number }} \
           ./gradlew createEnv --no-daemon
 
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
       - name: Stop existing process
         run: |
           pm2 stop /root/ecosystem.config.js --only ${{ vars.PM2_API_NAME }} --silent
