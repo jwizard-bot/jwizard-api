@@ -4,6 +4,7 @@
  */
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
+import java.time.LocalDateTime
 
 plugins {
 	id("org.springframework.boot") version "3.2.1"
@@ -17,7 +18,6 @@ group = "pl.jwizard.api"
 version = "1.0.0"
 
 var jvmVersion = JavaVersion.VERSION_17
-var jarSnapshotSHA = System.getenv("JAR_SNAPSHOT_SHA") ?: version
 
 java.sourceCompatibility = jvmVersion
 java.targetCompatibility = jvmVersion
@@ -73,7 +73,28 @@ tasks.named<Delete>("clean") {
 
 tasks.withType<BootJar> {
 	destinationDirectory = file("$projectDir/.bin")
-	archiveFileName = "jwizard-api-$jarSnapshotSHA.jar"
+	archiveFileName = "jwizard-api.jar"
+}
+
+fun getEnv(name: String, def: Any = ""): String {
+	return System.getenv("JWIZARD_API_$name") ?: def.toString()
+}
+
+tasks.register<Copy>("createEnv") {
+	val envFile = file("$projectDir/.bin/.env")
+	if (envFile.exists()) {
+		envFile.delete()
+	}
+	val currentDateTime = LocalDateTime.now()
+	val values = mapOf(
+		"VAULT_TOKEN" to getEnv("VAULT_TOKEN"),
+		"BUILD_VERSION" to getEnv("BUILD_VERSION", "DEVELOPMENT"),
+		"BUILD_DATE" to currentDateTime.toString(),
+	)
+	val str = values.entries.joinToString(separator = "\n") {
+		"JWIZARD_API_${it.key}=${it.value}"
+	}
+	envFile.writeText(str)
 }
 
 tasks.withType<KotlinCompile> {
