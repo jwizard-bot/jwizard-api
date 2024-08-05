@@ -11,7 +11,7 @@ import java.io.File
 object EnvironmentContextLoader : AbstractLoggingBean(EnvironmentContextLoader::class) {
 	fun loadContext() {
 		val profile = System.getProperty("spring.profiles.active")
-		if (profile !== "prod") {
+		if (profile != "prod") {
 			return
 		}
 		val envFileKeys = getEnvFileKeys()
