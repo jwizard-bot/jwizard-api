@@ -50,6 +50,7 @@ dependencies {
 	implementation("org.apache.commons:commons-collections4:4.4")
 	implementation("javax.xml.bind:jaxb-api:2.3.1")
 	implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
+	implementation("io.github.cdimascio:dotenv-java:2.2.0")
 
 	runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -88,6 +89,7 @@ tasks.register<Copy>("createEnv") {
 	val currentDateTime = LocalDateTime.now()
 	val values = mapOf(
 		"VAULT_TOKEN" to getEnv("VAULT_TOKEN"),
+		"VAULT_SERVER" to getEnv("VAULT_SERVER"),
 		"BUILD_VERSION" to getEnv("BUILD_VERSION", "DEVELOPMENT"),
 		"BUILD_DATE" to currentDateTime.toString(),
 	)

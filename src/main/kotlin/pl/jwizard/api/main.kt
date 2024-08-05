@@ -9,6 +9,7 @@ import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 import org.springframework.scheduling.annotation.EnableScheduling
+import pl.jwizard.api.config.EnvironmentContextLoader
 
 @EnableScheduling
 @EnableCaching
@@ -17,5 +18,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class JWizardApiEntrypoint
 
 fun main(args: Array<String>) {
+	EnvironmentContextLoader.loadContext()
 	runApplication<JWizardApiEntrypoint>(*args)
 }
