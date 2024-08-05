@@ -23,7 +23,3 @@ jwizard:
   web:
     client-urls:
       - https://jwizard.pl
-
-logging:
-  file:
-    path: .log/prod
