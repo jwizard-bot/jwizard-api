@@ -28,6 +28,8 @@ jwizard:
     available-locales:
       - en
       - pl
+    locale-bundles:
+      - i18n-feature/messages
 
 logging:
   level:

@@ -26,17 +26,12 @@ class HomeServiceImpl(
 	)
 
 	override fun getHomePageKeyFeaturs(): List<KeyFeatureResDto> {
-		val currentLang = i18nService.getCurrentLanguage()
-		val sql = parse(
-			"SELECT title_{{lng}}, desc_{{lng}}, is_active FROM key_features",
-			mapOf("lng" to currentLang),
-		)
 		val keyFeatures = jdbcTemplate
-			.queryForList(sql)
+			.queryForList("SELECT name, is_active FROM key_features")
 			.map {
 				KeyFeatureResDto(
-					name = it["title_$currentLang"] as String,
-					description = it["desc_$currentLang"] as String,
+					name = i18nService.getMessage("jwa.feature.${it["name"]}.heading"),
+					description = i18nService.getMessage("jwa.feature.${it["name"]}.description"),
 					isActive = it["is_active"] as Boolean
 				)
 			}
