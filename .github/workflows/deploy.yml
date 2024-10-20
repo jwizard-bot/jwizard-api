@@ -30,8 +30,12 @@ jobs:
       - name: Clean build dir
         run: ./gradlew clean --no-daemon
 
+      - name: Determinate build version
+        id: sha
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Package to JAR
-        run: ./gradlew bootJar --no-daemon
+        run: ./gradlew shadowJar --no-daemon
 
       - name: Revoke Vault key
         run: |
@@ -55,11 +59,6 @@ jobs:
           unset VAULT_ADDR
           unset VAULT_TOKEN
 
-      - name: Determinate deployment version
-        id: vars
-        run: |
-          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
       - name: Generate env file
         run: |
           JWIZARD_API_VAULT_TOKEN=${{ steps.vault-keygen.outputs.vault_key }} \
@@ -70,11 +69,13 @@ jobs:
   deploy:
     runs-on: self-hosted
     needs: build
+    env:
+      PM2_API_NAME: "JWizardApi"
 
     steps:
       - name: Stop existing process
         run: |
-          pm2 stop /root/ecosystem.config.js --only ${{ vars.PM2_API_NAME }} --silent
+          pm2 stop /root/ecosystem.config.js --only $PM2_API_NAME --silent
           pm2 save
 
       - name: Move compiled executable files
@@ -85,5 +86,5 @@ jobs:
 
       - name: Start process
         run: |
-          pm2 start /root/ecosystem.config.js --only ${{ vars.PM2_API_NAME }} --silent
+          pm2 start /root/ecosystem.config.js --only $PM2_API_NAME --silent
           pm2 save

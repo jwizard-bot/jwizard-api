@@ -3,15 +3,13 @@
 .idea/compiler.xml
 .idea/workspace.xml
 .idea/libraries/
-.idea/dataSources/
-.idea/dataSources.local.xml
-.idea/shelf/
 .idea/discord.xml
 
-.gradle/
-.kotlin/
+.gradle
 build/
 .env
 .log/
+.kotlin/
 out/
 .bin/
+docs/

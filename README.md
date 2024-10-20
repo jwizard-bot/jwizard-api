@@ -1,21 +1,39 @@
-<p align="center">
-    <img src=".github/banner.png" alt="">
-</p>
+![](.github/banner.png)
 
-This repo contains API for web client and JWizard core. Represens bridge between core and web client data flow module.
-Filling JWizard core with configuration properties and default values. Available modify guild settings and perform CRUD
-actions on user's playlists. Repository to run correctly requires:
-
-* [jwizard-infra](https://github.com/jwizard-bot/jwizard-infra)
-
-Clone it and configure repos above, before run this application.
+JWizard is an open-source Discord music bot handling audio content from various multimedia sources with innovative web
+player. This repository contains an API used by the web client to manage guilds, playlists, and remotely invoke Discord
+commands using its own protocol based on WebSocket and RabbitMQ message queue.
 
 ## Table of content
 
+* [Architecture concepts](#architecture-concepts)
+* [Project modules](#project-modules)
+* [Clone and install](#clone-and-install)
+* [Documentation](#documentation)
+* [Contributing](#contributing)
 * [License](#license)
 
-<a name="license"></a>
+## Architecture concepts
+
+TBD
+
+## Project modules
+
+TBD
+
+## Clone and install
+
+TBD
+
+## Documentation
+
+For detailed documentation, please visit [JWizard API KDoc documentation](https://docs.jwizard.pl/jwa).
+
+## Contributing
+
+We welcome contributions from the community! Please read our [CONTRIBUTE](./CONTRIBUTE.md) file for guidelines on how
+to get involved.
 
 ## License
 
-This project is on Apache 2.0 License.
+This project is licensed under the AGPL-3.0 License - see the LICENSE file for details.
