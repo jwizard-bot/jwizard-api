@@ -157,7 +157,7 @@ tasks.register('createEnv') {
 }
 
 static def getEnv(String name, Object defValue = '') {
-	return System.getenv("JWIZARD_CORE_$name") ?: defValue.toString()
+	return System.getenv("JWIZARD_API_$name") ?: defValue.toString()
 }
 
 static def getPluginId(Provider<PluginDependency> accessor) {
