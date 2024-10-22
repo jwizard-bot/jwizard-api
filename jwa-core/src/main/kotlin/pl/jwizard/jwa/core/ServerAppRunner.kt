@@ -4,62 +4,26 @@
  */
 package pl.jwizard.jwa.core
 
-import org.springframework.context.annotation.ComponentScan
-import pl.jwizard.jwa.core.printer.AbstractPrinter
-import pl.jwizard.jwa.core.printer.ConsolePrinter
-import pl.jwizard.jwa.core.printer.FancyFramePrinter
-import pl.jwizard.jwa.core.printer.FancyTitlePrinter
-import pl.jwizard.jwa.core.util.logger
-import kotlin.reflect.KClass
+import pl.jwizard.jwl.AppRunner
+import pl.jwizard.jwl.SpringKtContextFactory
+import pl.jwizard.jwl.util.logger
 
 /**
- * The main class that loads resources, configuration and runs the server.
- * Use this class with [ServerApp] annotation. Singleton instance.
+ * Singleton responsible for running the server application. It extends the base [AppRunner] class to initialized
+ * server with pre-defined [SpringKtContextFactory] object.
  *
  * @author Miłosz Gilga
  */
-object ServerAppRunner {
+object ServerAppRunner : AppRunner() {
 	private val log = logger<ServerAppRunner>()
 
 	/**
-	 * Base application package. Used for Spring Context [ComponentScan] annotation. All classes related with
-	 * Spring IoC containers will be loaded into Spring Context.
-	 */
-	const val BASE_PACKAGE = "pl.jwizard"
-
-	/**
-	 * Fancy title banner classpath location in `resources` directory.
-	 */
-	private const val BANNER_CLASSPATH_LOCATION = "util/banner.txt"
-
-	/**
-	 * Fancy frame classpath location in `resources` directory.
-	 */
-	private const val FRAME_CLASSPATH_LOCATION = "util/frame.txt"
-
-	/**
-	 * Static method which starts loading configuration, resources and a new Server instance.
+	 * Executes the application logic with the provided Spring context. This method is responsible for initializing the
+	 * server and setting up the Spring context required for the application to run.
 	 *
-	 * @param clazz Main type of class that runs the server.
+	 * @param context The pre-configured [SpringKtContextFactory] class representing Spring Context.
 	 */
-	fun run(clazz: KClass<*>) {
-		val startTimestamp = System.currentTimeMillis()
-		val printer = ConsolePrinter()
-		val printers = arrayOf(
-			FancyTitlePrinter(BANNER_CLASSPATH_LOCATION, printer),
-			FancyFramePrinter(FRAME_CLASSPATH_LOCATION, printer),
-		)
-		AbstractPrinter.printContent(printers)
-		try {
-			// create context, load properties and create server
-
-			val endTimestamp = System.currentTimeMillis()
-			val elapsedTime = endTimestamp - startTimestamp
-
-			log.info("Load in: {}s. Start listening incoming requests...", elapsedTime / 1000.0)
-		} catch (ex: IrreparableException) {
-			ex.printLogStatement()
-			ex.killProcess()
-		}
+	override fun runWithContext(context: SpringKtContextFactory) {
+		log.info("Initialize server with Spring context")
 	}
 }

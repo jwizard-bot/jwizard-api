@@ -4,15 +4,15 @@
  */
 package pl.jwizard.jwa.app
 
-import pl.jwizard.jwa.core.ServerApp
 import pl.jwizard.jwa.core.ServerAppRunner
+import pl.jwizard.jwl.AppContextInitiator
 
 /**
  * Main application class.
  *
  * @author Miłosz Gilga
  */
-@ServerApp
+@AppContextInitiator
 class JWizardApiEntrypoint
 
 fun main() {
