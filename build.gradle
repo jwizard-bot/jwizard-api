@@ -38,7 +38,7 @@ allprojects {
 		mavenLocal()
 	}
 	group = groupId
-	version = version
+	version = getEnv('JWIZARD_API_VERSION', 'vDEVELOPMENT').substring(1)
 }
 
 subprojects {
