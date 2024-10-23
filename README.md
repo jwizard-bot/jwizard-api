@@ -27,7 +27,7 @@ TBD
 
 ## Documentation
 
-For detailed documentation, please visit [JWizard API KDoc documentation](https://docs.jwizard.pl/jwa).
+For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
 
 ## Contributing
 
