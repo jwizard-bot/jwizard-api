@@ -1,23 +1,7 @@
-deployment:
-  build-version: ${env:JWIZARD_API_BUILD_VERSION:UNKNOWN}
-  last-build-date: ${env:JWIZARD_API_BUILD_DATE:UNKNOWN}
-
-db:
-  username: ${vault:V_MYSQL_USERNAME}
-  password: ${vault:V_MYSQL_PASSWORD}
-  driver-class-name: com.mysql.cj.jdbc.Driver
-
 vault:
   kv:
-    backend: jwizard
-    default-context: common
     application-name: api
 
 github:
   api-url: https://api.github.com
   organization-name: jwizard-bot
-
-s3:
-  region: eu-central-1
-  path-style-access-enabled: true
-  public-api-url: https://cdn.jwizard.pl
