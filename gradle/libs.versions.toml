@@ -12,7 +12,6 @@ jacksonVersion = "2.18.0"
 springVaultVersion = "3.1.2"
 awsS3sdkVersion = "2.27.21"
 javalinVersion = "6.3.0"
-jwizardLibVersion = "1.0.0"
 
 [libraries]
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
@@ -32,7 +31,6 @@ jacksonAnnotations = { module = "com.fasterxml.jackson.core:jackson-annotations"
 springVaultCore = { module = "org.springframework.vault:spring-vault-core", version.ref = "springVaultVersion" }
 awsS3sdk = { module = "software.amazon.awssdk:s3", version.ref = "awsS3sdkVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
-jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
