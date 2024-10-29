@@ -9,6 +9,5 @@ dependencies {
 	implementation libs.jacksonDatabind
 	implementation libs.jacksonDataformatYaml
 	implementation libs.jacksonAnnotations
-	implementation libs.springVaultCore
 	implementation libs.javalin
 }
