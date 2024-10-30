@@ -11,6 +11,7 @@ dokkaVersion = "1.9.20"
 jacksonVersion = "2.18.0"
 awsS3sdkVersion = "2.27.21"
 javalinVersion = "6.3.0"
+jwizardLibVersion = "latest"
 
 [libraries]
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
@@ -29,6 +30,7 @@ jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dat
 jacksonAnnotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
 awsS3sdk = { module = "software.amazon.awssdk:s3", version.ref = "awsS3sdkVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
+jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
