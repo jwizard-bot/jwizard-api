@@ -9,7 +9,6 @@ dotenvVersion = "2.2.0"
 shadowJarVersion = "8.1.1"
 dokkaVersion = "1.9.20"
 jacksonVersion = "2.18.0"
-awsS3sdkVersion = "2.27.21"
 javalinVersion = "6.3.0"
 jwizardLibVersion = "latest"
 
@@ -28,7 +27,6 @@ jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin",
 jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonVersion" }
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
 jacksonAnnotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
-awsS3sdk = { module = "software.amazon.awssdk:s3", version.ref = "awsS3sdkVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
 jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 
