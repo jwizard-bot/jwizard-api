@@ -5,19 +5,17 @@
 package pl.jwizard.jwa.core.property
 
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.SpringKtContextFactory
+import pl.jwizard.jwl.IoCKtContextFactory
 import pl.jwizard.jwl.property.BaseEnvironment
 
 /**
- * A component that manages the application's environment properties.
+ * Component class for managing and retrieving application properties for specific guilds, using remote sources such as
+ * a database. Extends [BaseEnvironment] to utilize centralized environment configuration and property handling.
  *
- * This class extends [BaseEnvironment] to provide functionality for loading and accessing properties in the context
- * of a Spring application. It utilizes the [SpringKtContextFactory] to retrieve beans and manage property sources.
- *
- * @property springKtContextFactory Provides access to the Spring context for retrieving beans.
+ * @property ioCKtContextFactory Provides access to the IoC context for retrieving beans.
  * @author Miłosz Gilga
  */
 @Component
 class EnvironmentBean(
-	private val springKtContextFactory: SpringKtContextFactory,
-) : BaseEnvironment(springKtContextFactory)
+	private val ioCKtContextFactory: IoCKtContextFactory,
+) : BaseEnvironment(ioCKtContextFactory)
