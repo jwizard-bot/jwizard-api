@@ -4,8 +4,8 @@
  */
 package pl.jwizard.jwa.core.property
 
-import org.springframework.stereotype.Component
-import pl.jwizard.jwl.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.IoCKtContextFactory
+import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.property.BaseEnvironment
 
 /**
@@ -15,7 +15,7 @@ import pl.jwizard.jwl.property.BaseEnvironment
  * @property ioCKtContextFactory Provides access to the IoC context for retrieving beans.
  * @author Miłosz Gilga
  */
-@Component
+@SingletonComponent
 class EnvironmentBean(
 	private val ioCKtContextFactory: IoCKtContextFactory,
 ) : BaseEnvironment(ioCKtContextFactory)
