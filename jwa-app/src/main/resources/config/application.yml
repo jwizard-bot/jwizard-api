@@ -4,4 +4,7 @@ vault:
 
 github:
   api-url: https://api.github.com
-  organization-name: jwizard-bot
+
+cache:
+  invalidate-time-sec: 10800 # 3h
+  max-elements: 400

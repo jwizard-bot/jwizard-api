@@ -10,12 +10,14 @@ shadowJarVersion = "8.1.1"
 dokkaVersion = "1.9.20"
 jacksonVersion = "2.18.0"
 javalinVersion = "6.3.0"
+caffeineVersion = "3.1.8"
 jwizardLibVersion = "latest"
 
 [libraries]
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
 springContext = { module = "org.springframework:spring-context", version.ref = "springVersion" }
+springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
 springJdbc = { module = "org.springframework:spring-jdbc", version.ref = "springVersion" }
 mysqlConnector = { module = "com.mysql:mysql-connector-j", version.ref = "mysqlConnectorVersion" }
 hikariCp = { module = "com.zaxxer:HikariCP", version.ref = "hikariCpVersion" }
@@ -28,6 +30,7 @@ jacksonDatabind = { module = "com.fasterxml.jackson.core:jackson-databind", vers
 jacksonDataformatYaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jacksonVersion" }
 jacksonAnnotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonVersion" }
 javalin = { module = "io.javalin:javalin", version.ref = "javalinVersion" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeineVersion" }
 jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 
 [plugins]
