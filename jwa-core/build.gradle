@@ -4,10 +4,12 @@
  */
 dependencies {
 	implementation libs.springContext
+	implementation libs.springContextSupport
 	implementation libs.dotEnv
 	implementation libs.jacksonKotlin
 	implementation libs.jacksonDatabind
 	implementation libs.jacksonDataformatYaml
 	implementation libs.jacksonAnnotations
 	implementation libs.javalin
+	implementation libs.caffeine
 }
