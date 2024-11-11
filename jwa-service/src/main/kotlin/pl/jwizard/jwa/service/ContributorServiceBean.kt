@@ -4,18 +4,18 @@
  */
 package pl.jwizard.jwa.service
 
+import com.fasterxml.jackson.databind.JsonNode
 import pl.jwizard.jwa.core.HttpClientFacadeBean
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacadeBean
 import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.core.util.ext.save
-import pl.jwizard.jwa.core.util.ext.take
 import pl.jwizard.jwa.rest.contributor.dto.ContributorsResDto
 import pl.jwizard.jwa.rest.contributor.dto.ProjectContributor
 import pl.jwizard.jwa.rest.contributor.spi.ContributorService
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 import pl.jwizard.jwl.property.AppBaseProperty
+import pl.jwizard.jwl.util.ext.getAsText
 import pl.jwizard.jwl.vcs.VcsRepository
 
 /**
@@ -77,23 +77,26 @@ class ContributorServiceBean(
 	}
 
 	/**
-	 * Computes the list of project contributors by aggregating data from each repository. This method fetches
-	 * contributors for each project and processes the data to group them by their repositories.
+	 * Computes the list of project contributors by retrieving data from GitHub and categorizing by repository variants.
 	 *
-	 * Each contributor's variant list is also checked to see if they contribute to all repositories, in which case
-	 * the "all" variant is added to their list.
+	 * This method is called when the contributors' data is absent in the cache. It iterates over each standalone
+	 * repository, retrieves its contributors from GitHub, and then consolidates each contributor's repository variants.
+	 * Contributors who have contributions across all repositories are assigned a default variant.
 	 *
-	 * @return A list of [ProjectContributor] objects, representing each contributor with their associated variants.
+	 * @return A list of [ProjectContributor] objects, each containing the contributor's details and a list of variants.
 	 */
 	private fun computeOnAbsent(): List<ProjectContributor> {
-		val contributors = projectRepositories
-			.map { getPerProjectContributorsList(it) }
-			.flatten()
-
-		val contributorsWithVariants = contributors.map { contributor ->
+		val contributors = mutableListOf<Pair<String, JsonNode>>()
+		for (repository in projectRepositories) {
+			val repositoryContributors = getPerProjectContributors(repository)
+			for (contributor in repositoryContributors) {
+				contributors += Pair(environmentBean.getProperty(repository.property), contributor)
+			}
+		}
+		val contributorsWithVariants = contributors.map { (_, contributor) ->
 			val contributorVariants = contributors
-				.filter { it.take("login") == contributor.take("login") }
-				.map { it.take("repository") }
+				.filter { (_, user) -> user.getAsText("login") == contributor.getAsText("login") }
+				.map { (repository, _) -> repository }
 				.toMutableList()
 
 			val memberContributeAllProjects = contributorVariants.containsAll(variants)
@@ -101,34 +104,29 @@ class ContributorServiceBean(
 				contributorVariants.add(0, DEFAULT_VARIANT)
 			}
 			ProjectContributor(
-				nickname = contributor.take("login"),
-				profileLink = contributor.take("html_url"),
-				profileImageUrl = contributor.take("avatar_url"),
-				variants = contributorVariants
+				nickname = contributor.getAsText("login"),
+				profileLink = contributor.getAsText("html_url"),
+				profileImageUrl = contributor.getAsText("avatar_url"),
+				variants = contributorVariants,
 			)
 		}
 		return contributorsWithVariants.distinctBy(ProjectContributor::nickname)
 	}
 
 	/**
-	 * Retrieves the list of contributors for a specific project repository by calling the GitHub API. This method makes
-	 * a GET request to the GitHub API to fetch the contributors for a given repository and filters the results to
-	 * include only user-type contributors.
+	 * Retrieves the list of contributors for a specific project repository from GitHub.
 	 *
-	 * The repository name is dynamically obtained from the environment configuration based on the repository type.
+	 * This method constructs an API request to fetch the contributors for a given repository from GitHub's API, filtered
+	 * to include only users (excluding bots or other types).
 	 *
-	 * @param repository The repository for which contributors are to be fetched.
-	 * @return A list of maps containing contributor data retrieved from the GitHub API.
+	 * @param repository The [VcsRepository] for which contributors should be retrieved.
+	 * @return A mutable list of [JsonNode] objects, each representing a contributor.
 	 */
-	private fun getPerProjectContributorsList(repository: VcsRepository): List<Map<String, Any>> {
+	private fun getPerProjectContributors(repository: VcsRepository): MutableList<JsonNode> {
 		val repositoryName = environmentBean.getProperty<String>(repository.property)
 		val response = httpClientFacadeBean.getJsonListCall(
 			url = "$githubApiUrl/repos/$organizationName/$repositoryName/contributors"
 		)
-		val outputWithOnlyMembers = response.filter { it.take("type").lowercase() == "user" }
-		for (member in outputWithOnlyMembers) {
-			member.save("repository", environmentBean.getProperty(repository.property))
-		}
-		return outputWithOnlyMembers
+		return response.filter { it.getAsText("type") == "User" }.toMutableList()
 	}
 }

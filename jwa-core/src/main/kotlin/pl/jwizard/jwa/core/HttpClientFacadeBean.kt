@@ -4,9 +4,9 @@
  */
 package pl.jwizard.jwa.core
 
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
-import pl.jwizard.jwl.util.logger
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -25,38 +25,30 @@ import java.net.http.HttpResponse
 @SingletonComponent
 class HttpClientFacadeBean(private val objectMapper: ObjectMapper) {
 
-	companion object {
-		private val log = logger<HttpClientFacadeBean>()
-	}
-
 	/**
 	 * The HTTP client used for making requests to external APIs. This client is initialized during class instantiation.
 	 */
 	private final val httpClient = HttpClient.newHttpClient()
 
-	init {
-		log.info("Init HttpClient for external API calls.")
-	}
-
 	/**
-	 * Makes an HTTP GET request to the specified URL and returns a list of JSON objects as a list of mutable maps
-	 * (`List<MutableMap<String, Any>>`). The response is expected to be a JSON array, which is deserialized into the
-	 * return type.
+	 * Sends an HTTP GET request to the specified URL and parses the JSON response into a [JsonNode].
 	 *
-	 * @param url The URL to send the GET request to.
-	 * @return A list of mutable maps representing the JSON response body.
-	 * @throws RuntimeException if the HTTP status code is not 200 or if an error occurs during the request.
+	 * This method creates an HTTP GET request to fetch JSON data from the specified URL. The response body is then
+	 * deserialized into a [JsonNode] using the [ObjectMapper]. If the response status code is not 200, it throws
+	 * a [RuntimeException].
+	 *
+	 * @param url The URL to send the GET request to. It should point to a JSON resource.
+	 * @return A [JsonNode] representing the JSON data returned by the response.
+	 * @throws RuntimeException If the HTTP status code is not 200 or if an error occurs during the request.
 	 */
-	fun getJsonListCall(url: String): List<MutableMap<String, Any>> {
+	fun getJsonListCall(url: String): JsonNode {
 		val httpRequest = HttpRequest.newBuilder()
-			.uri(URI(url))
+			.uri(URI.create(url))
 			.build()
-
 		val response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString())
 		if (response.statusCode() != 200) {
 			throw RuntimeException("Could not perform call: ${response.uri()}. Ended code: ${response.statusCode()}.")
 		}
-		val reader = objectMapper.readerFor(List::class.java)
-		return reader.readValue(response.body())
+		return objectMapper.readTree(response.body())
 	}
 }
