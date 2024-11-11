@@ -9,4 +9,5 @@ dependencies {
 	implementation libs.hikariCp
 
 	implementation project(":jwa-core")
+	implementation project(":jwa-service")
 }
