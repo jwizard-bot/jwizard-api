@@ -24,20 +24,19 @@ TBD
 ## Clone and install
 
 1. Make sure you have at least JDK 17 and Kotlin 2.0.
-2. Go to [JWizard Infra repository](https://github.com/jwizard-bot/jwizard-infra), configure and run all necessary
-   containers defined in `README.md` file in this repository. You must have up these containers:
-
-| Name             | Port(s)    | Description                  |
-|------------------|------------|------------------------------|
-| jwizard-minio-s3 | 8763, 8764 | Storage objects service.     |
-| jwizard-vault    | 8761       | Secret keys storage service. |
-| jwizard-mysql-db | 8762       | MySQL database.              |
-
-3. Clone **JWizard Lib** from organization repository via:
+2. Clone **JWizard Lib** from organization repository via:
 
 ```bash
 $ git clone https://github.com/jwizard-bot/jwizard-lib
 ```
+
+3. Configure and run all necessary containers defined in `README.md` file in this repository. You must have up these
+   containers:
+
+| Name             | Port(s) | Description                  |
+|------------------|---------|------------------------------|
+| jwizard-vault    | 8761    | Secret keys storage service. |
+| jwizard-mysql-db | 8762    | MySQL database.              |
 
 4. Build library and package to Maven Local artifacts' storage:
 
