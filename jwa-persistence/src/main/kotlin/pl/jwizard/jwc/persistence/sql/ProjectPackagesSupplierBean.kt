@@ -27,7 +27,7 @@ class ProjectPackagesSupplierBean(private val jdbcKtTemplateBean: JdbcKtTemplate
 	 * @return The total number of project packages in the database.
 	 */
 	override fun getProjectPackagesCount(): Int {
-		val sql = "SELECT COUNT(*) FROM project_packages"
+		val sql = "SELECT COUNT(DISTINCT name) FROM project_packages"
 		return jdbcKtTemplateBean.queryForObject(sql, Int::class)
 	}
 }
