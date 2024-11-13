@@ -1,0 +1,5 @@
+server:
+  port: 6061
+
+service:
+  front-url: https://jwizard.pl

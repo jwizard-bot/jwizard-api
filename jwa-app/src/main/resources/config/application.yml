@@ -1,0 +1,10 @@
+vault:
+  kv:
+    application-name: api
+
+github:
+  api-url: https://api.github.com
+
+cache:
+  invalidate-time-sec: 10800 # 3h
+  max-elements: 400

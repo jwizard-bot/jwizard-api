@@ -9,6 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/jwa-app" />
+            <option value="$PROJECT_DIR$/jwa-core" />
+            <option value="$PROJECT_DIR$/jwa-persistence" />
+            <option value="$PROJECT_DIR$/jwa-rest" />
+            <option value="$PROJECT_DIR$/jwa-service" />
           </set>
         </option>
       </GradleProjectSettings>
