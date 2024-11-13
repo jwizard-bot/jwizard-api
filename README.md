@@ -15,7 +15,12 @@ commands using its own protocol based on WebSocket and RabbitMQ message queue.
 
 ## Architecture concepts
 
-TBD
+* This project is based on a REST API, utilizing a lightweight built-in Jetty server and the Javalin library.
+* Spring Boot was omitted in favor of implementing only the IoC container provided by Spring Context.
+* Configuration is shared with the JWizard Lib project to eliminate code redundancy and ensure consistency in changes
+  across different project modules.
+* This project is divided into several loosely coupled modules connected through the SPI pattern and auto-injected
+  beans by IoC container.
 
 ## Project modules
 
