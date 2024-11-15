@@ -5,6 +5,7 @@
 package pl.jwizard.jwa.service
 
 import pl.jwizard.jwa.core.i18n.I18nServerDynamicMod
+import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.rest.home.dto.FeaturesResDto
 import pl.jwizard.jwa.rest.home.dto.StatisticsInfoResDto
 import pl.jwizard.jwa.rest.home.spi.HomeService
@@ -14,6 +15,7 @@ import pl.jwizard.jwl.command.Command
 import pl.jwizard.jwl.command.Module
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
+import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.radio.RadioStation
 
 /**
@@ -29,6 +31,7 @@ class HomeServiceBean(
 	private val i18nBean: I18nBean,
 	private val projectPackagesSupplier: ProjectPackagesSupplier,
 	private val keyFeaturesSupplier: KeyFeaturesSupplier,
+	private val environmentBean: EnvironmentBean,
 ) : HomeService {
 
 	/**
@@ -53,11 +56,12 @@ class HomeServiceBean(
 	 */
 	override fun getHomePageFeatures(language: String?): List<FeaturesResDto> {
 		val keyFeatures = keyFeaturesSupplier.getKeyFeatures()
+		val args = mapOf("prefix" to environmentBean.getProperty<String>(AppBaseProperty.GUILD_LEGACY_PREFIX))
 		return keyFeatures
 			.map { (textId, isActive) ->
 				FeaturesResDto(
 					name = i18nBean.tRaw(I18nServerDynamicMod.KEY_FEATURE_NAME, arrayOf(textId), language),
-					description = i18nBean.tRaw(I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION, arrayOf(textId), language),
+					description = i18nBean.tRaw(I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
 					isActive,
 				)
 			}
