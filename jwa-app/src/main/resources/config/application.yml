@@ -1,6 +1,7 @@
 vault:
   kv:
-    application-name: api
+    application-names:
+      - api
 
 github:
   api-url: https://api.github.com
