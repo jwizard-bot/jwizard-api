@@ -1,4 +1,4 @@
-name: ${{ github.event.inputs.pipeline_name || "Build and deploy JWizard API" }}
+name: Build and deploy JWizard API
 
 on:
   push:
@@ -13,11 +13,6 @@ on:
       - "gradle.properties"
       - "settings.gradle"
   workflow_dispatch:
-    inputs:
-      pipeline_name:
-        description: "Pipeline execution name"
-        required: false
-        default: "Build and deploy JWizard API"
 
 env:
   PM2_API_NAME: JWizardApi
