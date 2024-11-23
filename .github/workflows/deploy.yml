@@ -1,4 +1,4 @@
-name: Build and deploy JWizard API
+name: ${{ github.event.inputs.pipeline_name || "Build and deploy JWizard API" }}
 
 on:
   push:
@@ -16,7 +16,8 @@ on:
     inputs:
       pipeline_name:
         description: "Pipeline execution name"
-        required: true
+        required: false
+        default: "Build and deploy JWizard API"
 
 env:
   PM2_API_NAME: JWizardApi
