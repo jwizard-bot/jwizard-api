@@ -3,8 +3,5 @@
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 dependencies {
-	implementation libs.javalin
-	implementation libs.springContext
-
 	implementation project(":jwa-core")
 }
