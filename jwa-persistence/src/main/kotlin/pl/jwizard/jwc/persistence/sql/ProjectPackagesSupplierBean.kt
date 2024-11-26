@@ -6,17 +6,17 @@ package pl.jwizard.jwc.persistence.sql
 
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
-import pl.jwizard.jwl.persistence.sql.JdbcKtTemplateBean
+import pl.jwizard.jwl.persistence.sql.JdbiQueryBean
 
 /**
  * Implementation of the [ProjectPackagesSupplier] interface that retrieves the count of project packages
  * from a database.
  *
- * @property jdbcKtTemplateBean A template bean used for executing SQL queries.
+ * @property jdbiQuery Bean for executing SQL queries.
  * @author Miłosz Gilga
  */
 @SingletonComponent
-class ProjectPackagesSupplierBean(private val jdbcKtTemplateBean: JdbcKtTemplateBean) : ProjectPackagesSupplier {
+class ProjectPackagesSupplierBean(private val jdbiQuery: JdbiQueryBean) : ProjectPackagesSupplier {
 
 	/**
 	 * Retrieves the count of project packages from the database.
@@ -28,6 +28,6 @@ class ProjectPackagesSupplierBean(private val jdbcKtTemplateBean: JdbcKtTemplate
 	 */
 	override fun getProjectPackagesCount(): Int {
 		val sql = "SELECT COUNT(DISTINCT name) FROM project_packages"
-		return jdbcKtTemplateBean.queryForObject(sql, Int::class)
+		return jdbiQuery.queryForObject(sql, Int::class)
 	}
 }

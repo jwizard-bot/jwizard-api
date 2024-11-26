@@ -7,16 +7,16 @@ package pl.jwizard.jwc.persistence.sql
 import pl.jwizard.jwa.service.spi.KeyFeaturesSupplier
 import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.persistence.sql.ColumnDef
-import pl.jwizard.jwl.persistence.sql.JdbcKtTemplateBean
+import pl.jwizard.jwl.persistence.sql.JdbiQueryBean
 
 /**
  * Implementation of the [KeyFeaturesSupplier] interface that retrieves key feature data from a database.
  *
- * @property jdbcKtTemplateBean A template bean used for executing SQL queries.
+ * @property jdbiQuery Bean for executing SQL queries.
  * @author Miłosz Gilga
  */
 @SingletonComponent
-class KeyFeaturesSupplierBean(private val jdbcKtTemplateBean: JdbcKtTemplateBean) : KeyFeaturesSupplier {
+class KeyFeaturesSupplierBean(private val jdbiQuery: JdbiQueryBean) : KeyFeaturesSupplier {
 
 	/**
 	 * Retrieves key features from the database.
@@ -27,7 +27,7 @@ class KeyFeaturesSupplierBean(private val jdbcKtTemplateBean: JdbcKtTemplateBean
 	 *
 	 * @return A map containing feature names as keys and their active status (Boolean) as values.
 	 */
-	override fun getKeyFeatures() = jdbcKtTemplateBean.queryForListMap(
+	override fun getKeyFeatures() = jdbiQuery.queryForListMap(
 		sql = "SELECT name, is_active FROM key_features",
 		key = ColumnDef("name", String::class),
 		value = ColumnDef("is_active", Boolean::class)
