@@ -21,11 +21,11 @@ import java.util.concurrent.TimeUnit
  * as cache invalidation. The cache manager is configured with a specified cache invalidate time and the maximum number
  * of cache elements, which are provided through the [EnvironmentBean].
  *
- * @property environmentBean An instance of [EnvironmentBean] used to retrieve configuration properties such.
+ * @property environment An instance of [EnvironmentBean] used to retrieve configuration properties such.
  * @author Miłosz Gilga
  */
 @SingletonComponent
-class CacheFacadeBean(private val environmentBean: EnvironmentBean) {
+class CacheFacadeBean(private val environment: EnvironmentBean) {
 
 	companion object {
 		val log = logger<CacheFacadeBean>()
@@ -37,8 +37,8 @@ class CacheFacadeBean(private val environmentBean: EnvironmentBean) {
 	private final val cacheManager: CacheManager
 
 	init {
-		val cacheInvalidateTimeSec = environmentBean.getProperty<Long>(ServerProperty.CACHE_INVALIDATE_TIME_SEC)
-		val cacheMaxElements = environmentBean.getProperty<Long>(ServerProperty.CACHE_MAX_ELEMENTS)
+		val cacheInvalidateTimeSec = environment.getProperty<Long>(ServerProperty.CACHE_INVALIDATE_TIME_SEC)
+		val cacheMaxElements = environment.getProperty<Long>(ServerProperty.CACHE_MAX_ELEMENTS)
 
 		val config = Caffeine.newBuilder()
 			.expireAfterWrite(cacheInvalidateTimeSec, TimeUnit.SECONDS)

@@ -21,17 +21,17 @@ import pl.jwizard.jwl.radio.RadioStation
 /**
  * Implementation of [HomeService] that provides data for the home page such as statistics and features.
  *
- * @property i18nBean The [I18nBean] used for fetching localized text values.
+ * @property i18n The [I18nBean] used for fetching localized text values.
  * @property projectPackagesSupplier The [ProjectPackagesSupplier] used for retrieving project package count.
  * @property keyFeaturesSupplier The [KeyFeaturesSupplier] used for retrieving the application's key features.
  * @author Miłosz Gilga
  */
 @SingletonService
 class HomeServiceBean(
-	private val i18nBean: I18nBean,
+	private val i18n: I18nBean,
 	private val projectPackagesSupplier: ProjectPackagesSupplier,
 	private val keyFeaturesSupplier: KeyFeaturesSupplier,
-	private val environmentBean: EnvironmentBean,
+	private val environment: EnvironmentBean,
 ) : HomeService {
 
 	/**
@@ -56,12 +56,12 @@ class HomeServiceBean(
 	 */
 	override fun getHomePageFeatures(language: String?): List<FeaturesResDto> {
 		val keyFeatures = keyFeaturesSupplier.getKeyFeatures()
-		val args = mapOf("prefix" to environmentBean.getProperty<String>(AppBaseProperty.GUILD_LEGACY_PREFIX))
+		val args = mapOf("prefix" to environment.getProperty<String>(AppBaseProperty.GUILD_LEGACY_PREFIX))
 		return keyFeatures
 			.map { (textId, isActive) ->
 				FeaturesResDto(
-					name = i18nBean.tRaw(I18nServerDynamicMod.KEY_FEATURE_NAME, arrayOf(textId), language),
-					description = i18nBean.tRaw(I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
+					name = i18n.tRaw(I18nServerDynamicMod.KEY_FEATURE_NAME, arrayOf(textId), language),
+					description = i18n.tRaw(I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
 					isActive,
 				)
 			}

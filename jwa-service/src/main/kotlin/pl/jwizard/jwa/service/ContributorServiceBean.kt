@@ -24,16 +24,16 @@ import pl.jwizard.jwl.vcs.VcsRepository
  * This service retrieves contributors from GitHub repositories, combines the information for each contributor, and
  * caches the result to avoid repeated external API calls.
  *
- * @property environmentBean The environment properties containing configuration values, such as API URLs.
- * @property cacheFacadeBean The cache facade used to cache the list of contributors.
- * @property httpClientFacadeBean The HTTP client used for making requests to the GitHub API to fetch contributor data.
+ * @property environment The environment properties containing configuration values, such as API URLs.
+ * @property cacheFacade The cache facade used to cache the list of contributors.
+ * @property httpClientFacade The HTTP client used for making requests to the GitHub API to fetch contributor data.
  * @author Miłosz Gilga
  */
 @SingletonService
 class ContributorServiceBean(
-	private val environmentBean: EnvironmentBean,
-	private val cacheFacadeBean: CacheFacadeBean,
-	private val httpClientFacadeBean: HttpClientFacadeBean,
+	private val environment: EnvironmentBean,
+	private val cacheFacade: CacheFacadeBean,
+	private val httpClientFacade: HttpClientFacadeBean,
 ) : ContributorService {
 
 	companion object {
@@ -43,8 +43,8 @@ class ContributorServiceBean(
 		private const val DEFAULT_VARIANT = "all"
 	}
 
-	private val githubApiUrl = environmentBean.getProperty<String>(ServerProperty.GITHUB_API_URL)
-	private val organizationName = environmentBean.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
+	private val githubApiUrl = environment.getProperty<String>(ServerProperty.GITHUB_API_URL)
+	private val organizationName = environment.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
 
 	/**
 	 * A list of project repositories that are "standalone".
@@ -54,7 +54,7 @@ class ContributorServiceBean(
 	/**
 	 * A list of variants for the repositories based on configuration.
 	 */
-	private val variants = projectRepositories.map { environmentBean.getProperty<String>(it.property) }
+	private val variants = projectRepositories.map { environment.getProperty<String>(it.property) }
 
 	/**
 	 * Retrieves the project contributors, either from the cache or by computing the list if absent.
@@ -68,7 +68,7 @@ class ContributorServiceBean(
 		val repositoryVariants = variants.toMutableList()
 		repositoryVariants.add(0, DEFAULT_VARIANT)
 
-		val contributors = cacheFacadeBean.getCachedList(CacheEntity.CONTRIBUTORS, 0, ::computeOnAbsent)
+		val contributors = cacheFacade.getCachedList(CacheEntity.CONTRIBUTORS, 0, ::computeOnAbsent)
 		return ContributorsResDto(
 			contributors = contributors,
 			variants = repositoryVariants,
@@ -90,7 +90,7 @@ class ContributorServiceBean(
 		for (repository in projectRepositories) {
 			val repositoryContributors = getPerProjectContributors(repository)
 			for (contributor in repositoryContributors) {
-				contributors += Pair(environmentBean.getProperty(repository.property), contributor)
+				contributors += Pair(environment.getProperty(repository.property), contributor)
 			}
 		}
 		val contributorsWithVariants = contributors.map { (_, contributor) ->
@@ -123,8 +123,8 @@ class ContributorServiceBean(
 	 * @return A mutable list of [JsonNode] objects, each representing a contributor.
 	 */
 	private fun getPerProjectContributors(repository: VcsRepository): MutableList<JsonNode> {
-		val repositoryName = environmentBean.getProperty<String>(repository.property)
-		val response = httpClientFacadeBean.getJsonListCall(
+		val repositoryName = environment.getProperty<String>(repository.property)
+		val response = httpClientFacade.getJsonListCall(
 			url = "$githubApiUrl/repos/$organizationName/$repositoryName/contributors"
 		)
 		return response.filter { it.getAsText("type") == "User" }.toMutableList()

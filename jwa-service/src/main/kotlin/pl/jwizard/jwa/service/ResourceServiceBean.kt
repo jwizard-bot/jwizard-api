@@ -20,16 +20,16 @@ import java.io.InputStream
  * This service handles retrieving resources stored in the application's classpath. It supports returning the resource
  * along with its content type for further processing or serving in HTTP responses.
  *
- * @property environmentBean Provides access to environment properties, including configuration for the resources' path.
+ * @property environment Provides access to environment properties, including configuration for the resources' path.
  * @author Miłosz Gilga
  */
 @SingletonService
-class ResourceServiceBean(private val environmentBean: EnvironmentBean) : ResourceService {
+class ResourceServiceBean(private val environment: EnvironmentBean) : ResourceService {
 
 	/**
 	 * List of prefixes that define the possible directories where static resources may be located.
 	 */
-	private val prefixes = environmentBean.getListProperty<String>(AppBaseListProperty.STATIC_RESOURCES_PREFIXES)
+	private val prefixes = environment.getListProperty<String>(AppBaseListProperty.STATIC_RESOURCES_PREFIXES)
 
 	/**
 	 * A flattened list of all available resources, obtained by browsing all directories defined by the prefixes.
