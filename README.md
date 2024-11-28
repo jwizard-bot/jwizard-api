@@ -43,6 +43,8 @@ $ git clone https://github.com/jwizard-bot/jwizard-lib
 | jwizard-vault    | 8761    | Secret keys storage service. |
 | jwizard-mysql-db | 8762    | MySQL database.              |
 
+> NOTE: Don't forget to perform database migration after start DB (see `jwizard-lib` repository).
+
 4. Build library and package to Maven Local artifacts' storage:
 
 * for UNIX based systems:
