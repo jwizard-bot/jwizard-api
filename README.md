@@ -29,10 +29,11 @@ TBD
 ## Clone and install
 
 1. Make sure you have at least JDK 17 and Kotlin 2.0.
-2. Clone **JWizard Lib** from organization repository via:
+2. Clone **JWizard Lib** and **JWizard Tools** from organization repository via:
 
 ```bash
 $ git clone https://github.com/jwizard-bot/jwizard-lib
+$ git clone https://github.com/jwizard-bot/jwizard-tools
 ```
 
 3. Configure and run all necessary containers defined in `README.md` file in this repository. You must have up these
@@ -62,7 +63,7 @@ $ ./gradlew clean publishToMavenLocal
 5. Clone this repository via:
 
 ```bash
-$ git clone https://github.com/jwizard-bot/jwizard-core
+$ git clone https://github.com/jwizard-bot/jwizard-api
 ```
 
 6. Create `.env` file in root of the project path (based on `example.env`) and insert Vault token:
