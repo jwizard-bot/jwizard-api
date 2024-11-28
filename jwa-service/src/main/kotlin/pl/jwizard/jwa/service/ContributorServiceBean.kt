@@ -5,7 +5,6 @@
 package pl.jwizard.jwa.service
 
 import com.fasterxml.jackson.databind.JsonNode
-import pl.jwizard.jwa.core.HttpClientFacadeBean
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacadeBean
 import pl.jwizard.jwa.core.property.EnvironmentBean
@@ -13,6 +12,7 @@ import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.rest.contributor.dto.ContributorsResDto
 import pl.jwizard.jwa.rest.contributor.dto.ProjectContributor
 import pl.jwizard.jwa.rest.contributor.spi.ContributorService
+import pl.jwizard.jwl.http.HttpClientFacadeBean
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.util.ext.getAsText
