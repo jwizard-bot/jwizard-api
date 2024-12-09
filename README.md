@@ -44,7 +44,8 @@ $ git clone https://github.com/jwizard-bot/jwizard-tools
 | jwizard-vault    | 8761    | Secret keys storage service. |
 | jwizard-mysql-db | 8762    | MySQL database.              |
 
-> NOTE: Don't forget to perform database migration after start DB (see `jwizard-lib` repository).
+> NOTE: Don't forget to perform database migration after start DB (see
+> [jwizard-lib](https://github.com/jwizard-bot/jwizard-lib) repository).
 
 4. Build library and package to Maven Local artifacts' storage:
 
@@ -72,7 +73,8 @@ $ git clone https://github.com/jwizard-bot/jwizard-api
 ENV_VAULT_TOKEN=<vault token>
 ```
 
-where `<value token>` property is the Vault token stored in configured `.env` file in `jwizard-infa` repository.
+where `<value token>` property is the Vault token stored in configured `.env` file
+in [jwizard-lib](https://github.com/jwizard-bot/jwizard-lib) repository.
 
 5. That's it. Now you can run via Intellij IDEA. Make sure, you have set JVM parameters:
 
