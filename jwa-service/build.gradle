@@ -3,6 +3,8 @@
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 dependencies {
+	implementation libs.jsoup
+
 	implementation project(":jwa-core")
 	implementation project(":jwa-rest")
 }

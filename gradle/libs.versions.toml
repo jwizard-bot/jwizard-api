@@ -7,6 +7,7 @@ logbackVersion = "1.5.7"
 shadowJarVersion = "8.1.1"
 slf4jApiVersion = "2.0.16"
 springVersion = "6.1.14"
+jsoupVersion = "1.18.3"
 
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeineVersion" }
@@ -17,6 +18,7 @@ logbackCore = { module = "ch.qos.logback:logback-core", version.ref = "logbackVe
 logbackClassic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
 slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoupVersion" }
 
 [plugins]
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
