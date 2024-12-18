@@ -9,12 +9,12 @@ package pl.jwizard.jwa.rest.contributor.dto
  * associated variants.
  *
  * @property contributors A list of [ProjectContributor] objects representing the contributors.
- * @property variants A list of variant names available for the project.
- * @property initVariant An optional initial variant that may be used to indicate a default or pre-selected variant.
+ * @property variants A list of variant names available for the project (with translations).
+ * @property initVariant An initial variant that may be used to indicate a default or pre-selected variant.
  * @author Miłosz Gilga
  */
 data class ContributorsResDto(
 	val contributors: List<ProjectContributor>,
-	val variants: List<String>,
-	val initVariant: String?,
+	val variants: Map<String, ProjectVariant>,
+	val initVariant: String,
 )

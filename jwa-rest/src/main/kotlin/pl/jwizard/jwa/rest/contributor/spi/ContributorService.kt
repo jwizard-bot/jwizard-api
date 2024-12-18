@@ -22,7 +22,8 @@ interface ContributorService {
 	 * This method returns a [ContributorsResDto] containing the contributor information along with the associated
 	 * variants and optionally the initial variant.
 	 *
+	 * @param language The language code used to retrieve localized project names.
 	 * @return A [ContributorsResDto] containing a list of contributors, their variants, and an optional initial variant.
 	 */
-	fun getProjectContributors(): ContributorsResDto
+	fun getProjectContributors(language: String?): ContributorsResDto
 }

@@ -11,8 +11,11 @@ import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.rest.contributor.dto.ContributorsResDto
 import pl.jwizard.jwa.rest.contributor.dto.ProjectContributor
+import pl.jwizard.jwa.rest.contributor.dto.ProjectVariant
 import pl.jwizard.jwa.rest.contributor.spi.ContributorService
 import pl.jwizard.jwl.http.HttpClientFacadeBean
+import pl.jwizard.jwl.i18n.I18nBean
+import pl.jwizard.jwl.i18n.source.I18nProjectSource
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.util.ext.getAsText
@@ -27,6 +30,7 @@ import pl.jwizard.jwl.vcs.VcsRepository
  * @property environment The environment properties containing configuration values, such as API URLs.
  * @property cacheFacade The cache facade used to cache the list of contributors.
  * @property httpClientFacade The HTTP client used for making requests to the GitHub API to fetch contributor data.
+ * @property i18n A bean responsible for providing localized translations for the status description.
  * @author Miłosz Gilga
  */
 @SingletonService
@@ -34,6 +38,7 @@ class ContributorServiceBean(
 	private val environment: EnvironmentBean,
 	private val cacheFacade: CacheFacadeBean,
 	private val httpClientFacade: HttpClientFacadeBean,
+	private val i18n: I18nBean,
 ) : ContributorService {
 
 	companion object {
@@ -47,14 +52,9 @@ class ContributorServiceBean(
 	private val organizationName = environment.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
 
 	/**
-	 * A list of project repositories that are "standalone".
-	 */
-	private val projectRepositories = VcsRepository.entries.filter(VcsRepository::standalone)
-
-	/**
 	 * A list of variants for the repositories based on configuration.
 	 */
-	private val variants = projectRepositories.map { environment.getProperty<String>(it.property) }
+	private val variants = VcsRepository.entries.map { environment.getProperty<String>(it.property) }
 
 	/**
 	 * Retrieves the project contributors, either from the cache or by computing the list if absent.
@@ -62,16 +62,26 @@ class ContributorServiceBean(
 	 * The method checks the cache for contributors data and returns it if available. If not, it computes the list by
 	 * making API calls and caches the result for subsequent calls.
 	 *
+	 * @param language The language code used to retrieve localized project names.
 	 * @return A [ContributorsResDto] object containing a list of contributors and repository variants.
 	 */
-	override fun getProjectContributors(): ContributorsResDto {
-		val repositoryVariants = variants.toMutableList()
-		repositoryVariants.add(0, DEFAULT_VARIANT)
+	override fun getProjectContributors(language: String?): ContributorsResDto {
+		val repositoryVariants = VcsRepository.entries
+			.associate {
+				environment.getProperty<String>(it.property) to ProjectVariant(
+					i18n.t(it.i18nSource, language),
+					it.position
+				)
+			}
+			.toMutableMap()
+
+		val defaultVariantName = i18n.t(I18nProjectSource.ALL, language)
+		repositoryVariants += DEFAULT_VARIANT to ProjectVariant(defaultVariantName, 0)
 
 		val contributors = cacheFacade.getCachedList(CacheEntity.CONTRIBUTORS, 0, ::computeOnAbsent)
 		return ContributorsResDto(
 			contributors = contributors,
-			variants = repositoryVariants,
+			variants = repositoryVariants.toMap(),
 			initVariant = DEFAULT_VARIANT,
 		)
 	}
@@ -87,7 +97,7 @@ class ContributorServiceBean(
 	 */
 	private fun computeOnAbsent(): List<ProjectContributor> {
 		val contributors = mutableListOf<Pair<String, JsonNode>>()
-		for (repository in projectRepositories) {
+		for (repository in VcsRepository.entries) {
 			val repositoryContributors = getPerProjectContributors(repository)
 			for (contributor in repositoryContributors) {
 				contributors += Pair(environment.getProperty(repository.property), contributor)

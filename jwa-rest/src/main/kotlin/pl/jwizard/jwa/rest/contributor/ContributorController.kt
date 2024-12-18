@@ -7,6 +7,8 @@ package pl.jwizard.jwa.rest.contributor
 import io.javalin.http.Context
 import pl.jwizard.jwa.rest.contributor.spi.ContributorService
 import pl.jwizard.jwl.ioc.stereotype.SingletonController
+import pl.jwizard.jwl.server.attribute.CommonServerAttribute
+import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinition
 
@@ -30,7 +32,8 @@ class ContributorController(private val contributorService: ContributorService) 
 	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
 	 */
 	private fun getAllProjectContributors(ctx: Context) {
-		val contributorsResDto = contributorService.getProjectContributors()
+		val language = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
+		val contributorsResDto = contributorService.getProjectContributors(language)
 		ctx.json(contributorsResDto)
 	}
 
