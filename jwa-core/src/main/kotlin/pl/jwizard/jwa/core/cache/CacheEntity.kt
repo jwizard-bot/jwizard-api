@@ -14,6 +14,7 @@ import pl.jwizard.jwl.property.Property
  * @author Miłosz Gilga
  */
 enum class CacheEntity(override val key: String) : Property {
-	CONTRIBUTORS("ContributorsApiCall.Cache"),
+	CONTRIBUTORS("Contributors.Cache"),
+	PROJECT_PACKAGES("ProjectPackages.Cache"),
 	;
 }
