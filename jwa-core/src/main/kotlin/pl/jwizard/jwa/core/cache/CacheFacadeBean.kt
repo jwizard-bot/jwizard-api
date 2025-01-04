@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.core.cache
@@ -63,18 +63,24 @@ class CacheFacadeBean(private val environment: EnvironmentBean) {
 	 * @param cacheEntity The cache entity representing the cache.
 	 * @param key The key to identify the cached data.
 	 * @param computeOnAbsent A lambda function that computes the value if the key is not found in the cache.
+	 * @param revalidateData A lambda function to determine if the cached data is still valid. Defaults to always valid.
 	 * @return The cached data, either from the cache or computed.
 	 */
 	final inline fun <reified T : Serializable> getCached(
 		cacheEntity: CacheEntity,
 		key: Any,
 		computeOnAbsent: () -> T,
+		revalidateData: (data: T) -> Boolean = { true },
 	): T {
 		val cache = getCache(cacheEntity)
 		var cachedData = cache.get(key, T::class.java)
 		if (cachedData != null) {
-			log.debug("Getting from cache entity: {} with key: {}.", cacheEntity.key, key)
-			return cachedData
+			if (revalidateData(cachedData)) {
+				log.debug("Getting from cache entity: {} with key: {}.", cacheEntity.key, key)
+				return cachedData
+			} else {
+				deleteFromCache(cacheEntity, key)
+			}
 		}
 		cachedData = computeOnAbsent()
 		cache.put(key, cachedData)
@@ -92,19 +98,26 @@ class CacheFacadeBean(private val environment: EnvironmentBean) {
 	 * @param cacheEntity The cache entity representing the cache.
 	 * @param key The key to identify the cached data.
 	 * @param computeOnAbsent A lambda function that computes the list if the key is not found in the cache.
+	 * @param revalidateData A lambda function to determine if the cached data is still valid. Defaults to always valid.
 	 * @return A list of cached items, either from the cache or computed.
 	 */
 	final inline fun <reified T : Serializable> getCachedList(
 		cacheEntity: CacheEntity,
 		key: Any,
 		computeOnAbsent: () -> List<T>,
+		revalidateData: (data: List<T>) -> Boolean = { true },
 	): List<T> {
 		val cache = getCache(cacheEntity)
 		var cachedData = cache.get(key, CacheListContainer::class.java)
 		if (cachedData != null) {
 			val (elements) = cachedData
-			log.debug("Getting: {} values from cache entity: {} with key: {}.", elements.size, cacheEntity.key, key)
-			return elements.map { T::class.java.cast(it) }
+			val castedElements = elements.map { T::class.java.cast(it) }
+			if (revalidateData(castedElements)) {
+				log.debug("Getting: {} values from cache entity: {} with key: {}.", elements.size, cacheEntity.key, key)
+				return castedElements
+			} else {
+				deleteFromCache(cacheEntity, key)
+			}
 		}
 		cachedData = CacheListContainer(elements = computeOnAbsent())
 		cache.put(key, cachedData)
