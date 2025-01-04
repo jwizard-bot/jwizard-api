@@ -72,7 +72,12 @@ class RepositoryServiceBean(
 			computeOnAbsent = { fetchRepositoryLanguageInfo(projectsBuildInfo, language) },
 			revalidateData = { revalidateCache(projectsBuildInfo, it) },
 		)
-		return cachedRepositories
+		return cachedRepositories.map {
+			it.copy(
+				name = i18n.tRaw(I18nLibDynamicSource.PROJECT_NAME, arrayOf(it.slug), language),
+				description = i18n.tRaw(I18nLibDynamicSource.PROJECT_DESCRIPTION, arrayOf(it.slug), language),
+			)
+		}
 	}
 
 	/**
