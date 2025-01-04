@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.core.cache
@@ -16,5 +16,6 @@ import pl.jwizard.jwl.property.Property
 enum class CacheEntity(override val key: String) : Property {
 	CONTRIBUTORS("Contributors.Cache"),
 	PROJECT_PACKAGES("ProjectPackages.Cache"),
+	REPOSITORIES("Repositories.Cache"),
 	;
 }
