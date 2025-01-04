@@ -50,7 +50,9 @@ class ContributorServiceBean(
 	/**
 	 * A list of variants for the repositories based on configuration.
 	 */
-	private val variants = VcsRepository.entries.map { environment.getProperty<String>(it.property) }
+	private val variants = VcsRepository.entries
+		.filter { it != VcsRepository.ALL }
+		.map { environment.getProperty<String>(it.property) }
 
 	/**
 	 * The default variant value for contributors, indicating all repositories.
