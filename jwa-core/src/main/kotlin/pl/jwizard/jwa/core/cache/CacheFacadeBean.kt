@@ -137,7 +137,7 @@ class CacheFacadeBean(private val environment: EnvironmentBean) {
 	fun deleteFromCache(cacheEntity: CacheEntity, key: Any) {
 		val cache = cacheManager.getCache(cacheEntity.key) ?: return
 		cache.evict(key)
-		log.info("Deleted cache: {} with key: {}.", cacheEntity.key, key)
+		log.debug("Deleted cache: {} with key: {}.", cacheEntity.key, key)
 	}
 
 	/**
