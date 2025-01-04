@@ -129,7 +129,6 @@ class RepositoryServiceBean(
 					buildDate = lastUpdatedUtc,
 					link = link
 				),
-				license = repo.get("license").getAsText("spdx_id"),
 			)
 			parsedRepositories.add(repositoryRes)
 		}
