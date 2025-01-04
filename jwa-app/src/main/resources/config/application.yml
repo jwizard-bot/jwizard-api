@@ -5,6 +5,7 @@ vault:
 
 github:
   api-url: https://api.github.com
+  language-color-api-url: https://raw.githubusercontent.com/ozh/github-colors/master/colors.json
 
 cache:
   invalidate-time-sec: 10800 # 3h
