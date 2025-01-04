@@ -18,7 +18,6 @@ import java.io.Serializable
  * @property link The URL link to the repository's page (ex. on GitHub).
  * @property primaryLanguage The primary language used in the repository, represented as a [PrimaryLanguageDto].
  * @property lastUpdate The details of the last update to the repository, represented as a [LastUpdateDto].
- * @property license The license under which the repository is distributed.
  * @author Miłosz Gilga
  */
 data class RepositoryResDto(
@@ -28,5 +27,4 @@ data class RepositoryResDto(
 	val link: String,
 	val primaryLanguage: PrimaryLanguageDto,
 	val lastUpdate: LastUpdateDto,
-	val license: String,
 ) : Serializable
