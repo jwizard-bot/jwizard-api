@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.service
@@ -15,10 +15,11 @@ import pl.jwizard.jwa.rest.contributor.dto.ProjectVariant
 import pl.jwizard.jwa.rest.contributor.spi.ContributorService
 import pl.jwizard.jwl.http.HttpClientFacadeBean
 import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.i18n.source.I18nProjectSource
+import pl.jwizard.jwl.i18n.source.I18nLibDynamicSource
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.util.ext.getAsText
+import pl.jwizard.jwl.vcs.VcsConfigBean
 import pl.jwizard.jwl.vcs.VcsRepository
 
 /**
@@ -31,6 +32,7 @@ import pl.jwizard.jwl.vcs.VcsRepository
  * @property cacheFacade The cache facade used to cache the list of contributors.
  * @property httpClientFacade The HTTP client used for making requests to the GitHub API to fetch contributor data.
  * @property i18n A bean responsible for providing localized translations for the status description.
+ * @property vcsConfig A configuration bean for managing VCS repository details, such as repository names.
  * @author Miłosz Gilga
  */
 @SingletonService
@@ -39,14 +41,8 @@ class ContributorServiceBean(
 	private val cacheFacade: CacheFacadeBean,
 	private val httpClientFacade: HttpClientFacadeBean,
 	private val i18n: I18nBean,
+	private val vcsConfig: VcsConfigBean,
 ) : ContributorService {
-
-	companion object {
-		/**
-		 * The default variant value for contributors, indicating all repositories.
-		 */
-		private const val DEFAULT_VARIANT = "all"
-	}
 
 	private val githubApiUrl = environment.getProperty<String>(ServerProperty.GITHUB_API_URL)
 	private val organizationName = environment.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
@@ -55,6 +51,11 @@ class ContributorServiceBean(
 	 * A list of variants for the repositories based on configuration.
 	 */
 	private val variants = VcsRepository.entries.map { environment.getProperty<String>(it.property) }
+
+	/**
+	 * The default variant value for contributors, indicating all repositories.
+	 */
+	private val defaultVariant = vcsConfig.getRepositoryName(VcsRepository.ALL)
 
 	/**
 	 * Retrieves the project contributors, either from the cache or by computing the list if absent.
@@ -68,21 +69,19 @@ class ContributorServiceBean(
 	override fun getProjectContributors(language: String?): ContributorsResDto {
 		val repositoryVariants = VcsRepository.entries
 			.associate {
-				environment.getProperty<String>(it.property) to ProjectVariant(
-					i18n.t(it.i18nSource, language),
-					it.position
+				val repoName = vcsConfig.getRepositoryName(it)
+				repoName to ProjectVariant(
+					name = i18n.tRaw(I18nLibDynamicSource.PROJECT_NAME, arrayOf(repoName), language),
+					position = it.position,
 				)
 			}
 			.toMutableMap()
-
-		val defaultVariantName = i18n.t(I18nProjectSource.ALL, language)
-		repositoryVariants += DEFAULT_VARIANT to ProjectVariant(defaultVariantName, 0)
 
 		val contributors = cacheFacade.getCachedList(CacheEntity.CONTRIBUTORS, 0, ::computeOnAbsent)
 		return ContributorsResDto(
 			contributors = contributors,
 			variants = repositoryVariants.toMap(),
-			initVariant = DEFAULT_VARIANT,
+			initVariant = defaultVariant,
 		)
 	}
 
@@ -97,7 +96,7 @@ class ContributorServiceBean(
 	 */
 	private fun computeOnAbsent(): List<ProjectContributor> {
 		val contributors = mutableListOf<Pair<String, JsonNode>>()
-		for (repository in VcsRepository.entries) {
+		for (repository in VcsRepository.entries.filter { it != VcsRepository.ALL }) {
 			val repositoryContributors = getPerProjectContributors(repository)
 			for (contributor in repositoryContributors) {
 				contributors += Pair(environment.getProperty(repository.property), contributor)
@@ -111,7 +110,7 @@ class ContributorServiceBean(
 
 			val memberContributeAllProjects = contributorVariants.containsAll(variants)
 			if (memberContributeAllProjects) {
-				contributorVariants.add(0, DEFAULT_VARIANT)
+				contributorVariants.add(0, defaultVariant)
 			}
 			ProjectContributor(
 				nickname = contributor.getAsText("login"),
