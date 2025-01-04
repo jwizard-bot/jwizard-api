@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.core.i18n
 
-import pl.jwizard.jwa.core.i18n.I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION
-import pl.jwizard.jwa.core.i18n.I18nServerDynamicMod.KEY_FEATURE_NAME
-import pl.jwizard.jwl.i18n.I18nDynamicModule
+import pl.jwizard.jwa.core.i18n.I18nServerDynamicSource.KEY_FEATURE_DESCRIPTION
+import pl.jwizard.jwa.core.i18n.I18nServerDynamicSource.KEY_FEATURE_NAME
+import pl.jwizard.jwl.i18n.I18nDynamicSource
 
 /**
  * Enum class defining dynamic internationalization (i18n) keys for the server.
@@ -18,7 +18,7 @@ import pl.jwizard.jwl.i18n.I18nDynamicModule
  * @property key The key string used for retrieving the localized value.
  * @author Miłosz Gilga
  */
-enum class I18nServerDynamicMod(override val key: String) : I18nDynamicModule {
+enum class I18nServerDynamicSource(override val key: String) : I18nDynamicSource {
 
 	/**
 	 * Key for the feature name, used in the format `jwa.feature.%s.heading`.

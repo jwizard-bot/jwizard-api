@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.service
 
-import pl.jwizard.jwa.core.i18n.I18nServerDynamicMod
+import pl.jwizard.jwa.core.i18n.I18nServerDynamicSource
 import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.rest.home.dto.FeaturesResDto
 import pl.jwizard.jwa.rest.home.dto.StatisticsInfoResDto
@@ -60,8 +60,8 @@ class HomeServiceBean(
 		return keyFeatures
 			.map { (textId, isActive) ->
 				FeaturesResDto(
-					name = i18n.tRaw(I18nServerDynamicMod.KEY_FEATURE_NAME, arrayOf(textId), language),
-					description = i18n.tRaw(I18nServerDynamicMod.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
+					name = i18n.tRaw(I18nServerDynamicSource.KEY_FEATURE_NAME, arrayOf(textId), language),
+					description = i18n.tRaw(I18nServerDynamicSource.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
 					isActive,
 				)
 			}
