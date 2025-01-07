@@ -92,7 +92,10 @@ where `Xmx` and `Xms` parameters are optional and can be modified.
 
 For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
 <br>
-Documentation for latest version (with SHA) you will find [here](https://docs.jwizard.pl/jwa) - in KDoc format.
+Documentation for latest version (with SHA) you will find:
+
+* [here](https://docs.jwizard.pl/jwa/kdoc) - in **KDoc** format,
+* [here](https://docs.jwizard.pl/jwa/javadoc) - in **Javadoc** format.
 
 ## Contributing
 
