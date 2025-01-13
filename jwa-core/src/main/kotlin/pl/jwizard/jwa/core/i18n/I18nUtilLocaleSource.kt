@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.core.i18n
@@ -17,5 +17,6 @@ enum class I18nUtilLocaleSource(override val placeholder: String) : I18nLocaleSo
 	STATUS_OPERATIONAL("jwa.util.status.operational"),
 	STATUS_DOWN("jwa.util.status.down"),
 	STATUS_UNKNOWN("jwa.util.status.unknown"),
+	ALL("jwa.util.all"),
 	;
 }
