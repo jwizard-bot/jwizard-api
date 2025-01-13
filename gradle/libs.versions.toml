@@ -1,16 +1,19 @@
 [versions]
 caffeineVersion = "3.1.8"
 dokkaVersion = "1.9.20"
+jdaVersion = "5.1.0"
+jsoupVersion = "1.18.3"
 jwizardLibVersion = "latest"
 kotlinVersion = "2.0.20"
 logbackVersion = "1.5.7"
 shadowJarVersion = "8.1.1"
 slf4jApiVersion = "2.0.16"
 springVersion = "6.1.14"
-jsoupVersion = "1.18.3"
 
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeineVersion" }
+jda = { module = "net.dv8tion:JDA", version.ref = "jdaVersion" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoupVersion" }
 jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
@@ -18,7 +21,6 @@ logbackCore = { module = "ch.qos.logback:logback-core", version.ref = "logbackVe
 logbackClassic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
 slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
-jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoupVersion" }
 
 [plugins]
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
