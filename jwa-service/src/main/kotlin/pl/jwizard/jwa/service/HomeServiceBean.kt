@@ -6,9 +6,9 @@ package pl.jwizard.jwa.service
 
 import pl.jwizard.jwa.core.i18n.I18nServerDynamicSource
 import pl.jwizard.jwa.core.property.EnvironmentBean
-import pl.jwizard.jwa.rest.home.dto.FeaturesResDto
-import pl.jwizard.jwa.rest.home.dto.StatisticsInfoResDto
-import pl.jwizard.jwa.rest.home.spi.HomeService
+import pl.jwizard.jwa.rest.route.home.dto.FeaturesResDto
+import pl.jwizard.jwa.rest.route.home.dto.StatisticsInfoResDto
+import pl.jwizard.jwa.rest.route.home.spi.HomeService
 import pl.jwizard.jwa.service.spi.KeyFeaturesSupplier
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 import pl.jwizard.jwl.command.Command
@@ -61,7 +61,12 @@ class HomeServiceBean(
 			.map { (textId, isActive) ->
 				FeaturesResDto(
 					name = i18n.tRaw(I18nServerDynamicSource.KEY_FEATURE_NAME, arrayOf(textId), language),
-					description = i18n.tRaw(I18nServerDynamicSource.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language),
+					description = i18n.tRaw(
+						I18nServerDynamicSource.KEY_FEATURE_DESCRIPTION,
+						arrayOf(textId),
+						args,
+						language
+					),
 					isActive,
 				)
 			}

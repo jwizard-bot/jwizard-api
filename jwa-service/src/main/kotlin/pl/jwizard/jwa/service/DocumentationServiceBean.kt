@@ -5,9 +5,9 @@
 package pl.jwizard.jwa.service
 
 import pl.jwizard.jwa.core.property.EnvironmentBean
-import pl.jwizard.jwa.rest.documentation.dto.DocumentationLinkDto
-import pl.jwizard.jwa.rest.documentation.dto.DocumentationResDto
-import pl.jwizard.jwa.rest.documentation.spi.DocumentationService
+import pl.jwizard.jwa.rest.route.documentation.dto.DocumentationLinkDto
+import pl.jwizard.jwa.rest.route.documentation.dto.DocumentationResDto
+import pl.jwizard.jwa.rest.route.documentation.spi.DocumentationService
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nLibDynamicSource
 import pl.jwizard.jwl.ioc.stereotype.SingletonService

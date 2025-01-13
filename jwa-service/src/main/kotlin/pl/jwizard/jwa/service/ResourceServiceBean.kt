@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.service
 
 import io.javalin.http.NotFoundResponse
 import pl.jwizard.jwa.core.property.EnvironmentBean
-import pl.jwizard.jwa.rest.resource.spi.ResourceService
+import pl.jwizard.jwa.rest.route.resource.spi.ResourceService
 import pl.jwizard.jwl.file.IndependentFileBrowser
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 import pl.jwizard.jwl.property.AppBaseListProperty

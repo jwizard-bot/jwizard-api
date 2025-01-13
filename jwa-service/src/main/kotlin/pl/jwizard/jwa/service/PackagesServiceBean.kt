@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.service
 
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacadeBean
-import pl.jwizard.jwa.rest.packages.dto.PackageRowResDto
-import pl.jwizard.jwa.rest.packages.spi.PackagesService
+import pl.jwizard.jwa.rest.route.packages.dto.PackageRowResDto
+import pl.jwizard.jwa.rest.route.packages.spi.PackagesService
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 

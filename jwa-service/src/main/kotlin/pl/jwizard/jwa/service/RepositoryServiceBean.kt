@@ -8,10 +8,10 @@ import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacadeBean
 import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.rest.repository.dto.LastUpdateDto
-import pl.jwizard.jwa.rest.repository.dto.PrimaryLanguageDto
-import pl.jwizard.jwa.rest.repository.dto.RepositoryResDto
-import pl.jwizard.jwa.rest.repository.spi.RepositoryService
+import pl.jwizard.jwa.rest.route.repository.dto.LastUpdateDto
+import pl.jwizard.jwa.rest.route.repository.dto.PrimaryLanguageDto
+import pl.jwizard.jwa.rest.route.repository.dto.RepositoryResDto
+import pl.jwizard.jwa.rest.route.repository.spi.RepositoryService
 import pl.jwizard.jwa.service.spi.BuildInfoSupplier
 import pl.jwizard.jwa.service.spi.dto.ProjectVersionRow
 import pl.jwizard.jwl.http.HttpClientFacadeBean

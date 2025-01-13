@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2024 by JWizard
+ * Copyright (c) 2025 by JWizard
  * Originally developed by Miłosz Gilga <https://miloszgilga.pl>
  */
 package pl.jwizard.jwa.service
 
 import org.jsoup.Jsoup
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
-import pl.jwizard.jwa.rest.status.dto.GlobalStatusResDto
-import pl.jwizard.jwa.rest.status.spi.StatusService
+import pl.jwizard.jwa.rest.route.status.dto.GlobalStatusResDto
+import pl.jwizard.jwa.rest.route.status.spi.StatusService
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 

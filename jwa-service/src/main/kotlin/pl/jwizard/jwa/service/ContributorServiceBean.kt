@@ -9,10 +9,10 @@ import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacadeBean
 import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.rest.contributor.dto.ContributorsResDto
-import pl.jwizard.jwa.rest.contributor.dto.ProjectContributor
-import pl.jwizard.jwa.rest.contributor.dto.ProjectVariant
-import pl.jwizard.jwa.rest.contributor.spi.ContributorService
+import pl.jwizard.jwa.rest.route.contributor.dto.ContributorsResDto
+import pl.jwizard.jwa.rest.route.contributor.dto.ProjectContributor
+import pl.jwizard.jwa.rest.route.contributor.dto.ProjectVariant
+import pl.jwizard.jwa.rest.route.contributor.spi.ContributorService
 import pl.jwizard.jwl.http.HttpClientFacadeBean
 import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.i18n.source.I18nLibDynamicSource
