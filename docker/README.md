@@ -6,6 +6,7 @@ commands using its own protocol based on WebSocket and RabbitMQ message queue.
 
 [Webpage](https://jwizard.pl)
 | [GitHub repository](https://github.com/jwizard-bot/jwizard-api)
+| [Support](https://github.com/sponsors/jwizard-bot)
 
 ## Build image
 
