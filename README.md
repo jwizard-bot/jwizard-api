@@ -30,7 +30,7 @@ commands using its own protocol based on WebSocket and RabbitMQ message queue.
 | jwa-core        | Server loader, exception handlers and session management.                           |
 | jwa-persistence | Communication via RDBMS (SQL) with loosely coupled binding beans (provided by SPI). |
 | jwa-rest        | Javalin API endpoint definitions.                                                   |
-| jwa-service     | Services as loosely coupled binding beans for different handlers (HTTP, WS etc.)    |
+| jwa-service     | Services as loosely coupled binding beans for different handlers (HTTP, WS etc.).   |
 
 ## Clone and install
 
