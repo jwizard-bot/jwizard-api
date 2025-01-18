@@ -9,8 +9,6 @@ RUN apk add --no-cache findutils
 ENV BUILD_DIR=/build/jwa
 
 ARG JWIZARD_VERSION
-ARG JWIZARD_PORT
-
 # environment variables for M2 Central Repository Service
 ARG JWIZARD_MAVEN_NAME
 ARG JWIZARD_MAVEN_SECRET
@@ -58,7 +56,7 @@ RUN sed -i \
 
 RUN chmod +x entrypoint
 
-EXPOSE $JWIZARD_PORT
+EXPOSE 6061
 LABEL maintainer="JWizard <info@jwizard.pl>"
 
 ENTRYPOINT [ "./entrypoint" ]
