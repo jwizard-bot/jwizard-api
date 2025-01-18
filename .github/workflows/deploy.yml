@@ -9,6 +9,8 @@ on:
       - "dokka/**"
       - "gradle/libs.versions.toml"
       - "jwa-*/**"
+      - ".dockerignore"
+      - "Dockerfile.pipeline"
       - "build.gradle"
       - "gradle.properties"
       - "settings.gradle"
