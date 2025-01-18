@@ -1,5 +1,9 @@
 ![](.github/banner.png)
 
+[[About project](https://jwizard.pl/about)]
+| [[Docker image](https://hub.docker.com/r/milosz08/jwizard-api)]
+| [[Docker installation](./docker/README.md)]
+
 JWizard is an open-source Discord music bot handling audio content from various multimedia sources with innovative web
 player. This repository contains an API used by the web client to manage guilds, playlists, and remotely invoke Discord
 commands using its own protocol based on WebSocket and RabbitMQ message queue.
