@@ -12,11 +12,11 @@ commands using its own protocol based on WebSocket and RabbitMQ message queue.
 
 ```bash
 docker build \
-	--build-arg JWIZARD_VERSION=latest \
-	--build-arg JWIZARD_PORT=8080 \
-	--build-arg JWIZARD_MAVEN_NAME=<maven m2 repository username> \
-	--build-arg JWIZARD_MAVEN_SECRET=<maven m2 repository secret> \
-	-t milosz08/jwizard-api .
+  --build-arg JWIZARD_VERSION=latest \
+  --build-arg JWIZARD_PORT=8080 \
+  --build-arg JWIZARD_MAVEN_NAME=<maven m2 repository username> \
+  --build-arg JWIZARD_MAVEN_SECRET=<maven m2 repository secret> \
+  -t milosz08/jwizard-api .
 ```
 
 ## Create container
