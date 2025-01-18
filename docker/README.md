@@ -21,7 +21,7 @@ docker build \
 
 ## Create container
 
-* From command:
+* Using command:
 
 ```bash
 docker run -d \
@@ -35,7 +35,7 @@ docker run -d \
   milosz08/jwizard-api:latest
 ```
 
-* From `docker-compose.yml` file:
+* Using `docker-compose.yml` file:
 
 ```yaml
 services:
