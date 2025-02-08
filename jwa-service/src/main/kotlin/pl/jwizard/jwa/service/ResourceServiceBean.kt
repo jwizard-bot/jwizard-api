@@ -4,7 +4,6 @@
  */
 package pl.jwizard.jwa.service
 
-import io.javalin.http.NotFoundResponse
 import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.rest.route.resource.spi.ResourceService
 import pl.jwizard.jwl.file.IndependentFileBrowser
@@ -39,23 +38,22 @@ class ResourceServiceBean(private val environment: EnvironmentBean) : ResourceSe
 		.flatten()
 
 	/**
-	 * Retrieves a resource by its name. If the resource does not exist, a NotFoundResponse is thrown. The resource is
+	 * Retrieves a resource by its name. If the resource does not exist, returns `null`. The resource is
 	 * looked up in multiple containers (directories) based on the predefined prefixes.
 	 *
 	 * @param name The name of the resource to retrieve.
-	 * @return A pair containing the content type of the resource and its input stream for reading.
-	 * @throws NotFoundResponse If the resource does not exist in any of the defined directories.
+	 * @return A pair containing the content type of the resource and its input stream for reading or `null`.
 	 */
-	override fun getResource(name: String): Pair<String, InputStream> {
+	override fun getResource(name: String): Pair<String, InputStream>? {
 		if (!availableResources.contains(name)) {
-			throw NotFoundResponse()
+			return null
 		}
-		val classPathResource = findResourceInMultipleContainers(prefixes, name) ?: throw NotFoundResponse()
+		val classPathResource = findResourceInMultipleContainers(prefixes, name) ?: return null
 		return try {
 			val connection = classPathResource.url.openConnection()
 			Pair(connection.contentType ?: "application/octet-stream", classPathResource.inputStream)
 		} catch (ex: IOException) {
-			throw NotFoundResponse()
+			return null
 		}
 	}
 }

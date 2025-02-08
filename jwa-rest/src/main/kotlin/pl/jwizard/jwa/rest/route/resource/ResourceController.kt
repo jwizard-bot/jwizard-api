@@ -5,6 +5,7 @@
 package pl.jwizard.jwa.rest.route.resource
 
 import io.javalin.http.Context
+import io.javalin.http.NotFoundResponse
 import io.javalin.http.queryParamAsClass
 import pl.jwizard.jwa.core.server.ValidatorChainFacade
 import pl.jwizard.jwa.rest.route.resource.spi.ResourceService
@@ -31,7 +32,9 @@ class ResourceController(private val resourceService: ResourceService) : RestCon
 		val assetNameParam = ctx.queryParamAsClass<String>("name")
 		val assetName = ValidatorChainFacade(assetNameParam).disallowBlanks().get()
 
-		val (contentTYpe, inputStream) = resourceService.getResource(assetName)
+		val resource = resourceService.getResource(assetName) ?: throw NotFoundResponse()
+
+		val (contentTYpe, inputStream) = resource
 		ctx.contentType(contentTYpe)
 		ctx.result(inputStream)
 	}
