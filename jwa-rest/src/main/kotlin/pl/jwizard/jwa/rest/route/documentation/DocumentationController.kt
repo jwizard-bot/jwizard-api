@@ -7,10 +7,8 @@ package pl.jwizard.jwa.rest.route.documentation
 import io.javalin.http.Context
 import pl.jwizard.jwa.rest.route.documentation.spi.DocumentationService
 import pl.jwizard.jwl.ioc.stereotype.SingletonController
-import pl.jwizard.jwl.server.attribute.CommonServerAttribute
-import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.server.route.RestControllerBase
-import pl.jwizard.jwl.server.route.RouteDefinition
+import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 /**
  * REST controller for handling operations related to documentation resources.
@@ -27,20 +25,18 @@ class DocumentationController(private val documentationService: DocumentationSer
 	override val basePath = "/v1/documentation"
 
 	/**
-	 * Handles the `GET /v1/documentation/all` endpoint.
+	 * Handles the `GET /v1/documentation/all` endpoint. Retrieves all available documentation resources, optionally
+	 * filtered by language, and sends them as a JSON response.
 	 *
-	 * Retrieves all available documentation resources, optionally filtered by language, and sends them as a JSON
-	 * response.
-	 *
-	 * @param ctx The [Context] object representing the HTTP request and response context.
+	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
+	 * @param language The optional language code (ex. "en", "pl") to determine localization.
 	 */
-	private fun getAllDocumentations(ctx: Context) {
-		val language = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
+	private fun getAllDocumentations(ctx: Context, language: String?) {
 		val documentations = documentationService.getAllDocumentations(language)
 		ctx.json(documentations)
 	}
 
-	override val routes = RouteDefinition.Builder()
-		.get("/all", ::getAllDocumentations)
+	override val routes = RouteDefinitionBuilder()
+		.getWithI18n("/all", ::getAllDocumentations)
 		.compositeRoutes()
 }

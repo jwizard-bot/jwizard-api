@@ -10,7 +10,7 @@ import pl.jwizard.jwa.core.server.ValidatorChainFacade
 import pl.jwizard.jwa.rest.route.resource.spi.ResourceService
 import pl.jwizard.jwl.ioc.stereotype.SingletonController
 import pl.jwizard.jwl.server.route.RestControllerBase
-import pl.jwizard.jwl.server.route.RouteDefinition
+import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 /**
  * Controller class responsible for handling HTTP requests related to static assets.
@@ -25,7 +25,7 @@ class ResourceController(private val resourceService: ResourceService) : RestCon
 	/**
 	 * Endpoint method that retrieves a specified asset by name and sends it as a binary response.
 	 *
-	 * @param ctx The Javalin [Context] used to handle the HTTP request and send the response.
+	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
 	 */
 	private fun fetchRawFile(ctx: Context) {
 		val assetNameParam = ctx.queryParamAsClass<String>("name")
@@ -36,7 +36,7 @@ class ResourceController(private val resourceService: ResourceService) : RestCon
 		ctx.result(inputStream)
 	}
 
-	override val routes = RouteDefinition.Builder()
+	override val routes = RouteDefinitionBuilder()
 		.get("/file", ::fetchRawFile)
 		.compositeRoutes()
 }

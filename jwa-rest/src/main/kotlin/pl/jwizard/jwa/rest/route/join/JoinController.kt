@@ -8,7 +8,7 @@ import io.javalin.http.Context
 import pl.jwizard.jwa.rest.route.join.spi.JoinService
 import pl.jwizard.jwl.ioc.stereotype.SingletonController
 import pl.jwizard.jwl.server.route.RestControllerBase
-import pl.jwizard.jwl.server.route.RouteDefinition
+import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 /**
  * Controller responsible for handling routes related to join functionality.
@@ -24,11 +24,10 @@ class JoinController(private val joinService: JoinService) : RestControllerBase 
 	override val basePath = "/v1/join"
 
 	/**
-	 * Handles the GET request for fetching all join instances.
+	 * Handles the GET request for fetching all join instances. This method retrieves all available joinable instances
+	 * using the [JoinService] and returns them as a JSON response.
 	 *
-	 * This method retrieves all available joinable instances using the [JoinService] and returns them as a JSON response.
-	 *
-	 * @param ctx The Javalin Context object used to manage the HTTP request and response.
+	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
 	 */
 	private fun getAllInstances(ctx: Context) {
 		val instances = joinService.fetchJoinInstances()
@@ -40,14 +39,14 @@ class JoinController(private val joinService: JoinService) : RestControllerBase 
 	 *
 	 * This method retrieves all permissions needed to join a specific instance and returns them as a JSON response.
 	 *
-	 * @param ctx The Javalin Context object used to manage the HTTP request and response.
+	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
 	 */
 	private fun getRequiredPermissions(ctx: Context) {
 		val instances = joinService.fetchRequiredPermissions()
 		ctx.json(instances)
 	}
 
-	override val routes = RouteDefinition.Builder()
+	override val routes = RouteDefinitionBuilder()
 		.get("/instance/all", ::getAllInstances)
 		.get("/permission/all", ::getRequiredPermissions)
 		.compositeRoutes()

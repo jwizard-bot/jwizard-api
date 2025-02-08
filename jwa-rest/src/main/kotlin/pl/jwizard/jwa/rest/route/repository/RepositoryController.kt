@@ -7,10 +7,8 @@ package pl.jwizard.jwa.rest.route.repository
 import io.javalin.http.Context
 import pl.jwizard.jwa.rest.route.repository.spi.RepositoryService
 import pl.jwizard.jwl.ioc.stereotype.SingletonController
-import pl.jwizard.jwl.server.attribute.CommonServerAttribute
-import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.server.route.RestControllerBase
-import pl.jwizard.jwl.server.route.RouteDefinition
+import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 /**
  * Controller class responsible for handling HTTP requests related to repositories.
@@ -26,20 +24,18 @@ class RepositoryController(private val repositoryService: RepositoryService) : R
 	override val basePath = "/v1/repository"
 
 	/**
-	 * Handles the request to fetch all repositories.
+	 * Handles the request to fetch all repositories. This method retrieves the language from the request context and
+	 * passes it to the [RepositoryService] to get the list of repositories. The list is then returned as a JSON response.
 	 *
-	 * This method retrieves the language from the request context and passes it to the [RepositoryService] to get the
-	 * list of repositories. The list is then returned as a JSON response.
-	 *
-	 * @param ctx The Javalin context for the request, used to retrieve attributes and send the response.
+	 * @param ctx The Javalin HTTP context, used for request handling and response manipulation.
+	 * @param language The optional language code (ex. "en", "pl") to determine localization.
 	 */
-	private fun fetchAllRepositories(ctx: Context) {
-		val language = ctx.getAttribute<String>(CommonServerAttribute.I18N_LOCALE)
+	private fun fetchAllRepositories(ctx: Context, language: String?) {
 		val repositories = repositoryService.getAllRepositories(language)
 		ctx.json(repositories)
 	}
 
-	override val routes = RouteDefinition.Builder()
-		.get("/all", ::fetchAllRepositories)
+	override val routes = RouteDefinitionBuilder()
+		.getWithI18n("/all", ::fetchAllRepositories)
 		.compositeRoutes()
 }
