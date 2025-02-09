@@ -41,7 +41,7 @@ class JoinServiceBean(
 		val rawPermissions = Permission.getRaw(mappedPermissions)
 
 		return botInstancesService.botInstances.entries.map { (id, data) ->
-			val instanceIndex = if (id > 1) " ($id)" else ""
+			val instanceIndex = if (id > 0) " ($id)" else ""
 
 			val joinLink = UrlSearchParams.Builder()
 				.setBaseUrl("https://discord.com/oauth2/authorize")
