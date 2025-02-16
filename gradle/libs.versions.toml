@@ -1,6 +1,5 @@
 [versions]
 caffeineVersion = "3.1.8"
-dokkaVersion = "1.9.20"
 jdaVersion = "5.1.0"
 jsoupVersion = "1.18.3"
 jwizardLibVersion = "latest"
@@ -23,7 +22,6 @@ slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
 
 [plugins]
-dokka = { id = "org.jetbrains.dokka", version.ref = "dokkaVersion" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
 kotlinNoArg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlinVersion" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
