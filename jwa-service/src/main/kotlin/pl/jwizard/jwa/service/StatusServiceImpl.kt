@@ -3,8 +3,8 @@ package pl.jwizard.jwa.service
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
+import pl.jwizard.jwa.rest.route.status.StatusService
 import pl.jwizard.jwa.rest.route.status.dto.GlobalStatusResDto
-import pl.jwizard.jwa.rest.route.status.spi.StatusService
 import pl.jwizard.jwl.i18n.I18n
 
 @Component
