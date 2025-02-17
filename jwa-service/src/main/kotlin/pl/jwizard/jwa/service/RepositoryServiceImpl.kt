@@ -50,9 +50,9 @@ internal class RepositoryServiceBean(
 		)
 		return cachedRepositories.map {
 			it.copy(
-				name = i18n.tRaw(I18nLibDynamicSource.PROJECT_NAME, arrayOf(it.slug), language),
+				name = i18n.tRaw(I18nAppFragmentSource.PROJECT_NAME, arrayOf(it.slug), language),
 				description = i18n.tRaw(
-					I18nLibDynamicSource.PROJECT_DESCRIPTION,
+					I18nAppFragmentSource.PROJECT_DESCRIPTION,
 					arrayOf(it.slug),
 					language
 				),
@@ -88,18 +88,18 @@ internal class RepositoryServiceBean(
 				null
 			}
 			val repositoryRes = RepositoryResDto(
-				name = i18n.tRaw(I18nLibDynamicSource.PROJECT_NAME, arrayOf(name), language),
+				name = i18n.tRaw(I18nAppFragmentSource.PROJECT_NAME, arrayOf(name), language),
 				slug = name,
-				description = i18n.tRaw(I18nLibDynamicSource.PROJECT_DESCRIPTION, arrayOf(name), language),
-				link = repo.getAsText("html_url"),
+				description = i18n.tRaw(I18nAppFragmentSource.PROJECT_DESCRIPTION, arrayOf(name), language),
+				link = repositoryUrl,
 				primaryLanguage = PrimaryLanguageDto(
 					name = repo.getAsText("language"),
 					color = color,
 				),
 				lastUpdate = LastUpdateDto(
-					buildSha = shortSha,
+					buildSha = createShortSha(latestVersionLong),
 					buildDate = lastUpdatedUtc,
-					link = link
+					link = "$repositoryUrl/tree/$latestVersionLong"
 				),
 			)
 			parsedRepositories.add(repositoryRes)
