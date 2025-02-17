@@ -3,7 +3,6 @@ package pl.jwizard.jwa.rest.route.command
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.rest.route.command.spi.CommandService
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 

@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.contributor.spi
+package pl.jwizard.jwa.rest.route.contributor
 
 import pl.jwizard.jwa.rest.route.contributor.dto.ContributorsResDto
 

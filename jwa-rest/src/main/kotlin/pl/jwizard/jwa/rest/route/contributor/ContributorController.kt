@@ -2,7 +2,6 @@ package pl.jwizard.jwa.rest.route.contributor
 
 import io.javalin.http.Context
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.rest.route.contributor.spi.ContributorService
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 

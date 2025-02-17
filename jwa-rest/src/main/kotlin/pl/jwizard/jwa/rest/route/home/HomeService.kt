@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.home.spi
+package pl.jwizard.jwa.rest.route.home
 
 import pl.jwizard.jwa.rest.route.home.dto.FeaturesResDto
 import pl.jwizard.jwa.rest.route.home.dto.StatisticsInfoResDto

@@ -2,7 +2,6 @@ package pl.jwizard.jwa.rest.route.home
 
 import io.javalin.http.Context
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.rest.route.home.spi.HomeService
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 

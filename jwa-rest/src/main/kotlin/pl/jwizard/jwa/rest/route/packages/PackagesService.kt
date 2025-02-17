@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.packages.spi
+package pl.jwizard.jwa.rest.route.packages
 
 import pl.jwizard.jwa.rest.route.packages.dto.PackageRowResDto
 

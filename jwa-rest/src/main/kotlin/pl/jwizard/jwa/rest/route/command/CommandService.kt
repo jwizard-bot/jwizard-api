@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.command.spi
+package pl.jwizard.jwa.rest.route.command
 
 import pl.jwizard.jwa.rest.dto.OptionsResDto
 import pl.jwizard.jwa.rest.route.command.dto.CommandDetailsResDto

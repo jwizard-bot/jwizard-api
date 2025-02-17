@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.join.spi
+package pl.jwizard.jwa.rest.route.join
 
 import pl.jwizard.jwa.rest.route.join.dto.JoinInstanceResDto
 

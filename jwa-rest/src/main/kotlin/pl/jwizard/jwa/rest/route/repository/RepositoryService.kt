@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.rest.route.repository.spi
+package pl.jwizard.jwa.rest.route.repository
 
 import pl.jwizard.jwa.rest.route.repository.dto.RepositoryResDto
 
