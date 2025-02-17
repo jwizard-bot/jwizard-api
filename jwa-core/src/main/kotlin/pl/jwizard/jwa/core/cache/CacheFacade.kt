@@ -3,17 +3,17 @@ package pl.jwizard.jwa.core.cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.springframework.cache.CacheManager
 import org.springframework.cache.caffeine.CaffeineCacheManager
-import pl.jwizard.jwa.core.property.EnvironmentBean
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
+import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.logger
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
-@SingletonComponent
-class CacheFacadeBean(environment: EnvironmentBean) {
+@Component
+class CacheFacade(environment: BaseEnvironment) {
 	companion object {
-		val log = logger<CacheFacadeBean>()
+		val log = logger<CacheFacade>()
 	}
 
 	private final val cacheManager: CacheManager

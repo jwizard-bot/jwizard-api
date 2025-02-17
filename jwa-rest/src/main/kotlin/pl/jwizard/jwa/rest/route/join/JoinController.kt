@@ -1,12 +1,12 @@
 package pl.jwizard.jwa.rest.route.join
 
 import io.javalin.http.Context
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.rest.route.join.spi.JoinService
-import pl.jwizard.jwl.ioc.stereotype.SingletonController
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
-@SingletonController
+@Component
 class JoinController(private val joinService: JoinService) : RestControllerBase {
 	override val basePath = "/v1/join"
 

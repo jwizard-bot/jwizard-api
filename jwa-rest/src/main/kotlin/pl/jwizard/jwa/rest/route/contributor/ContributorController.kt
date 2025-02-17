@@ -1,14 +1,14 @@
 package pl.jwizard.jwa.rest.route.contributor
 
 import io.javalin.http.Context
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.rest.route.contributor.spi.ContributorService
-import pl.jwizard.jwl.ioc.stereotype.SingletonController
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
-@SingletonController
+@Component
 class ContributorController(
-	private val contributorService: ContributorService
+	private val contributorService: ContributorService,
 ) : RestControllerBase {
 	override val basePath = "/v1/contributor"
 

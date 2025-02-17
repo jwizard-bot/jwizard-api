@@ -1,16 +1,14 @@
 package pl.jwizard.jwa.core.server.exception
 
 import io.javalin.http.Context
-import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
+import org.springframework.stereotype.Component
+import pl.jwizard.jwl.i18n.I18n
 import pl.jwizard.jwl.server.exception.ExceptionResponse
 import pl.jwizard.jwl.server.exception.ExceptionsAdvisorBase
 import pl.jwizard.jwl.util.logger
 
-@SingletonComponent
-class ServerExceptionAdvisor(
-	i18nBean: I18nBean,
-) : ExceptionsAdvisorBase<LocalizedHttpException>(i18nBean) {
+@Component
+class ServerExceptionAdvisor(i18n: I18n) : ExceptionsAdvisorBase<LocalizedHttpException>(i18n) {
 	companion object {
 		private val log = logger<ServerExceptionAdvisor>()
 	}

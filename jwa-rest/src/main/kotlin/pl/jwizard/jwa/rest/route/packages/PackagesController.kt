@@ -1,12 +1,12 @@
 package pl.jwizard.jwa.rest.route.packages
 
 import io.javalin.http.Context
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.rest.route.packages.spi.PackagesService
-import pl.jwizard.jwl.ioc.stereotype.SingletonController
 import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
-@SingletonController
+@Component
 class PackagesController(private val packagesService: PackagesService) : RestControllerBase {
 	override val basePath = "/v1/packages"
 

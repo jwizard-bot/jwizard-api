@@ -72,10 +72,6 @@ subprojects {
 		}
 	}
 
-	noArg {
-		annotation('pl.jwizard.jwl.util.NoArgConstructor')
-	}
-
 	configurations.configureEach {
 		exclude group: 'commons-logging', module: 'commons-logging'
 	}

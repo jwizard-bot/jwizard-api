@@ -1,14 +1,14 @@
 package pl.jwizard.jwa.service
 
 import org.jsoup.Jsoup
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
 import pl.jwizard.jwa.rest.route.status.dto.GlobalStatusResDto
 import pl.jwizard.jwa.rest.route.status.spi.StatusService
-import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.ioc.stereotype.SingletonService
+import pl.jwizard.jwl.i18n.I18n
 
-@SingletonService
-internal class StatusServiceBean(private val i18n: I18nBean) : StatusService {
+@Component
+internal class StatusServiceImpl(private val i18n: I18n) : StatusService {
 	companion object {
 		private const val STATUS_PAGE_URL = "https://status.jwizard.pl"
 	}

@@ -4,20 +4,18 @@ import io.javalin.http.Context
 import io.javalin.http.HttpStatus
 import io.javalin.validation.ValidationError
 import io.javalin.validation.ValidationException
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nValidationError
-import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.i18n.source.I18nGeneralServerExceptionSource
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
+import pl.jwizard.jwl.i18n.I18n
 import pl.jwizard.jwl.server.attribute.CommonServerAttribute
 import pl.jwizard.jwl.server.exception.ExceptionResponse
 import pl.jwizard.jwl.server.exception.ExceptionsAdvisorBase
+import pl.jwizard.jwl.server.exception.I18nGeneralServerExceptionSource
 import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.util.logger
 
-@SingletonComponent
-class ValidationExceptionAdvisor(
-	i18nBean: I18nBean,
-) : ExceptionsAdvisorBase<ValidationException>(i18nBean) {
+@Component
+class ValidationExceptionAdvisor(i18n: I18n) : ExceptionsAdvisorBase<ValidationException>(i18n) {
 	companion object {
 		private val log = logger<ValidationExceptionAdvisor>()
 	}
@@ -42,7 +40,7 @@ class ValidationExceptionAdvisor(
 	}
 
 	private fun mapToCommonValidationError(error: ValidationError<Any>, language: String?) = try {
-		i18nBean.t(I18nValidationError.valueOf(error.message), language, error.args)
+		i18n.t(I18nValidationError.valueOf(error.message), language, error.args)
 	} catch (_: Exception) {
 		error.message
 	}

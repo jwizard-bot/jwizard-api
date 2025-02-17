@@ -1,12 +1,12 @@
 package pl.jwizard.jwc.persistence.sql
 
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
-import pl.jwizard.jwl.ioc.stereotype.SingletonComponent
 import pl.jwizard.jwl.persistence.sql.ColumnDef
-import pl.jwizard.jwl.persistence.sql.JdbiQueryBean
+import pl.jwizard.jwl.persistence.sql.JdbiQuery
 
-@SingletonComponent
-class ProjectPackagesSupplierBean(private val jdbiQuery: JdbiQueryBean) : ProjectPackagesSupplier {
+@Component
+class ProjectPackagesSqlSupplier(private val jdbiQuery: JdbiQuery) : ProjectPackagesSupplier {
 	override fun getProjectPackagesCount(): Int {
 		val sql = "SELECT COUNT(DISTINCT name) FROM project_packages"
 		return jdbiQuery.queryForObject(sql, Int::class)
