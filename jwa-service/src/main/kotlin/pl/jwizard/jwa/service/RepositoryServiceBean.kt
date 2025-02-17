@@ -20,7 +20,7 @@ import pl.jwizard.jwl.vcs.VcsConfigBean
 import pl.jwizard.jwl.vcs.VcsRepository
 
 @SingletonService
-class RepositoryServiceBean(
+internal class RepositoryServiceBean(
 	private val vcsConfig: VcsConfigBean,
 	private val cacheFacade: CacheFacadeBean,
 	private val i18n: I18nBean,

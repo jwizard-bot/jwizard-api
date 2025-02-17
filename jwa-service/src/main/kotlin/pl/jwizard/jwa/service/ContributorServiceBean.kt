@@ -19,7 +19,7 @@ import pl.jwizard.jwl.vcs.VcsConfigBean
 import pl.jwizard.jwl.vcs.VcsRepository
 
 @SingletonService
-class ContributorServiceBean(
+internal class ContributorServiceBean(
 	private val environment: EnvironmentBean,
 	private val cacheFacade: CacheFacadeBean,
 	private val httpClientFacade: HttpClientFacadeBean,

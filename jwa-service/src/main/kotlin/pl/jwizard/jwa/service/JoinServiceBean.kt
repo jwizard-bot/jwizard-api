@@ -9,7 +9,7 @@ import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.util.UrlSearchParams
 
 @SingletonService
-class JoinServiceBean(
+internal class JoinServiceBean(
 	environment: EnvironmentBean,
 	private val botInstancesService: BotInstancesServiceBean
 ) : JoinService {

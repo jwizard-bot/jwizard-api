@@ -8,7 +8,7 @@ import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 
 @SingletonService
-class PackagesServiceBean(
+internal class PackagesServiceBean(
 	private val cacheFacade: CacheFacadeBean,
 	private val projectPackagesSupplier: ProjectPackagesSupplier,
 ) : PackagesService {

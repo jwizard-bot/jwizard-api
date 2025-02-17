@@ -8,7 +8,7 @@ import pl.jwizard.jwl.i18n.I18nBean
 import pl.jwizard.jwl.ioc.stereotype.SingletonService
 
 @SingletonService
-class StatusServiceBean(private val i18n: I18nBean) : StatusService {
+internal class StatusServiceBean(private val i18n: I18nBean) : StatusService {
 	companion object {
 		private const val STATUS_PAGE_URL = "https://status.jwizard.pl"
 	}

@@ -15,7 +15,7 @@ import pl.jwizard.jwl.property.AppBaseProperty
 import java.util.*
 
 @SingletonService
-class CommandServiceBean(
+internal class CommandServiceBean(
 	environment: EnvironmentBean,
 	private val i18n: I18nBean,
 	private val botInstancesService: BotInstancesServiceBean,

@@ -15,7 +15,7 @@ import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.radio.RadioStation
 
 @SingletonService
-class HomeServiceBean(
+internal class HomeServiceBean(
 	private val i18n: I18nBean,
 	private val projectPackagesSupplier: ProjectPackagesSupplier,
 	private val keyFeaturesSupplier: KeyFeaturesSupplier,

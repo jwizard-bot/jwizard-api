@@ -10,7 +10,7 @@ import java.io.IOException
 import java.io.InputStream
 
 @SingletonService
-class ResourceServiceBean(environment: EnvironmentBean) : ResourceService {
+internal class ResourceServiceBean(environment: EnvironmentBean) : ResourceService {
 	private val prefixes = environment
 		.getListProperty<String>(AppBaseListProperty.STATIC_RESOURCES_PREFIXES)
 
