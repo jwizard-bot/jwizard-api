@@ -94,9 +94,11 @@ internal class CommandServiceImpl(
 	private fun createLegacyUsage(
 		command: Command,
 		language: String?,
-	) = botInstancesService.botInstances.keys.map { id ->
-		val legacyCommandContext =
-			CommandFormatContextImpl("$legacyPrefix${id + 1} ", isSlashEvent = false)
+	) = botInstancesService.instanceProperties.keys.map { id ->
+		val legacyCommandContext = CommandFormatContextImpl(
+			prefix = "$legacyPrefix${id + 1} ",
+			isSlashEvent = false,
+		)
 		buildCommandUsageInfo(command, legacyCommandContext, language)
 	}
 
