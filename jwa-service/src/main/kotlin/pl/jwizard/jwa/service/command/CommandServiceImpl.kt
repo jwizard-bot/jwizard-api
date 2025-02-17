@@ -1,24 +1,24 @@
-package pl.jwizard.jwa.service
+package pl.jwizard.jwa.service.command
 
+import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
-import pl.jwizard.jwa.core.property.EnvironmentBean
 import pl.jwizard.jwa.rest.dto.OptionsResDto
+import pl.jwizard.jwa.rest.route.command.CommandService
 import pl.jwizard.jwa.rest.route.command.dto.*
-import pl.jwizard.jwa.rest.route.command.spi.CommandService
+import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwl.command.Command
 import pl.jwizard.jwl.command.CommandFormatContext
-import pl.jwizard.jwl.command.CommandFormatContextImpl
 import pl.jwizard.jwl.command.Module
-import pl.jwizard.jwl.i18n.I18nBean
-import pl.jwizard.jwl.ioc.stereotype.SingletonService
+import pl.jwizard.jwl.i18n.I18n
 import pl.jwizard.jwl.property.AppBaseProperty
+import pl.jwizard.jwl.property.BaseEnvironment
 import java.util.*
 
-@SingletonService
-internal class CommandServiceBean(
-	environment: EnvironmentBean,
-	private val i18n: I18nBean,
-	private val botInstancesService: BotInstancesServiceBean,
+@Component
+internal class CommandServiceImpl(
+	private val i18n: I18n,
+	private val botInstancesService: BotInstancesService,
+	environment: BaseEnvironment,
 ) : CommandService {
 	private val legacyPrefix = environment.getProperty<String>(AppBaseProperty.GUILD_LEGACY_PREFIX)
 
@@ -52,8 +52,8 @@ internal class CommandServiceBean(
 			val commandData = mutableListOf<CommandData>()
 			for (command in Command.entries.filter { it.module == module }) {
 				commandData += CommandData(
-					name = command.toNameWithSpaces,
-					slug = command.toUrl,
+					name = command.asString,
+					slug = command.asSlug,
 					description = i18n.t(command, language),
 					arguments = getCommandArguments(command, language),
 					legacyUsage = createLegacyUsage(command, language),
@@ -70,9 +70,9 @@ internal class CommandServiceBean(
 	}
 
 	override fun getCommandDetails(nameId: String, language: String?): CommandDetailsResDto? {
-		val command = Command.entries.find { it.toUrl == nameId } ?: return null
+		val command = Command.entries.find { it.asSlug == nameId } ?: return null
 		return CommandDetailsResDto(
-			name = command.toNameWithSpaces,
+			name = command.asString,
 			description = i18n.t(command, language),
 			arguments = getCommandArguments(command, language),
 			legacyUsage = createLegacyUsage(command, language),
