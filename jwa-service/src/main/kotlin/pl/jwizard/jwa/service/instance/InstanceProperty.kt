@@ -1,12 +1,13 @@
 package pl.jwizard.jwa.service.instance
 
+import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupPropertySource
 import kotlin.reflect.KClass
 
 // server port property available only for DEV environment!
 internal enum class InstanceProperty(
-	val key: String,
-	val type: KClass<*> = String::class,
-) {
+	override val key: String,
+	override val type: KClass<*> = String::class,
+) : VaultKvGroupPropertySource {
 	JDA_INSTANCE_PREFIX("V_JDA_INSTANCE_PREFIX"),
 	JDA_PRIMARY_COLOR("V_JDA_PRIMARY_COLOR"),
 	JDA_SECRET("V_JDA_SECRET"),
