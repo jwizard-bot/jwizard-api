@@ -4,7 +4,9 @@ vault:
       - api
 
 github:
-  api-url: https://api.github.com
+  api:
+    url: https://api.github.com
+    token: ${vault:V_GITHUB_TOKEN}
   language-color-api-url: https://raw.githubusercontent.com/ozh/github-colors/master/colors.json
 
 cache:

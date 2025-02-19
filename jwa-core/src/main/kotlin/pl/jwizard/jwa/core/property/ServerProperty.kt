@@ -7,12 +7,13 @@ enum class ServerProperty(
 	override val key: String,
 	override val type: KClass<*> = String::class,
 ) : AppProperty {
-	GITHUB_API_URL("github.api-url"),
-
+	// github
+	GITHUB_API_URL("github.api.url"),
+	GITHUB_API_TOKEN("github.api.token"),
 	GITHUB_LANGUAGE_COLOR_API_URL("github.language-color-api-url"),
 
+	// cache
 	CACHE_INVALIDATE_TIME_SEC("cache.invalidate-time-sec", Long::class),
-
 	CACHE_MAX_ELEMENTS("cache.max-elements", Long::class),
 	;
 }
