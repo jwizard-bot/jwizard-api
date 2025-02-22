@@ -9,6 +9,14 @@ github:
     token: ${vault:V_GITHUB_TOKEN}
   language-color-api-url: https://raw.githubusercontent.com/ozh/github-colors/master/colors.json
 
+discord:
+  api:
+    url: https://discord.com/api/v10
+
+lavalink:
+  api:
+    version: v4
+
 cache:
   invalidate-time-sec: 10800 # 3h
   max-elements: 400

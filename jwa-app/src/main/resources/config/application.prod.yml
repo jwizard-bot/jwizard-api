@@ -1,5 +1,11 @@
 server:
   port: 6061
 
-service:
-  front-url: https://jwizard.pl
+discord:
+  process:
+    url-fragment: https://bot-instance-%s-f%st%s.jwizard.pl
+
+cors:
+  urls:
+    - https://jwizard.pl
+    - https://dashboard.jwizard.pl
