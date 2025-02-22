@@ -1,24 +1,29 @@
 package pl.jwizard.jwa.service.instance
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.eclipse.jetty.http.HttpHeader
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.property.ServerProperty
+import pl.jwizard.jwa.service.SecureHttpService
+import pl.jwizard.jwa.service.instance.domain.DevProcessDomainDefinition
+import pl.jwizard.jwa.service.instance.domain.ProcessDefinition
+import pl.jwizard.jwa.service.instance.domain.ProdProcessDomainDefinition
+import pl.jwizard.jwl.IrreparableException
+import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.vault.VaultClient
 import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupProperties
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 
 @Component
 internal class BotInstancesService(
-	private val httpClient: HttpClient,
-	private val objectMapper: ObjectMapper,
+	private val secureHttpService: SecureHttpService,
 	environment: BaseEnvironment,
 ) {
 	private val vaultClient = VaultClient(environment)
+
+	private val runtimeProfiles = environment
+		.getListProperty<String>(AppBaseListProperty.RUNTIME_PROFILES)
+	private val processUrlFragment = environment
+		.getProperty<String>(ServerProperty.DISCORD_PROCESS_URL_FRAGMENT)
 
 	final var instanceProperties: Map<Int, VaultKvGroupProperties<InstanceProperty>>
 		private set
@@ -35,6 +40,23 @@ internal class BotInstancesService(
 		)
 	}
 
+	// key is instance id, value is map of domain with count of shards per domain (process)
+	val instanceDomains: Map<Int, List<ProcessDefinition>>
+		get() {
+			val definitions = listOf(DevProcessDomainDefinition(), ProdProcessDomainDefinition())
+			val selectedClusterDefinition = definitions
+				.find { it.runtimeProfiles.containsAll(runtimeProfiles) }
+				?: throw IrreparableException(
+					this::class,
+					"Unable to find process definition for selected runtime profiles.",
+				)
+			return instanceProperties.entries.associate {
+				val processDefinition = selectedClusterDefinition
+					.generatePaths(processUrlFragment, it.value)
+				it.key to processDefinition
+			}
+		}
+
 	fun getSafetyProperties(instanceKey: Int) = instanceProperties[instanceKey]!!
 
 	fun createInstanceName(instanceKey: Int): String {
@@ -42,20 +64,18 @@ internal class BotInstancesService(
 		return "JWizard$instanceIndex"
 	}
 
+	fun getInstanceColor(instanceKey: Int): String {
+		val properties = getSafetyProperties(instanceKey)
+		return properties.get(InstanceProperty.JDA_PRIMARY_COLOR)
+	}
+
 	fun performHttpRequest(domain: String, urlSuffix: String, instanceId: Int): JsonNode? {
 		val properties = getSafetyProperties(instanceId)
 		val token = properties.get<String>(InstanceProperty.REST_API_TOKEN)
-
-		val httpRequest = HttpRequest.newBuilder()
-			.uri(URI.create("$domain/api/v1/status$urlSuffix"))
-			.header(HttpHeader.AUTHORIZATION.asString(), token)
-			.build()
-
-		val response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString())
-		return if (response.statusCode() == 200) {
-			objectMapper.readTree(response.body())
-		} else {
-			null
-		}
+		return secureHttpService.prepareAndRunSecureHttpRequest(
+			url = "$domain/api/v1/status$urlSuffix",
+			token = token,
+			silent = true,
+		)
 	}
 }
