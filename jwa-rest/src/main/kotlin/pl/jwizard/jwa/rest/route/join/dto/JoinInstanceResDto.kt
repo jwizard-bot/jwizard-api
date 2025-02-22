@@ -4,4 +4,5 @@ data class JoinInstanceResDto(
 	val name: String,
 	val color: String,
 	val link: String,
+	val avatarUrl: String,
 )

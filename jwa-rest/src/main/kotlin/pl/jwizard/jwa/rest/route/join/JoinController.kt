@@ -6,11 +6,12 @@ import pl.jwizard.jwl.server.route.RestControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-class JoinController(private val joinService: JoinService) : RestControllerBase {
+internal class JoinController(private val joinService: JoinService) : RestControllerBase {
 	override val basePath = "/v1/join"
 
 	private fun getAllInstances(ctx: Context) {
-		val instances = joinService.fetchJoinInstances()
+		val avatarSize = ctx.queryParam("avatarSize")
+		val instances = joinService.fetchJoinInstances(avatarSize?.toIntOrNull())
 		ctx.json(instances)
 	}
 
