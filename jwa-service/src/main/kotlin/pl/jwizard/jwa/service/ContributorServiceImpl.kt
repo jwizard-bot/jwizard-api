@@ -1,12 +1,10 @@
 package pl.jwizard.jwa.service
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacade
 import pl.jwizard.jwa.core.i18n.I18nAppFragmentSource
-import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.rest.route.contributor.ContributorService
 import pl.jwizard.jwa.rest.route.contributor.dto.ContributorsResDto
 import pl.jwizard.jwa.rest.route.contributor.dto.ProjectContributor
@@ -16,20 +14,14 @@ import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.property.VcsProperty
 import pl.jwizard.jwl.util.ext.getAsText
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 
 @Component
 internal class ContributorServiceImpl(
 	private val environment: BaseEnvironment,
 	private val cacheFacade: CacheFacade,
-	private val httpClient: HttpClient,
-	private val objectMapper: ObjectMapper,
 	private val i18n: I18n,
+	private val githubApiService: GithubApiService,
 ) : ContributorService {
-	private val githubApiUrl = environment.getProperty<String>(ServerProperty.GITHUB_API_URL)
 	private val defaultVariant = environment.getProperty<String>(VcsProperty.VCS_ALL)
 	private val organizationName = environment
 		.getProperty<String>(AppBaseProperty.VCS_ORGANIZATION_NAME)
@@ -84,15 +76,9 @@ internal class ContributorServiceImpl(
 	}
 
 	private fun getPerProjectContributors(repositoryName: String): MutableList<JsonNode> {
-		val httpRequest = HttpRequest.newBuilder()
-			.uri(URI.create("$githubApiUrl/repos/$organizationName/$repositoryName/contributors"))
-			.build()
-
-		val response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString())
-		if (response.statusCode() != 200) {
-			return mutableListOf()
-		}
-		val data = objectMapper.readTree(response.body())
-		return data.filter { it.getAsText("type") == "User" }.toMutableList()
+		val jsonNode = githubApiService
+			.performGithubGetRequest("/repos/$organizationName/$repositoryName/contributors")
+			?: mutableListOf()
+		return jsonNode.filter { it.getAsText("type") == "User" }.toMutableList()
 	}
 }
