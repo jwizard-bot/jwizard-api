@@ -14,7 +14,7 @@ import java.net.http.HttpRequest.BodyPublishers
 import java.net.http.HttpResponse
 
 @Component
-class SecureHttpService(
+internal class SecureHttpService(
 	private val httpClient: HttpClient,
 	private val objectMapper: ObjectMapper,
 ) {

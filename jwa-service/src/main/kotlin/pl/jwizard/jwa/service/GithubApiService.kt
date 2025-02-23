@@ -5,7 +5,7 @@ import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 
 @Component
-class GithubApiService(
+internal class GithubApiService(
 	private val secureHttpService: SecureHttpService,
 	private val environment: BaseEnvironment,
 ) {
