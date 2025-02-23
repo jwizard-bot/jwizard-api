@@ -1,9 +1,10 @@
 .idea/
 .gradle
 build/
-.env
 .log/
 .kotlin/
 out/
 .bin/
 docs/
+
+.env
