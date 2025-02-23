@@ -40,7 +40,7 @@ class ProcessDomainDefinitionTest {
 		val properties = Properties()
 		properties.setProperty("V_JDA_INSTANCE_PREFIX", prefix)
 		properties.setProperty("V_SHARDS_PER_PROCESS", "12")
-		properties.setProperty("V_SHARD_OVERALL_MAX", "29")
+		properties.setProperty("V_SHARD_OVERALL_MAX", "30")
 
 		val expectedPaths = listOf(
 			ProcessDefinition(prodPathDefinition.format(prefix, 0, 11), 12),
