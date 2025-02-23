@@ -25,7 +25,7 @@ internal class ProdProcessDomainDefinition : ProcessDomainDefinition {
 
 		var shardNumber = 0
 		for (clusterId in 0 until totalProcesses) {
-			val endShardNumber = min(shardOverallMax, shardNumber + shardsPerProcess - 1)
+			val endShardNumber = min(shardOverallMax - 1, shardNumber + shardsPerProcess - 1)
 			pathDefinitions += ProcessDefinition(
 				domain = pathDefinition.format(
 					instancePrefix,
@@ -33,7 +33,7 @@ internal class ProdProcessDomainDefinition : ProcessDomainDefinition {
 					endShardNumber // end shard id
 				),
 				// pre-defined total shards per instance
-				countOfShards = endShardNumber - shardNumber,
+				countOfShards = endShardNumber - shardNumber + 1,
 			)
 			shardNumber += shardsPerProcess
 		}

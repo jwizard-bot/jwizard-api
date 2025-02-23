@@ -43,9 +43,9 @@ class ProcessDomainDefinitionTest {
 		properties.setProperty("V_SHARD_OVERALL_MAX", "29")
 
 		val expectedPaths = listOf(
-			ProcessDefinition(prodPathDefinition.format(prefix, 0, 11), 11),
-			ProcessDefinition(prodPathDefinition.format(prefix, 12, 23), 11),
-			ProcessDefinition(prodPathDefinition.format(prefix, 24, 29), 5),
+			ProcessDefinition(prodPathDefinition.format(prefix, 0, 11), 12),
+			ProcessDefinition(prodPathDefinition.format(prefix, 12, 23), 12),
+			ProcessDefinition(prodPathDefinition.format(prefix, 24, 29), 6),
 		)
 		val paths = prodProcessDomainDefinition.generatePaths(
 			pathDefinition = prodPathDefinition,
