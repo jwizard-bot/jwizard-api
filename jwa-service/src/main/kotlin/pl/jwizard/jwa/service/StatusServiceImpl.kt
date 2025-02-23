@@ -53,18 +53,19 @@ internal class StatusServiceImpl(
 				shardsDown += (domainDefinition.countOfShards - shardsUp)
 			}
 		}
-		var globalStatus: Boolean? = null
-		// some other services state are unknown
-		if (operational == null) {
-			globalStatus = null
+		val globalStatus = if (operational == null) {
+			// some other services state are unknown
+			null
 		} else {
-			// all shards and other instances are up
 			if (shardsDown == 0 && operational == true) {
-				globalStatus = true
-			}
-			// some shards are down or other instances are down
-			if (shardsDown > 0 || operational == false) {
-				globalStatus = false
+				// all shards and other instances are up
+				true
+			} else if (shardsDown > 0 || operational == false) {
+				// some shards are down or other instances are down
+				false
+			} else {
+				// otherwise return false (we assume, that is an issue)
+				false
 			}
 		}
 		return GlobalStatusResDto(
