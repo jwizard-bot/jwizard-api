@@ -13,8 +13,7 @@ internal class PackagesServiceImpl(
 	private val projectPackagesSupplier: ProjectPackagesSupplier,
 ) : PackagesService {
 	override fun fetchAllPackages() = cacheFacade.getCachedList(
-		cacheEntity = CacheEntity.PROJECT_PACKAGES,
-		key = 0,
+		cacheKey = CacheEntity.PROJECT_PACKAGES,
 		computeOnAbsent = {
 			projectPackagesSupplier
 				.getAllProjectPackages()

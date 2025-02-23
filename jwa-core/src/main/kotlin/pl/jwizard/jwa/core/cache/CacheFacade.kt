@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit
 class CacheFacade(environment: BaseEnvironment) {
 	companion object {
 		val log = logger<CacheFacade>()
+
+		private const val DEFAULT_CACHE_GROUP = "jwizardCacheGroup"
 	}
 
 	private final val cacheManager: CacheManager
@@ -37,59 +39,47 @@ class CacheFacade(environment: BaseEnvironment) {
 	}
 
 	final inline fun <reified T : Serializable> getCached(
-		cacheEntity: CacheEntity,
-		key: Any,
+		cacheKey: CacheEntity,
 		computeOnAbsent: () -> T,
 		revalidateData: (data: T) -> Boolean = { true },
 	): T {
-		val cache = getCache(cacheEntity)
-		var cachedData = cache.get(key, T::class.java)
+		val cache = getCache()
+		var cachedData = cache.get(cacheKey.key, T::class.java)
 		if (cachedData != null) {
 			if (revalidateData(cachedData)) {
-				log.debug("Getting from cache entity: {} with key: {}.", cacheEntity.key, key)
+				log.debug("Getting from cache entity: {}.", cacheKey.key)
 				return cachedData
 			} else {
-				deleteFromCache(cacheEntity, key)
+				deleteFromCache(cacheKey, cacheKey.key)
 			}
 		}
 		cachedData = computeOnAbsent()
-		cache.put(key, cachedData)
-		log.debug("Persisted to cache: {} with key: {}.", cacheEntity.key, key)
+		cache.put(cacheKey.key, cachedData)
+		log.debug("Persisted to cache: {}.", cacheKey.key)
 		return cachedData
 	}
 
 	final inline fun <reified T : Serializable> getCachedList(
-		cacheEntity: CacheEntity,
-		key: Any,
+		cacheKey: CacheEntity,
 		computeOnAbsent: () -> List<T>,
 		revalidateData: (data: List<T>) -> Boolean = { true },
 	): List<T> {
-		val cache = getCache(cacheEntity)
-		var cachedData = cache.get(key, CacheListContainer::class.java)
+		val cache = getCache()
+		var cachedData = cache.get(cacheKey.key, CacheListContainer::class.java)
 		if (cachedData != null) {
 			val (elements) = cachedData
 			val castedElements = elements.map { T::class.java.cast(it) }
 			if (revalidateData(castedElements)) {
-				log.debug(
-					"Getting: {} values from cache entity: {} with key: {}.",
-					elements.size,
-					cacheEntity.key,
-					key
-				)
+				log.debug("Getting: {} values from cache entity: {}.", elements.size, cacheKey.key)
 				return castedElements
 			} else {
-				deleteFromCache(cacheEntity, key)
+				deleteFromCache(cacheKey, cacheKey.key)
 			}
 		}
 		cachedData = CacheListContainer(elements = computeOnAbsent())
-		cache.put(key, cachedData)
+		cache.put(cacheKey.key, cachedData)
 		val (elements) = cachedData
-		log.debug(
-			"Persisted: {} values to cache: {} with key: {}.",
-			elements.size,
-			cacheEntity.key,
-			key
-		)
+		log.debug("Persisted: {} values to cache: {}.", elements.size, cacheKey.key)
 		return elements.map { T::class.java.cast(it) }
 	}
 
@@ -99,8 +89,7 @@ class CacheFacade(environment: BaseEnvironment) {
 		log.debug("Deleted cache: {} with key: {}.", cacheEntity.key, key)
 	}
 
-	fun getCache(
-		cacheEntity: CacheEntity,
-	) = cacheManager.getCache(cacheEntity.key)
-		?: throw RuntimeException("Unable to find cache with name ${cacheEntity.key}.")
+	// should never throw, but who knows
+	fun getCache() = cacheManager.getCache(DEFAULT_CACHE_GROUP)
+		?: throw RuntimeException("Unable to find cache with name $DEFAULT_CACHE_GROUP.")
 }

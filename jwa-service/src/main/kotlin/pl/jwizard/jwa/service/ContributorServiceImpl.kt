@@ -40,7 +40,7 @@ internal class ContributorServiceImpl(
 				)
 			}
 			.toMutableMap()
-		val contributors = cacheFacade.getCachedList(CacheEntity.CONTRIBUTORS, 0, ::computeOnAbsent)
+		val contributors = cacheFacade.getCachedList(CacheEntity.CONTRIBUTORS, ::computeOnAbsent)
 		return ContributorsResDto(
 			contributors = contributors,
 			variants = repositoryVariants.toMap(),

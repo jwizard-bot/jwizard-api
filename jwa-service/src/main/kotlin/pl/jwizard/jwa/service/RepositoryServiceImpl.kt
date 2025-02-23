@@ -32,8 +32,7 @@ internal class RepositoryServiceImpl(
 			.associateBy { it.name }
 
 		val cachedRepositories = cacheFacade.getCachedList(
-			cacheEntity = CacheEntity.REPOSITORIES,
-			key = 0,
+			cacheKey = CacheEntity.REPOSITORIES,
 			computeOnAbsent = { fetchRepositoryLanguageInfo(projectsBuildInfo, language) },
 			revalidateData = { revalidateCache(projectsBuildInfo, it) },
 		)
