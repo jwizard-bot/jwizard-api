@@ -8,7 +8,7 @@ internal enum class InstanceProperty(
 	override val key: String,
 	override val type: KClass<*> = String::class,
 ) : VaultKvGroupPropertySource {
-	JDA_INSTANCE_PREFIX("V_JDA_INSTANCE_PREFIX"),
+	JDA_INSTANCE_PREFIX("V_JDA_INSTANCE_PREFIX", Int::class),
 	JDA_PRIMARY_COLOR("V_JDA_PRIMARY_COLOR"),
 	JDA_SECRET("V_JDA_SECRET"),
 	REST_API_TOKEN("V_REST_API_TOKEN"),

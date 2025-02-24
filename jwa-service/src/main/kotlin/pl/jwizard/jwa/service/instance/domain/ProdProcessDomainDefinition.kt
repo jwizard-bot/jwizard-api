@@ -12,7 +12,7 @@ internal class ProdProcessDomainDefinition : ProcessDomainDefinition {
 		pathDefinition: String,
 		properties: VaultKvGroupProperties<InstanceProperty>,
 	): List<ProcessDefinition> {
-		val instancePrefix = properties.get<String>(InstanceProperty.JDA_INSTANCE_PREFIX)
+		val instancePrefix = properties.get<Int>(InstanceProperty.JDA_INSTANCE_PREFIX)
 
 		// for production purposes, we return url addresses based on shards per process and
 		// maximum shards (for instance)
@@ -28,7 +28,7 @@ internal class ProdProcessDomainDefinition : ProcessDomainDefinition {
 			val endShardNumber = min(shardOverallMax - 1, shardNumber + shardsPerProcess - 1)
 			pathDefinitions += ProcessDefinition(
 				domain = pathDefinition.format(
-					instancePrefix,
+					instancePrefix - 1,
 					shardNumber, // start shard id
 					endShardNumber // end shard id
 				),

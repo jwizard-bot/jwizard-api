@@ -14,7 +14,7 @@ class ProcessDomainDefinitionTest {
 	private val prodProcessDomainDefinition = ProdProcessDomainDefinition()
 
 	private val devPathDefinition = "http://localhost:%s"
-	private val prodPathDefinition = "https://bot-instance-%s-f%se%s.jwizard.pl"
+	private val prodPathDefinition = "https://bot-instance-%s-f%st%s.jwizard.pl"
 
 	@Test
 	fun `should create dev cluster path definitions`() {
@@ -42,10 +42,11 @@ class ProcessDomainDefinitionTest {
 		properties.setProperty("V_SHARDS_PER_PROCESS", "12")
 		properties.setProperty("V_SHARD_OVERALL_MAX", "30")
 
+		val expectedInstanceId = prefix.toInt() - 1
 		val expectedPaths = listOf(
-			ProcessDefinition(prodPathDefinition.format(prefix, 0, 11), 12),
-			ProcessDefinition(prodPathDefinition.format(prefix, 12, 23), 12),
-			ProcessDefinition(prodPathDefinition.format(prefix, 24, 29), 6),
+			ProcessDefinition(prodPathDefinition.format(expectedInstanceId, 0, 11), 12),
+			ProcessDefinition(prodPathDefinition.format(expectedInstanceId, 12, 23), 12),
+			ProcessDefinition(prodPathDefinition.format(expectedInstanceId, 24, 29), 6),
 		)
 		val paths = prodProcessDomainDefinition.generatePaths(
 			pathDefinition = prodPathDefinition,
