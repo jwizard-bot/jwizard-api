@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: pre-deploy
     env:
-      SERVER_OUTPUT: "/var/www/jwizard-api"
+      SERVER_OUTPUT: "/opt/public/jwizard-api"
 
     steps:
       - name: Download generated JAR artifact
