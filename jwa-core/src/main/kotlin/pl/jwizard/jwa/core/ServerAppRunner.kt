@@ -15,7 +15,7 @@ object ServerAppRunner : AppRunner() {
 		val environment = context.getBean(BaseEnvironment::class)
 
 		val corsUrls = environment.getListProperty<String>(ServerListProperty.CORS_URLS)
-		log.info("Loaded cors urls: \"$corsUrls\".")
+		log.info("Loaded cors urls: \"{}\".", corsUrls)
 
 		httpServer.init({ config ->
 			config.bundledPlugins.enableCors { cors ->
