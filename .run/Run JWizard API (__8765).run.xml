@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run JWizard API" type="JetRunConfigurationType">
+  <configuration default="false" name="Run JWizard API (::8765)" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="pl.jwizard.jwa.app.JWizardApiEntrypointKt" />
     <module name="jwizard-api.jwa-app.main" />
     <shortenClasspath name="NONE" />
