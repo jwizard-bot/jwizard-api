@@ -3,11 +3,11 @@ package pl.jwizard.jwa.http.rest.route.command
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-class CommandController(private val commandService: CommandService) : RestControllerBase {
+internal class CommandController(private val commandService: CommandService) : HttpControllerBase {
 	override val basePath = "/v1/command"
 
 	private fun getCommandModules(ctx: Context, language: String?) {

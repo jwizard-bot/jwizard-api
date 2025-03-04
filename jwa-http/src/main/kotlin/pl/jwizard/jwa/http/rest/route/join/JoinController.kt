@@ -2,11 +2,11 @@ package pl.jwizard.jwa.http.rest.route.join
 
 import io.javalin.http.Context
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-internal class JoinController(private val joinService: JoinService) : RestControllerBase {
+internal class JoinController(private val joinService: JoinService) : HttpControllerBase {
 	override val basePath = "/v1/join"
 
 	private fun getAllInstances(ctx: Context) {

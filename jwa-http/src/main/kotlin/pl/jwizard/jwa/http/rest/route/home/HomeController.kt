@@ -2,11 +2,11 @@ package pl.jwizard.jwa.http.rest.route.home
 
 import io.javalin.http.Context
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-class HomeController(private val homeService: HomeService) : RestControllerBase {
+internal class HomeController(private val homeService: HomeService) : HttpControllerBase {
 	override val basePath = "/v1/home"
 
 	private fun getHomePageStatistics(ctx: Context) {

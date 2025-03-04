@@ -2,11 +2,13 @@ package pl.jwizard.jwa.http.rest.route.packages
 
 import io.javalin.http.Context
 import org.springframework.stereotype.Component
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-class PackagesController(private val packagesService: PackagesService) : RestControllerBase {
+internal class PackagesController(
+	private val packagesService: PackagesService,
+) : HttpControllerBase {
 	override val basePath = "/v1/packages"
 
 	private fun fetchAllPackages(ctx: Context) {

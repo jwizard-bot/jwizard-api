@@ -5,11 +5,11 @@ import io.javalin.http.pathParamAsClass
 import io.javalin.http.queryParamAsClass
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.server.ValidatorChainFacade
-import pl.jwizard.jwl.server.route.RestControllerBase
+import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
 @Component
-class StatusController(private val statusService: StatusService) : RestControllerBase {
+internal class StatusController(private val statusService: StatusService) : HttpControllerBase {
 	override val basePath = "/v1/status"
 
 	private fun getGlobalStatus(ctx: Context) {
