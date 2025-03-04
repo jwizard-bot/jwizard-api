@@ -4,10 +4,10 @@ import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacade
 import pl.jwizard.jwa.core.i18n.I18nAppFragmentSource
-import pl.jwizard.jwa.rest.route.repository.RepositoryService
-import pl.jwizard.jwa.rest.route.repository.dto.LastUpdateDto
-import pl.jwizard.jwa.rest.route.repository.dto.PrimaryLanguageDto
-import pl.jwizard.jwa.rest.route.repository.dto.RepositoryResDto
+import pl.jwizard.jwa.http.rest.route.repository.RepositoryService
+import pl.jwizard.jwa.http.rest.route.repository.dto.LastUpdateDto
+import pl.jwizard.jwa.http.rest.route.repository.dto.PrimaryLanguageDto
+import pl.jwizard.jwa.http.rest.route.repository.dto.RepositoryResDto
 import pl.jwizard.jwa.service.spi.BuildInfoSupplier
 import pl.jwizard.jwa.service.spi.dto.ProjectVersionRow
 import pl.jwizard.jwl.i18n.I18n

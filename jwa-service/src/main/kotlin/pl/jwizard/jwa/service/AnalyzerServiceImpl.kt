@@ -3,8 +3,8 @@ package pl.jwizard.jwa.service
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacade
-import pl.jwizard.jwa.rest.route.analyzer.AnalyzerService
-import pl.jwizard.jwa.rest.route.analyzer.dto.CombinedAnalyzerStatisticsResDto
+import pl.jwizard.jwa.http.rest.route.analyzer.AnalyzerService
+import pl.jwizard.jwa.http.rest.route.analyzer.dto.CombinedAnalyzerStatisticsResDto
 import pl.jwizard.jwa.service.spi.ProjectsAnalyzerSupplier
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment

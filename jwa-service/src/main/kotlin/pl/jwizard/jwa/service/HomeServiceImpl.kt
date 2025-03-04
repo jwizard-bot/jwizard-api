@@ -2,9 +2,9 @@ package pl.jwizard.jwa.service
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nAppFragmentSource
-import pl.jwizard.jwa.rest.route.home.HomeService
-import pl.jwizard.jwa.rest.route.home.dto.FeaturesResDto
-import pl.jwizard.jwa.rest.route.home.dto.StatisticsInfoResDto
+import pl.jwizard.jwa.http.rest.route.home.HomeService
+import pl.jwizard.jwa.http.rest.route.home.dto.FeaturesResDto
+import pl.jwizard.jwa.http.rest.route.home.dto.StatisticsInfoResDto
 import pl.jwizard.jwa.service.spi.KeyFeaturesSupplier
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 import pl.jwizard.jwl.command.Command

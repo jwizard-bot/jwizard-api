@@ -1,6 +1,6 @@
 dependencies {
 	implementation project(':jwa-core')
 	implementation project(':jwa-persistence')
-	implementation project(':jwa-rest')
+	implementation project(':jwa-http')
 	implementation project(':jwa-service')
 }

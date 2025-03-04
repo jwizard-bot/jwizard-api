@@ -3,8 +3,8 @@ package pl.jwizard.jwa.service
 import net.dv8tion.jda.api.Permission
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
-import pl.jwizard.jwa.rest.route.join.JoinService
-import pl.jwizard.jwa.rest.route.join.dto.JoinInstanceResDto
+import pl.jwizard.jwa.http.rest.route.join.JoinService
+import pl.jwizard.jwa.http.rest.route.join.dto.JoinInstanceResDto
 import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwa.service.instance.InstanceProperty
 import pl.jwizard.jwa.service.instance.discord.DiscordApiService

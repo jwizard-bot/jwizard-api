@@ -2,10 +2,10 @@ package pl.jwizard.jwa.service
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
-import pl.jwizard.jwa.rest.dto.OptionsResDto
-import pl.jwizard.jwa.rest.route.instance.InstanceService
-import pl.jwizard.jwa.rest.route.instance.dto.InstanceDefinitionResDto
-import pl.jwizard.jwa.rest.route.instance.dto.InstanceOption
+import pl.jwizard.jwa.http.dto.OptionsResDto
+import pl.jwizard.jwa.http.rest.route.instance.InstanceService
+import pl.jwizard.jwa.http.rest.route.instance.dto.InstanceDefinitionResDto
+import pl.jwizard.jwa.http.rest.route.instance.dto.InstanceOption
 import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwa.service.instance.discord.DiscordApiService
 import pl.jwizard.jwl.i18n.I18n
