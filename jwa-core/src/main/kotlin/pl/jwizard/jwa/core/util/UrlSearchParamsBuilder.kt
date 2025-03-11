@@ -11,7 +11,10 @@ class UrlSearchParamsBuilder {
 	}
 
 	fun addParam(key: String, value: Any) = apply {
-		params += key to URLEncoder.encode(value.toString(), Charsets.UTF_8)
+		params += URLEncoder.encode(key, Charsets.UTF_8) to URLEncoder.encode(
+			value.toString(),
+			Charsets.UTF_8,
+		)
 	}
 
 	fun build(): String {
@@ -26,4 +29,6 @@ class UrlSearchParamsBuilder {
 		}
 		return builder.toString()
 	}
+
+	fun buildAsFormData() = params.map { "${it.key}=${it.value}" }.joinToString("&")
 }
