@@ -20,7 +20,10 @@ object ServerAppRunner : AppRunner() {
 		httpServer.init({ config ->
 			config.bundledPlugins.enableCors { cors ->
 				if (corsUrls.isNotEmpty()) {
-					cors.addRule { it.allowHost(corsUrls.first(), *(corsUrls.drop(1).toTypedArray())) }
+					cors.addRule {
+						it.allowHost(corsUrls.first(), *(corsUrls.drop(1).toTypedArray()))
+						it.allowCredentials = true
+					}
 				}
 			}
 		})
