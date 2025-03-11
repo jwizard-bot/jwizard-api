@@ -1,8 +1,7 @@
-package pl.jwizard.jwa.service
+package pl.jwizard.jwa.service.http
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.javalin.http.ContentType
 import okio.IOException
 import org.eclipse.jetty.http.HttpHeader
 import org.eclipse.jetty.http.HttpMethod
@@ -20,9 +19,10 @@ internal class SecureHttpService(
 ) {
 	fun prepareAndRunSecureHttpRequest(
 		url: String,
-		token: String? = null,
+		authToken: String? = null,
+		authTokenType: AuthTokenType = AuthTokenType.PLAIN,
 		httpMethod: HttpMethod = HttpMethod.GET,
-		contentType: ContentType = ContentType.APPLICATION_JSON,
+		contentType: ApiContentType = ApiContentType.APPLICATION_JSON,
 		body: String? = null,
 		headers: Map<HttpHeader, String> = emptyMap(),
 		silent: Boolean = false
@@ -33,8 +33,10 @@ internal class SecureHttpService(
 				httpMethod.asString(),
 				body?.let { BodyPublishers.ofString(it) } ?: BodyPublishers.noBody(),
 			)
-			.header(HttpHeader.CONTENT_TYPE.asString(), contentType.mimeType)
-			.apply { token?.let { header(HttpHeader.AUTHORIZATION.asString(), token) } }
+			.header(HttpHeader.CONTENT_TYPE.asString(), contentType.mime)
+			.apply {
+				authToken?.let { header(HttpHeader.AUTHORIZATION.asString(), authTokenType.type + it) }
+			}
 			.apply { headers.forEach { header(it.key.asString(), it.value) } }
 			.build()
 		try {

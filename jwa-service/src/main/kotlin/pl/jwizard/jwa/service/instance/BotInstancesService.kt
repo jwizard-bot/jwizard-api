@@ -3,7 +3,7 @@ package pl.jwizard.jwa.service.instance
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.service.SecureHttpService
+import pl.jwizard.jwa.service.http.SecureHttpService
 import pl.jwizard.jwa.service.instance.domain.DevProcessDomainDefinition
 import pl.jwizard.jwa.service.instance.domain.ProcessDefinition
 import pl.jwizard.jwa.service.instance.domain.ProdProcessDomainDefinition
@@ -71,10 +71,9 @@ internal class BotInstancesService(
 
 	fun performHttpRequest(domain: String, urlSuffix: String, instanceId: Int): JsonNode? {
 		val properties = getSafetyProperties(instanceId)
-		val token = properties.get<String>(InstanceProperty.REST_API_TOKEN)
 		return secureHttpService.prepareAndRunSecureHttpRequest(
 			url = "$domain/api/v1/status$urlSuffix",
-			token = token,
+			authToken = properties.get<String>(InstanceProperty.REST_API_TOKEN),
 			silent = true,
 		)
 	}

@@ -2,6 +2,8 @@ package pl.jwizard.jwa.service
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
+import pl.jwizard.jwa.service.http.AuthTokenType
+import pl.jwizard.jwa.service.http.SecureHttpService
 import pl.jwizard.jwl.property.BaseEnvironment
 
 @Component
@@ -18,6 +20,7 @@ internal class GithubApiService(
 
 	fun performGithubGetRequest(urlSuffix: String) = secureHttpService.prepareAndRunSecureHttpRequest(
 		url = "$githubApiUrl$urlSuffix",
-		token = "Bearer $githubToken",
+		authToken = githubToken,
+		authTokenType = AuthTokenType.BEARER,
 	)
 }

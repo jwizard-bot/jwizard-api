@@ -8,7 +8,7 @@ import pl.jwizard.jwa.http.rest.route.status.dto.*
 import pl.jwizard.jwa.service.audionode.AudioNodeProperty
 import pl.jwizard.jwa.service.audionode.AudioNodeService
 import pl.jwizard.jwa.service.instance.BotInstancesService
-import pl.jwizard.jwa.service.instance.discord.DiscordApiService
+import pl.jwizard.jwa.service.instance.DiscordBotApiService
 import pl.jwizard.jwl.util.ext.getAsInt
 import pl.jwizard.jwl.util.ext.getAsLong
 import java.util.concurrent.Callable
@@ -19,7 +19,7 @@ import kotlin.math.ceil
 @Component
 internal class StatusServiceImpl(
 	private val botInstancesService: BotInstancesService,
-	private val discordApiService: DiscordApiService,
+	private val discordBotApiService: DiscordBotApiService,
 	private val audioNodeService: AudioNodeService,
 ) : StatusService {
 	companion object {
@@ -166,7 +166,7 @@ internal class StatusServiceImpl(
 					id = instanceKey,
 					name = botInstancesService.createInstanceName(instanceKey),
 					color = botInstancesService.getInstanceColor(instanceKey),
-					avatarUrl = discordApiService.getApplicationAvatarUrl(instanceKey, avatarSize),
+					avatarUrl = discordBotApiService.getApplicationAvatarUrl(instanceKey, avatarSize),
 					shards = RunningStatusCount(
 						up = totalRunningShards,
 						down = domains.sumOf { it.countOfShards } - totalRunningShards

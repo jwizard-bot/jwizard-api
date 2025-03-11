@@ -6,8 +6,8 @@ import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
 import pl.jwizard.jwa.http.rest.route.join.JoinService
 import pl.jwizard.jwa.http.rest.route.join.dto.JoinInstanceResDto
 import pl.jwizard.jwa.service.instance.BotInstancesService
+import pl.jwizard.jwa.service.instance.DiscordBotApiService
 import pl.jwizard.jwa.service.instance.InstanceProperty
-import pl.jwizard.jwa.service.instance.discord.DiscordApiService
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.util.getUserIdFromToken
@@ -15,7 +15,7 @@ import pl.jwizard.jwl.util.getUserIdFromToken
 @Component
 internal class JoinServiceImpl(
 	private val botInstancesService: BotInstancesService,
-	private val discordApiService: DiscordApiService,
+	private val discordBotApiService: DiscordBotApiService,
 	environment: BaseEnvironment,
 ) : JoinService {
 	private val permissions = environment.getListProperty<String>(AppBaseListProperty.JDA_PERMISSIONS)
@@ -38,7 +38,7 @@ internal class JoinServiceImpl(
 				name = botInstancesService.createInstanceName(id),
 				color = botInstancesService.getInstanceColor(id),
 				link = joinLink,
-				avatarUrl = discordApiService.getApplicationAvatarUrl(id, avatarSize),
+				avatarUrl = discordBotApiService.getApplicationAvatarUrl(id, avatarSize),
 			)
 		}
 	}
