@@ -3,7 +3,7 @@ package pl.jwizard.jwa.service.auth
 import io.javalin.http.UnauthorizedResponse
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.core.server.cookie.CustomHeader
+import pl.jwizard.jwa.core.server.CustomHeader
 import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.base64encode

@@ -1,4 +1,4 @@
-package pl.jwizard.jwa.core.server.cookie
+package pl.jwizard.jwa.core.server
 
 import io.javalin.http.Context
 

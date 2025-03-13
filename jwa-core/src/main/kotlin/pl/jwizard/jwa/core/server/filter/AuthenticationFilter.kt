@@ -6,9 +6,9 @@ import io.javalin.security.RouteRole
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.server.ApiServerAttribute
 import pl.jwizard.jwa.core.server.Role
-import pl.jwizard.jwa.core.server.cookie.ServerCookie
-import pl.jwizard.jwa.core.server.cookie.ServerCookie.Companion.cookie
-import pl.jwizard.jwa.core.server.cookie.ServerCookie.Companion.removeCookie
+import pl.jwizard.jwa.core.server.ServerCookie
+import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
+import pl.jwizard.jwa.core.server.ServerCookie.Companion.removeCookie
 import pl.jwizard.jwa.core.server.spi.SessionFilterService
 import pl.jwizard.jwl.server.filter.RoleFilterBase
 import pl.jwizard.jwl.server.setAttribute

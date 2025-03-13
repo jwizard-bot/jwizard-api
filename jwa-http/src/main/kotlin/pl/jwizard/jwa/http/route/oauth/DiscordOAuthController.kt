@@ -1,8 +1,8 @@
 package pl.jwizard.jwa.http.route.oauth
 
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.core.server.cookie.ServerCookie
-import pl.jwizard.jwa.core.server.cookie.ServerCookie.Companion.cookie
+import pl.jwizard.jwa.core.server.ServerCookie
+import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 import pl.jwizard.jwl.server.route.handler.RouteHandler

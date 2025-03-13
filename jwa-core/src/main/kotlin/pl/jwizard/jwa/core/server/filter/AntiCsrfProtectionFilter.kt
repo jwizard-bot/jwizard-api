@@ -6,9 +6,9 @@ import io.javalin.http.UnauthorizedResponse
 import io.javalin.security.RouteRole
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.server.ApiServerAttribute
+import pl.jwizard.jwa.core.server.CustomHeader
+import pl.jwizard.jwa.core.server.CustomHeader.Companion.header
 import pl.jwizard.jwa.core.server.Role
-import pl.jwizard.jwa.core.server.cookie.CustomHeader
-import pl.jwizard.jwa.core.server.cookie.CustomHeader.Companion.header
 import pl.jwizard.jwl.server.filter.RoleFilterBase
 import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.util.logger

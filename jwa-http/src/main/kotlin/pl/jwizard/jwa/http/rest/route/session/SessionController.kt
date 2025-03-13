@@ -4,9 +4,9 @@ import io.javalin.http.BadRequestResponse
 import io.javalin.http.HttpStatus
 import io.javalin.http.NotFoundResponse
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.core.server.cookie.ServerCookie
-import pl.jwizard.jwa.core.server.cookie.ServerCookie.Companion.cookie
-import pl.jwizard.jwa.core.server.cookie.ServerCookie.Companion.removeCookie
+import pl.jwizard.jwa.core.server.ServerCookie
+import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
+import pl.jwizard.jwa.core.server.ServerCookie.Companion.removeCookie
 import pl.jwizard.jwa.core.server.handler.AuthRouteHandler
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
