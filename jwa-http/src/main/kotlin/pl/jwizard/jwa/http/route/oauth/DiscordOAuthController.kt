@@ -25,8 +25,11 @@ internal class DiscordOAuthController(
 		val code = ctx.queryParam("code")
 		val sidFromCookie = ctx.cookie(ServerCookie.SID)
 		val ipAddress = ctx.header(CustomHeader.FORWARDED_FOR)
+		// get first proxy ip address (host address), every proxy server added own ip address
+		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
+		val firstProxyIp = ipAddress?.split(",")?.firstOrNull()?.trim()
 		val res = discordOAuthService.authorize(
-			code, basePath, sidFromCookie, ipAddress, ctx.userAgent()
+			code, basePath, sidFromCookie, firstProxyIp, ctx.userAgent()
 		)
 		if (res.sessionId != null) {
 			val sidCookie = ServerCookie.SID.toCookieInstance(
