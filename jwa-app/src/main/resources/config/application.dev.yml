@@ -1,5 +1,6 @@
 server:
   port: 8765
+  self-url: http://localhost:8765
 
 discord:
   process:

@@ -1,6 +1,7 @@
 package pl.jwizard.jwa.service
 
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.http.rest.route.join.JoinService
 import pl.jwizard.jwa.http.rest.route.join.dto.JoinInstanceResDto
 import pl.jwizard.jwa.service.instance.BotInstancesService
@@ -14,16 +15,16 @@ internal class JoinServiceImpl(
 	private val discordBotApiService: DiscordBotApiService,
 	environment: BaseEnvironment,
 ) : JoinService {
+	private val selfUrl = environment.getProperty<String>(ServerProperty.SERVER_SELF_URL)
 	private val permissions = environment.getListProperty<String>(AppBaseListProperty.JDA_PERMISSIONS)
 
 	override fun fetchJoinInstances(
 		avatarSize: Int?,
-		baseUrl: String
 	) = botInstancesService.instanceProperties.keys.map {
 		JoinInstanceResDto(
 			name = botInstancesService.createInstanceName(it),
 			color = botInstancesService.getInstanceColor(it),
-			link = "$baseUrl/invite/bot/${it}",
+			link = "$selfUrl/invite/bot/${it}",
 			avatarUrl = discordBotApiService.getApplicationAvatarUrl(it, avatarSize),
 		)
 	}

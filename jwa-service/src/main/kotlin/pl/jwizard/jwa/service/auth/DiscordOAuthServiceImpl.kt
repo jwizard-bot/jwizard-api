@@ -31,6 +31,8 @@ internal class DiscordOAuthServiceImpl(
 		private val log = logger<DiscordOAuthServiceImpl>()
 	}
 
+	private val selfUrl = environment.getProperty<String>(ServerProperty.SERVER_SELF_URL)
+
 	private val appId = environment.getProperty<String>(ServerProperty.DISCORD_OAUTH_APP_ID)
 	private val scopes = environment.getListProperty<String>(ServerListProperty.DISCORD_OAUTH_SCOPES)
 	private val sessionTtlSec = environment
@@ -40,29 +42,21 @@ internal class DiscordOAuthServiceImpl(
 	private val csrfTokenLength = environment
 		.getProperty<Int>(ServerProperty.DISCORD_OAUTH_CSRF_TOKEN_LENGTH)
 
-	// redirect to login page, if redirectUrl is not provided
-	override fun generateLoginUrl(redirectUrl: String?) = if (redirectUrl == null) {
-		environment.getProperty<String>(ServerProperty.DISCORD_OAUTH_REDIRECT_URL_ERROR)
-	} else {
-		UrlSearchParamsBuilder()
-			.setBaseUrl("https://discord.com/oauth2/authorize")
-			.addParam("client_id", appId)
-			.addParam("response_type", "code")
-			.addParam("redirect_uri", redirectUrl)
-			.addParam("scope", scopes.joinToString("+"))
-			.build()
-	}
+	override fun generateLoginUrl(basePath: String) = UrlSearchParamsBuilder()
+		.setBaseUrl("https://discord.com/oauth2/authorize")
+		.addParam("client_id", appId)
+		.addParam("response_type", "code")
+		.addParam("redirect_uri", makeRedirectUrl(basePath))
+		.addParam("scope", scopes.joinToString("+"))
+		.build()
 
 	override fun authorize(
 		code: String?,
-		redirectUrl: String?,
+		basePath: String,
 		sessionId: String?,
 		ipAddress: String,
 		userAgent: String?,
 	) = try {
-		if (redirectUrl == null) {
-			throw Exception("Redirect url is not set.")
-		}
 		val csrfToken = encryptService.encrypt(secureRndGeneratorService.generate(csrfTokenLength))
 		val sessionTimeAsLong = sessionTtlSec.toLong()
 		val geolocationInfo = geolocationService.extractGeolocationBasedIp(ipAddress)
@@ -112,7 +106,10 @@ internal class DiscordOAuthServiceImpl(
 			true
 		}
 		val persistedSid = if (noSessionOrSessionExpired) {
-			val tokenData = discordApiService.generateOAuthToken(code.toString(), redirectUrl)
+			val tokenData = discordApiService.generateOAuthToken(
+				code.toString(),
+				makeRedirectUrl(basePath),
+			)
 			val userData = discordApiService.performDiscordApiRequest(
 				urlSuffix = "/users/@me",
 				authToken = tokenData.accessToken,
@@ -152,4 +149,6 @@ internal class DiscordOAuthServiceImpl(
 		val baseUrl = environment.getProperty<String>(ServerProperty.DISCORD_OAUTH_REDIRECT_URL_ERROR)
 		LoginResponseData(baseUrl.format(errorDigitCode))
 	}
+
+	private fun makeRedirectUrl(basePath: String) = "$selfUrl$basePath/discord/redirect"
 }

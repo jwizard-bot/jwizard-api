@@ -1,5 +1,6 @@
 server:
   port: 6061
+  self-url: https://api.jwizard.pl
 
 discord:
   process:
