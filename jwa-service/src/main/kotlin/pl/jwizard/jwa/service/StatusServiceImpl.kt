@@ -2,6 +2,7 @@ package pl.jwizard.jwa.service
 
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.convertMillisToDtf
 import pl.jwizard.jwa.http.rest.route.status.StatusService
 import pl.jwizard.jwa.http.rest.route.status.dto.*
@@ -9,6 +10,7 @@ import pl.jwizard.jwa.service.audionode.AudioNodeProperty
 import pl.jwizard.jwa.service.audionode.AudioNodeService
 import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwa.service.instance.DiscordBotApiService
+import pl.jwizard.jwa.service.instance.domain.ProcessDefinition
 import pl.jwizard.jwl.util.ext.getAsInt
 import pl.jwizard.jwl.util.ext.getAsLong
 import java.util.concurrent.Callable
@@ -147,12 +149,11 @@ internal class StatusServiceImpl(
 
 	override fun getInstancesStatus(avatarSize: Int?): List<InstanceStatusResDto> {
 		// get N of threads based on count of instances
-		val instances = botInstancesService.instanceDomains.entries
-		val executor = Executors.newFixedThreadPool(instances.size)
-
-		val futures = instances.map { instance ->
-			val (instanceKey, domains) = instance
-			executor.submit<InstanceStatusResDto> {
+		val instances = botInstancesService.instanceDomains.entries.toList()
+		val blockingThreadsExecutor = BlockingThreadsExecutor(
+			poolSize = instances.size,
+			futureCallback = { instance: Map.Entry<Int, List<ProcessDefinition>> ->
+				val (instanceKey, domains) = instance
 				val statusList = domains.mapNotNull {
 					botInstancesService.performHttpRequest(it.domain, "/shard/reduced", instanceKey)
 				}
@@ -183,11 +184,9 @@ internal class StatusServiceImpl(
 					audioListeners = reducedAudioListeners,
 				)
 			}
-		}
-		// wait for finish all threads
-		val instancesStatus = futures.map { it.get() }
-		executor.shutdown()
-		return instancesStatus
+		)
+		blockingThreadsExecutor.initThreads(instances)
+		return blockingThreadsExecutor.waitAndGet()
 	}
 
 	override fun checkIfShardForGuildNameOrIdIsUp(
