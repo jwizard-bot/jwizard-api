@@ -17,7 +17,7 @@ import pl.jwizard.jwl.server.filter.LanguageHeaderExtractorFilter
 import java.net.http.HttpClient
 
 @Component
-class AppConfiguration {
+internal class AppConfiguration {
 	@Bean
 	fun objectMapper(): ObjectMapper {
 		val objectMapper = ObjectMapper()
@@ -49,14 +49,13 @@ class AppConfiguration {
 
 	@Bean
 	fun httpServer(
-		environment: BaseEnvironment,
 		ioCKtContextFactory: IoCKtContextFactory,
-		i18n: I18n,
 		objectMapper: ObjectMapper,
-	) = HttpServer(environment, ioCKtContextFactory, i18n, objectMapper)
+		environment: BaseEnvironment,
+	) = HttpServer(ioCKtContextFactory, objectMapper, environment)
 
 	@Bean
-	fun unspecifiedExceptionAdvisor(i18n: I18n) = UnspecifiedExceptionAdvisor(i18n)
+	fun unspecifiedExceptionAdvisor() = UnspecifiedExceptionAdvisor()
 
 	@Bean
 	fun languageHeaderExtractorFilter(
