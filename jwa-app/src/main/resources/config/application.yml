@@ -20,7 +20,9 @@ discord:
     app-secret: ${vault:V_DISCORD_OAUTH_SECRET}
     scopes:
       - identify
-    session_ttl_sec: 512 #
+    session_ttl_sec: 604800 # 7 days
+    sid-token-length: 32 # in bytes
+    csrf-token-length: 32 # in bytes
 
 geolocation:
   api:

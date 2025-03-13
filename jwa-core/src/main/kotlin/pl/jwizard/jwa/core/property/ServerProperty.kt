@@ -22,6 +22,8 @@ enum class ServerProperty(
 	DISCORD_OAUTH_REDIRECT_URL_SUCCESS("discord.oauth.redirect-url.success"),
 	DISCORD_OAUTH_REDIRECT_URL_ERROR("discord.oauth.redirect-url.error"),
 	DISCORD_OAUTH_SESSION_TTL_SEC("discord.oauth.session_ttl_sec", Int::class),
+	DISCORD_OAUTH_SID_TOKEN_LENGTH("discord.oauth.sid-token-length", Int::class),
+	DISCORD_OAUTH_CSRF_TOKEN_LENGTH("discord.oauth.csrf-token-length", Int::class),
 
 	// geolocation api
 	GEOLOCATION_API_URL("geolocation.api.url"),
