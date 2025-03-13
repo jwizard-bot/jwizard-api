@@ -1,6 +1,8 @@
 package pl.jwizard.jwa.http.rest.route.join
 
+import io.javalin.http.NotFoundResponse
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.util.ext.baseUrl
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 import pl.jwizard.jwl.server.route.handler.RouteHandler
@@ -11,7 +13,8 @@ internal class JoinController(private val joinService: JoinService) : HttpContro
 
 	private val getAllInstances = RouteHandler { ctx ->
 		val avatarSize = ctx.queryParam("avatarSize")
-		val instances = joinService.fetchJoinInstances(avatarSize?.toIntOrNull())
+		val baseUrl = ctx.baseUrl() ?: throw NotFoundResponse()
+		val instances = joinService.fetchJoinInstances(avatarSize?.toIntOrNull(), baseUrl)
 		ctx.json(instances)
 	}
 
