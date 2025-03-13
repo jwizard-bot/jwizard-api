@@ -9,6 +9,8 @@ discord:
     redirect-url:
       success: http://localhost:8764
       error: http://localhost:8764/login?error=%s
+    cookie:
+      domain: localhost
 
 cors:
   urls:

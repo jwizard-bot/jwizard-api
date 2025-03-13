@@ -9,10 +9,18 @@ enum class ServerCookie(val cookieName: String) {
 
 	fun toCookieInstance(
 		value: String,
+		domain: String,
 		ttl: Int,
 		httpOnly: Boolean,
 		secure: Boolean,
-	) = Cookie(cookieName, value, maxAge = ttl, isHttpOnly = httpOnly, secure = secure)
+	) = Cookie(
+		cookieName,
+		value,
+		domain = domain,
+		maxAge = ttl,
+		isHttpOnly = httpOnly,
+		secure = secure
+	)
 
 	companion object {
 		fun Context.cookie(serverCookie: ServerCookie) = cookie(serverCookie.cookieName)

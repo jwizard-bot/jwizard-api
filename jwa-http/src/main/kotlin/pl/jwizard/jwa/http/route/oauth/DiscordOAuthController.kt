@@ -35,6 +35,7 @@ internal class DiscordOAuthController(
 			val sidCookie = ServerCookie.SID.toCookieInstance(
 				value = res.sessionId,
 				ttl = res.sessionTtl,
+				domain = res.domain,
 				httpOnly = true,
 				secure = true,
 			)

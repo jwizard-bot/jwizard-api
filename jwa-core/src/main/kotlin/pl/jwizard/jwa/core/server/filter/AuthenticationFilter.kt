@@ -4,12 +4,14 @@ import io.javalin.http.Context
 import io.javalin.http.UnauthorizedResponse
 import io.javalin.security.RouteRole
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.core.server.ApiServerAttribute
 import pl.jwizard.jwa.core.server.Role
 import pl.jwizard.jwa.core.server.ServerCookie
 import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
 import pl.jwizard.jwa.core.server.ServerCookie.Companion.removeCookie
 import pl.jwizard.jwa.core.server.spi.SessionFilterService
+import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.server.filter.RoleFilterBase
 import pl.jwizard.jwl.server.setAttribute
 import pl.jwizard.jwl.util.logger
@@ -19,6 +21,7 @@ import java.time.ZoneOffset
 @Component
 class AuthenticationFilter(
 	private val sessionFilterService: SessionFilterService,
+	environment: BaseEnvironment,
 ) : RoleFilterBase() {
 	companion object {
 		private val log = logger<AuthenticationFilter>()
@@ -26,6 +29,9 @@ class AuthenticationFilter(
 
 	override val roles = arrayOf<RouteRole>(Role.AUTHENTICATED)
 	override val runIndex = 1
+
+	private val cookieDomain = environment
+		.getProperty<String>(ServerProperty.DISCORD_OAUTH_COOKIE_DOMAIN)
 
 	override fun roleFilter(ctx: Context) {
 		val sessionId = ctx.cookie(ServerCookie.SID) ?: throw UnauthorizedResponse()
@@ -58,6 +64,7 @@ class AuthenticationFilter(
 		val updatedCookie = ServerCookie.SID.toCookieInstance(
 			value = sessionId,
 			ttl = sessionTime,
+			domain = cookieDomain,
 			httpOnly = true,
 			secure = true,
 		)

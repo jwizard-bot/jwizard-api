@@ -9,6 +9,8 @@ discord:
     redirect-url:
       success: https://dashboard.jwizard.pl
       error: https://dashboard.jwizard.pl/login?error=%s
+    cookie:
+      domain: .jwizard.pl
 
 cors:
   urls:

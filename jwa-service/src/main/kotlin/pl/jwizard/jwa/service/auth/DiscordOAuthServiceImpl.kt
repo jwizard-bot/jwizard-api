@@ -41,6 +41,8 @@ internal class DiscordOAuthServiceImpl(
 		.getProperty<Int>(ServerProperty.DISCORD_OAUTH_SID_TOKEN_LENGTH)
 	private val csrfTokenLength = environment
 		.getProperty<Int>(ServerProperty.DISCORD_OAUTH_CSRF_TOKEN_LENGTH)
+	private val cookieDomain = environment
+		.getProperty<String>(ServerProperty.DISCORD_OAUTH_COOKIE_DOMAIN)
 
 	override fun generateLoginUrl(basePath: String) = UrlSearchParamsBuilder()
 		.setBaseUrl("https://discord.com/oauth2/authorize")
@@ -137,6 +139,7 @@ internal class DiscordOAuthServiceImpl(
 		LoginResponseData(
 			redirectUrl = environment.getProperty(ServerProperty.DISCORD_OAUTH_REDIRECT_URL_SUCCESS),
 			sessionId = persistedSid,
+			domain = cookieDomain,
 			sessionTtl = sessionTtlSec,
 		)
 	} catch (ex: Exception) {
@@ -147,7 +150,7 @@ internal class DiscordOAuthServiceImpl(
 			errorDigitCode, ex.message,
 		)
 		val baseUrl = environment.getProperty<String>(ServerProperty.DISCORD_OAUTH_REDIRECT_URL_ERROR)
-		LoginResponseData(baseUrl.format(errorDigitCode))
+		LoginResponseData(baseUrl.format(errorDigitCode), domain = cookieDomain)
 	}
 
 	private fun makeRedirectUrl(basePath: String) = "$selfUrl$basePath/discord/redirect"
