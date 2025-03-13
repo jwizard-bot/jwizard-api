@@ -1,9 +1,10 @@
 package pl.jwizard.jwa.http.rest.route.instance
 
-import io.javalin.http.Context
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.handler.I18nRouteHandler
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
+import pl.jwizard.jwl.server.route.handler.RouteHandler
 
 @Component
 internal class InstanceController(
@@ -11,25 +12,25 @@ internal class InstanceController(
 ) : HttpControllerBase {
 	override val basePath = "/v1/instance"
 
-	private fun getAllInstanceOptions(ctx: Context, language: String?) {
+	private val getAllInstanceOptions = I18nRouteHandler { ctx, language ->
 		val resDto = instanceService.getAllInstanceOptions(language)
 		ctx.json(resDto)
 	}
 
-	private fun getAllInstanceDefinitions(ctx: Context) {
+	private val getAllInstanceDefinitions = RouteHandler { ctx ->
 		val avatarSize = ctx.queryParam("avatarSize")
 		val resDto = instanceService.getAllInstanceDefinitions(avatarSize?.toIntOrNull())
 		ctx.json(resDto)
 	}
 
-	private fun getAllInstanceIds(ctx: Context) {
+	private val getAllInstanceIds = RouteHandler { ctx ->
 		val resDto = instanceService.getAllInstanceIds()
 		ctx.json(resDto)
 	}
 
 	override val routes = RouteDefinitionBuilder()
-		.getWithI18n("/option/all", ::getAllInstanceOptions)
-		.get("/definition/all", ::getAllInstanceDefinitions)
-		.get("/id/all", ::getAllInstanceIds)
+		.get("/option/all", getAllInstanceOptions)
+		.get("/definition/all", getAllInstanceDefinitions)
+		.get("/id/all", getAllInstanceIds)
 		.compositeRoutes()
 }

@@ -1,26 +1,27 @@
 package pl.jwizard.jwa.http.rest.route.home
 
-import io.javalin.http.Context
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.handler.I18nRouteHandler
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
+import pl.jwizard.jwl.server.route.handler.RouteHandler
 
 @Component
 internal class HomeController(private val homeService: HomeService) : HttpControllerBase {
 	override val basePath = "/v1/home"
 
-	private fun getHomePageStatistics(ctx: Context) {
+	private val getHomePageStatistics = RouteHandler { ctx ->
 		val statistics = homeService.getHomePageStatistics()
 		ctx.json(statistics)
 	}
 
-	private fun getHomePageFeatures(ctx: Context, language: String?) {
+	private val getHomePageFeatures = I18nRouteHandler { ctx, language ->
 		val features = homeService.getHomePageFeatures(language)
 		ctx.json(features)
 	}
 
 	override val routes = RouteDefinitionBuilder()
-		.get("/statistics", ::getHomePageStatistics)
-		.getWithI18n("/features", ::getHomePageFeatures)
+		.get("/statistics", getHomePageStatistics)
+		.get("/features", getHomePageFeatures)
 		.compositeRoutes()
 }

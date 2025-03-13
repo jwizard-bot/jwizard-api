@@ -1,7 +1,7 @@
 package pl.jwizard.jwa.http.rest.route.contributor
 
-import io.javalin.http.Context
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.handler.I18nRouteHandler
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
@@ -11,12 +11,12 @@ internal class ContributorController(
 ) : HttpControllerBase {
 	override val basePath = "/v1/contributor"
 
-	private fun getAllProjectContributors(ctx: Context, language: String?) {
+	private val getAllProjectContributors = I18nRouteHandler { ctx, language ->
 		val contributorsResDto = contributorService.getProjectContributors(language)
 		ctx.json(contributorsResDto)
 	}
 
 	override val routes = RouteDefinitionBuilder()
-		.getWithI18n("/all", ::getAllProjectContributors)
+		.get("/all", getAllProjectContributors)
 		.compositeRoutes()
 }

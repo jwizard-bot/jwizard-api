@@ -1,7 +1,7 @@
 package pl.jwizard.jwa.http.rest.route.repository
 
-import io.javalin.http.Context
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.handler.I18nRouteHandler
 import pl.jwizard.jwl.server.route.HttpControllerBase
 import pl.jwizard.jwl.server.route.RouteDefinitionBuilder
 
@@ -11,12 +11,12 @@ internal class RepositoryController(
 ) : HttpControllerBase {
 	override val basePath = "/v1/repository"
 
-	private fun fetchAllRepositories(ctx: Context, language: String?) {
+	private val fetchAllRepositories = I18nRouteHandler { ctx, language ->
 		val repositories = repositoryService.getAllRepositories(language)
 		ctx.json(repositories)
 	}
 
 	override val routes = RouteDefinitionBuilder()
-		.getWithI18n("/all", ::fetchAllRepositories)
+		.get("/all", fetchAllRepositories)
 		.compositeRoutes()
 }
