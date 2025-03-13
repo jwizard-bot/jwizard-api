@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.eclipse.jetty.http.HttpMethod
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
-import pl.jwizard.jwa.service.DiscordApiService
+import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.http.ApiContentType
 import pl.jwizard.jwa.service.http.AuthTokenType
 import pl.jwizard.jwl.util.getUserIdFromToken
