@@ -9,7 +9,7 @@ interface DiscordOAuthService {
 		code: String?,
 		basePath: String,
 		sessionId: String?,
-		ipAddress: String,
+		ipAddress: String?,
 		userAgent: String?,
 	): LoginResponseData
 }

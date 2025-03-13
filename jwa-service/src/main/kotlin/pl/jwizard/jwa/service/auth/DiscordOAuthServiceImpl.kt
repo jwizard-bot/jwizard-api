@@ -54,7 +54,7 @@ internal class DiscordOAuthServiceImpl(
 		code: String?,
 		basePath: String,
 		sessionId: String?,
-		ipAddress: String,
+		ipAddress: String?,
 		userAgent: String?,
 	) = try {
 		val csrfToken = encryptService.encrypt(secureRndGeneratorService.generate(csrfTokenLength))

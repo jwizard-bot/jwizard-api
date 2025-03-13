@@ -1,6 +1,8 @@
 package pl.jwizard.jwa.http.route.oauth
 
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.CustomHeader
+import pl.jwizard.jwa.core.server.CustomHeader.Companion.header
 import pl.jwizard.jwa.core.server.ServerCookie
 import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
 import pl.jwizard.jwl.server.route.HttpControllerBase
@@ -22,8 +24,9 @@ internal class DiscordOAuthController(
 	private val authorizeAndRedirect = RouteHandler { ctx ->
 		val code = ctx.queryParam("code")
 		val sidFromCookie = ctx.cookie(ServerCookie.SID)
+		val ipAddress = ctx.header(CustomHeader.FORWARDED_FOR)
 		val res = discordOAuthService.authorize(
-			code, basePath, sidFromCookie, ctx.ip(), ctx.userAgent()
+			code, basePath, sidFromCookie, ipAddress, ctx.userAgent()
 		)
 		if (res.sessionId != null) {
 			val sidCookie = ServerCookie.SID.toCookieInstance(

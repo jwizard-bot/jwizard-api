@@ -14,9 +14,8 @@ internal class GeolocationService(
 	private val apiUrl = environment.getProperty<String>(ServerProperty.GEOLOCATION_API_URL)
 	private val apiKey = environment.getProperty<String>(ServerProperty.GEOLOCATION_API_KEY)
 
-	fun extractGeolocationBasedIp(ip: String): String? {
-		print(ip)
-		if (apiKey.isBlank()) {
+	fun extractGeolocationBasedIp(ip: String?): String? {
+		if (ip == null || apiKey.isBlank()) {
 			// geolocation service is disabled
 			return null
 		}
