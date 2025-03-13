@@ -21,6 +21,6 @@ internal class GithubApiService(
 	fun performGithubGetRequest(urlSuffix: String) = secureHttpService.prepareAndRunSecureHttpRequest(
 		url = "$githubApiUrl$urlSuffix",
 		authToken = githubToken,
-		authTokenType = AuthTokenType.BEARER,
+		authTokenType = AuthTokenType.TOKEN,
 	)
 }
