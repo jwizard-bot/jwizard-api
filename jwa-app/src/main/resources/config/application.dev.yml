@@ -4,6 +4,10 @@ server:
 discord:
   process:
     url-fragment: http://localhost:%s
+  oauth:
+    redirect-url:
+      success: http://localhost:8764
+      error: http://localhost:8764/login?error=%s
 
 cors:
   urls:

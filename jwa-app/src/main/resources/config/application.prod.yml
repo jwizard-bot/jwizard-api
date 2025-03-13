@@ -4,6 +4,10 @@ server:
 discord:
   process:
     url-fragment: https://bot-instance-%s-f%st%s.jwizard.pl
+  oauth:
+    redirect-url:
+      success: https://dashboard.jwizard.pl
+      error: https://dashboard.jwizard.pl/login?error=%s
 
 cors:
   urls:

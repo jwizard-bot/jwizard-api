@@ -10,5 +10,8 @@ enum class ServerListProperty(
 ) : AppListProperty {
 	// cors
 	CORS_URLS("cors.urls"),
+
+	// discord oauth
+	DISCORD_OAUTH_SCOPES("discord.oauth.scopes"),
 	;
 }

@@ -3,6 +3,9 @@ vault:
     application-names:
       - api
 
+server:
+  aes-secret-key: ${vault:V_AES_SECRET_KEY}
+
 github:
   api:
     url: https://api.github.com
@@ -12,6 +15,22 @@ github:
 discord:
   api:
     url: https://discord.com/api/v10
+  oauth:
+    app-id: ${vault:V_DISCORD_OAUTH_APP_ID}
+    app-secret: ${vault:V_DISCORD_OAUTH_SECRET}
+    scopes:
+      - identify
+    session_ttl_sec: 512 #
+
+geolocation:
+  api:
+    url: https://api.ipgeolocation.io/ipgeo
+    key: ${vault:V_GEOLOCATION_API_KEY}
+    name: IPGeolocation
+    website: https://ipgeolocation.io/
+
+yauaa:
+  cache-max-elements: 1000
 
 lavalink:
   api:
