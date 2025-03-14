@@ -1,8 +1,9 @@
 # JWizard API
 
-JWizard is an open-source Discord music bot handling audio content from various multimedia sources with innovative web
-player. This image contains an API used by the web client to manage guilds, playlists, and remotely invoke Discord
-commands using its own protocol based on WebSocket and RabbitMQ message queue.
+JWizard is an open-source Discord music bot handling audio content from various multimedia sources
+with innovative web player. This image contains an API used by the web client to manage guilds,
+playlists, and remotely invoke Discord commands using its own protocol based on WebSocket and
+RabbitMQ message queue.
 
 [Webpage](https://jwizard.pl)
 | [GitHub repository](https://github.com/jwizard-bot/jwizard-api)
@@ -58,15 +59,6 @@ networks:
   jwizard-network:
     driver: bridge
 ```
-
-## Documentation
-
-For detailed documentation, please visit [JWizard documentation](https://jwizard.pl/docs).
-<br>
-Documentation for latest version (with SHA) you will find:
-
-* [here](https://docs.jwizard.pl/jwa/kdoc) - in **KDoc** format,
-* [here](https://docs.jwizard.pl/jwa/javadoc) - in **Javadoc** format.
 
 ## License
 
