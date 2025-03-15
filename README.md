@@ -24,11 +24,9 @@ RabbitMQ message queue.
 * Spring Boot was omitted in favor of implementing only the IoC container provided by Spring
   Context.
 * Configuration is shared with the JWizard Lib project to eliminate code redundancy and ensure
-  consistency in changes
-  across different project modules.
+  consistency in changes across different project modules.
 * This project is divided into several loosely coupled modules connected through the SPI pattern and
-  auto-injected
-  beans by IoC container.
+  auto-injected beans by IoC container.
 
 ## Project modules
 
@@ -104,9 +102,8 @@ where `Xmx` and `Xms` parameters are optional and can be modified.
 
 ## Contributing
 
-We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING) file for
-guidelines on how
-to get involved.
+We welcome contributions from the community! Please read our [CONTRIBUTING](./CONTRIBUTING.md) file
+for guidelines on how to get involved.
 
 ## License
 
