@@ -56,7 +56,8 @@ $ git clone https://github.com/jwizard-bot/jwizard-tools
 | jwizard-vault    | 8761    | Secret keys storage service. |
 | jwizard-mysql-db | 8762    | MySQL database.              |
 
-> NOTE: Don't forget to perform database migration after start DB (see
+> [!IMPORTANT]
+> Don't forget to perform database migration after start DB (see
 > [jwizard-lib](https://github.com/jwizard-bot/jwizard-lib) repository).
 
 4. Build library and package to Maven Local artifacts' storage:
@@ -96,8 +97,9 @@ in [jwizard-lib](https://github.com/jwizard-bot/jwizard-lib) repository.
 
 where `Xmx` and `Xms` parameters are optional and can be modified.
 
-> NOTE: For servers running on HotSpot JVM, Oracle recommended same Xms and Xmx parameter, ex.
-`-Xms128m` and `-Xmx128m`. More information you will find
+> [!NOTE]
+> For servers running on HotSpot JVM, Oracle recommended same Xms and Xmx parameter, ex. `-Xms128m`
+> and `-Xmx128m`. More information you will find
 > [here](https://docs.oracle.com/cd/E74363_01/ohi_vbp_-_installation_guide--20160224-094432-html-chunked/s66.html).
 
 ## Contributing
