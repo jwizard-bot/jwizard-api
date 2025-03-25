@@ -1,6 +1,5 @@
 server:
-  port: 8765
-  self-url: http://localhost:8765
+  self-url: http://localhost:${vault:V_SERVER_PORT}
 
 discord:
   process:
