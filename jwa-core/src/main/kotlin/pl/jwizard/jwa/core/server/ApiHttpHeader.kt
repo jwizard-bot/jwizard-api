@@ -9,7 +9,6 @@ enum class ApiHttpHeader(val headerName: String) {
 	// custom
 	X_CSRF_TOKEN("X-Csrf-Token"),
 	X_FORWARDED_FOR("X-Forwarded-For"),
-	X_CLOUDFLARE_VERIFY_PROXY("X-Cloudflare-Verify-Proxy"),
 	;
 
 	companion object {

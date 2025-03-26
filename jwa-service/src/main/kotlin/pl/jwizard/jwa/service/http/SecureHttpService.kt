@@ -21,7 +21,10 @@ internal class SecureHttpService(
 	private val objectMapper: ObjectMapper,
 	environment: BaseEnvironment,
 ) {
-	private val proxyVerifyToken = environment.getProperty<String>(AppBaseProperty.PROXY_VERIFY_TOKEN)
+	private val proxyVerificationHeaderName = environment
+		.getProperty<String>(AppBaseProperty.PROXY_VERIFICATION_HEADER_NAME)
+	private val proxyVerificationToken = environment
+		.getProperty<String>(AppBaseProperty.PROXY_VERIFICATION_TOKEN)
 
 	fun prepareAndRunSecureHttpRequest(
 		url: String,
@@ -32,7 +35,7 @@ internal class SecureHttpService(
 		body: String? = null,
 		headers: Map<ApiHttpHeader, String> = emptyMap(),
 		silent: Boolean = false,
-		withProxyVerifyToken: Boolean = false,
+		withProxyVerification: Boolean = false,
 	): JsonNode? {
 		val httpRequest = HttpRequest.newBuilder()
 			.uri(URI.create(url))
@@ -42,8 +45,8 @@ internal class SecureHttpService(
 			)
 			.header(HttpHeader.CONTENT_TYPE.asString(), contentType.mime)
 			.apply {
-				if (proxyVerifyToken.isNotBlank()) {
-					header(ApiHttpHeader.X_CLOUDFLARE_VERIFY_PROXY.headerName, proxyVerifyToken)
+				if (proxyVerificationToken.isNotBlank()) {
+					header(proxyVerificationHeaderName, proxyVerificationToken)
 				}
 				authToken?.let { header(HttpHeader.AUTHORIZATION.asString(), authTokenType.type + it) }
 				headers.forEach { header(it.key.headerName, it.value) }
