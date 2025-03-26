@@ -1,8 +1,8 @@
 package pl.jwizard.jwa.http.route.oauth
 
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.core.server.CustomHeader
-import pl.jwizard.jwa.core.server.CustomHeader.Companion.header
+import pl.jwizard.jwa.core.server.ApiHttpHeader
+import pl.jwizard.jwa.core.server.ApiHttpHeader.Companion.header
 import pl.jwizard.jwa.core.server.ServerCookie
 import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
 import pl.jwizard.jwl.server.route.HttpControllerBase
@@ -24,7 +24,7 @@ internal class DiscordOAuthController(
 	private val authorizeAndRedirect = RouteHandler { ctx ->
 		val code = ctx.queryParam("code")
 		val sidFromCookie = ctx.cookie(ServerCookie.SID)
-		val ipAddress = ctx.header(CustomHeader.FORWARDED_FOR)
+		val ipAddress = ctx.header(ApiHttpHeader.X_FORWARDED_FOR)
 		// get first proxy ip address (host address), every proxy server added own ip address
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
 		val firstProxyIp = ipAddress?.split(",")?.firstOrNull()?.trim()

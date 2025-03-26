@@ -3,7 +3,7 @@ package pl.jwizard.jwa.service.auth
 import io.javalin.http.UnauthorizedResponse
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.core.server.CustomHeader
+import pl.jwizard.jwa.core.server.ApiHttpHeader
 import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.base64encode
@@ -108,7 +108,7 @@ internal class SessionServiceImpl(
 	override fun updateAndGetCsrfToken(sessionId: String): CsrfTokenResDto {
 		val csrfToken = encryptService.encrypt(secureRndGeneratorService.generate(csrfTokenLength))
 		sessionSupplier.updateCsrfToken(sessionId, csrfToken)
-		return CsrfTokenResDto(csrfToken, CustomHeader.CSRF_TOKEN.headerName)
+		return CsrfTokenResDto(csrfToken, ApiHttpHeader.X_CSRF_TOKEN.headerName)
 	}
 
 	override fun revalidate(sessionId: String?): RevalidateStateResDto {

@@ -2,10 +2,10 @@ package pl.jwizard.jwa.service.discord
 
 import com.fasterxml.jackson.databind.JsonNode
 import net.dv8tion.jda.api.JDAInfo
-import org.eclipse.jetty.http.HttpHeader
 import org.eclipse.jetty.http.HttpMethod
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
+import pl.jwizard.jwa.core.server.ApiHttpHeader
 import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
 import pl.jwizard.jwa.service.http.ApiContentType
 import pl.jwizard.jwa.service.http.AuthTokenType
@@ -99,7 +99,7 @@ internal class DiscordApiService(
 			httpMethod = httpMethod,
 			headers = mapOf(
 				// https://discord.com/developers/docs/reference#user-agent
-				HttpHeader.USER_AGENT to "DiscordBot (JDA, ${JDAInfo.VERSION})"
+				ApiHttpHeader.USER_AGENT to "DiscordBot (JDA, ${JDAInfo.VERSION})"
 			),
 			body = body,
 		)

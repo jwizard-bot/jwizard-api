@@ -5,9 +5,9 @@ import io.javalin.http.ForbiddenResponse
 import io.javalin.http.UnauthorizedResponse
 import io.javalin.security.RouteRole
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.server.ApiHttpHeader
+import pl.jwizard.jwa.core.server.ApiHttpHeader.Companion.header
 import pl.jwizard.jwa.core.server.ApiServerAttribute
-import pl.jwizard.jwa.core.server.CustomHeader
-import pl.jwizard.jwa.core.server.CustomHeader.Companion.header
 import pl.jwizard.jwa.core.server.Role
 import pl.jwizard.jwl.server.filter.RoleFilterBase
 import pl.jwizard.jwl.server.getAttribute
@@ -25,7 +25,7 @@ class AntiCsrfProtectionFilter : RoleFilterBase() {
 	override fun roleFilter(ctx: Context) {
 		val session = ctx.getAttribute<LoggedUser>(ApiServerAttribute.AUTHENTICATED_USER)
 			?: throw UnauthorizedResponse()
-		if (session.csrfToken != ctx.header(CustomHeader.CSRF_TOKEN)) {
+		if (session.csrfToken != ctx.header(ApiHttpHeader.X_CSRF_TOKEN)) {
 			log.debug("Passed csrf token is not equal to persisted csrf token.")
 			throw ForbiddenResponse()
 		}
