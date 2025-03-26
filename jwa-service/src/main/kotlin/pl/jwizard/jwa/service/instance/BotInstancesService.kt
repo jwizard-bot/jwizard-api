@@ -75,6 +75,7 @@ internal class BotInstancesService(
 			url = "$domain/api/v1/status$urlSuffix",
 			authToken = properties.get<String>(InstanceProperty.REST_API_TOKEN),
 			silent = true,
+			withProxyVerifyToken = true,
 		)
 	}
 }

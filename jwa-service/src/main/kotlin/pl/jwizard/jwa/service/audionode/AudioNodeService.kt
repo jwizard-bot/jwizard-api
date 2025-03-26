@@ -49,6 +49,7 @@ internal class AudioNodeService(
 			url = "$scheme://$gatewayHost/$apiVersion$urlSuffix",
 			authToken = properties.get(AudioNodeProperty.PASSWORD),
 			silent = true,
+			withProxyVerifyToken = true,
 		)
 	}
 
