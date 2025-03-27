@@ -1,4 +1,4 @@
-package pl.jwizard.jwc.persistence
+package pl.jwizard.jwa.persistence
 
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component

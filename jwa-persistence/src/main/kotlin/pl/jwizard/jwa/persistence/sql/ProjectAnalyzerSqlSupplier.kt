@@ -1,4 +1,4 @@
-package pl.jwizard.jwc.persistence.sql
+package pl.jwizard.jwa.persistence.sql
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.service.spi.ProjectsAnalyzerSupplier
