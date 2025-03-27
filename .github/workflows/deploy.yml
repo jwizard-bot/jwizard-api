@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: output-jar
-          path: .bin/
+          path: jwizard-api.jar
           retention-days: 1
 
   docker:
@@ -113,7 +113,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: output-jar
-          path: .bin
+          path: bin
 
       - name: Setup Python environment
         uses: actions/setup-python@v5
@@ -141,7 +141,7 @@ jobs:
         run: exec/run-with-config remote_invoker \
           "${{ secrets.CONFIG_FILE_CONTENT }}" \
           --name api  \
-          --inputDir ${{ github.workspace }}/.bin
+          --inputDir ${{ github.workspace }}/bin
         env:
           JWIZARD_SSH_HOST: ${{ secrets.SSH_HOST }}
           JWIZARD_SSH_PORT: ${{ secrets.SSH_PORT }}
