@@ -8,7 +8,6 @@ kotlinVersion = "2.0.20"
 log4jCoreVersion = "2.24.3"
 logbackVersion = "1.5.7"
 shadowJarVersion = "8.1.1"
-slf4jApiVersion = "2.0.16"
 springVersion = "6.1.14"
 yauaaVersion = "7.30.0"
 
@@ -21,10 +20,8 @@ junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", versio
 jwizardLib = { module = "pl.jwizard:jwizard-lib", version.ref = "jwizardLibVersion" }
 kotlin = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlinVersion" }
 kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinVersion" }
-logbackCore = { module = "ch.qos.logback:logback-core", version.ref = "logbackVersion" }
 log4jCore = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4jCoreVersion" }
 logbackClassic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
-slf4jApi = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApiVersion" }
 springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
 yauaa = { module = "nl.basjes.parse.useragent:yauaa", version.ref = "yauaaVersion" }
 
