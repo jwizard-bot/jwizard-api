@@ -26,7 +26,7 @@ docker build \
 ```bash
 docker run -d \
   --name jwizard-api \
-  -p 6061:6061 \
+  -p 8080:8080 \
   -e JWIZARD_VAULT_SERVER=<vault server url> \
   -e JWIZARD_VAULT_USERNAME=<vault username> \
   -e JWIZARD_VAULT_PASSWORD=<vault password> \
@@ -43,7 +43,7 @@ services:
     container_name: jwizard-api
     image: milosz08/jwizard-api:latest
     ports:
-      - '6061:6061'
+      - '8080:8080'
     environment:
       JWIZARD_VAULT_SERVER: <vault server url>
       JWIZARD_VAULT_USERNAME: <vault username>

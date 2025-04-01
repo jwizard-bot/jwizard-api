@@ -56,7 +56,7 @@ RUN sed -i \
 
 RUN chmod +x entrypoint
 
-EXPOSE 6061
 LABEL maintainer="JWizard <info@jwizard.pl>"
 
+EXPOSE 8080
 ENTRYPOINT [ "./entrypoint" ]
