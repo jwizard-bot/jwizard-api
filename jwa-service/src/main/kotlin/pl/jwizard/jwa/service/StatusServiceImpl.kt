@@ -4,8 +4,8 @@ import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.convertMillisToDtf
-import pl.jwizard.jwa.http.rest.route.status.StatusService
-import pl.jwizard.jwa.http.rest.route.status.dto.*
+import pl.jwizard.jwa.gateway.http.rest.route.status.StatusService
+import pl.jwizard.jwa.gateway.http.rest.route.status.dto.*
 import pl.jwizard.jwa.service.audionode.AudioNodeProperty
 import pl.jwizard.jwa.service.audionode.AudioNodeService
 import pl.jwizard.jwa.service.instance.BotInstancesService

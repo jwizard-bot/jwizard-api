@@ -4,5 +4,5 @@ dependencies {
 	implementation(libs.yauaa)
 
 	implementation(project(":jwa-core"))
-	implementation(project(":jwa-http"))
+	implementation(project(":jwa-gateway"))
 }

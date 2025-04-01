@@ -2,9 +2,9 @@ package pl.jwizard.jwa.service.command
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.i18n.I18nUtilLocaleSource
-import pl.jwizard.jwa.http.dto.OptionsResDto
-import pl.jwizard.jwa.http.rest.route.command.CommandService
-import pl.jwizard.jwa.http.rest.route.command.dto.*
+import pl.jwizard.jwa.gateway.http.dto.OptionsResDto
+import pl.jwizard.jwa.gateway.http.rest.route.command.CommandService
+import pl.jwizard.jwa.gateway.http.rest.route.command.dto.*
 import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwl.command.Command
 import pl.jwizard.jwl.command.CommandFormatContext

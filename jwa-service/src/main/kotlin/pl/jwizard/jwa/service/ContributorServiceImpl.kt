@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacade
 import pl.jwizard.jwa.core.i18n.I18nAppFragmentSource
-import pl.jwizard.jwa.http.rest.route.contributor.ContributorService
-import pl.jwizard.jwa.http.rest.route.contributor.dto.ContributorsResDto
-import pl.jwizard.jwa.http.rest.route.contributor.dto.ProjectContributor
-import pl.jwizard.jwa.http.rest.route.contributor.dto.ProjectVariant
+import pl.jwizard.jwa.gateway.http.rest.route.contributor.ContributorService
+import pl.jwizard.jwa.gateway.http.rest.route.contributor.dto.ContributorsResDto
+import pl.jwizard.jwa.gateway.http.rest.route.contributor.dto.ProjectContributor
+import pl.jwizard.jwa.gateway.http.rest.route.contributor.dto.ProjectVariant
 import pl.jwizard.jwl.i18n.I18n
 import pl.jwizard.jwl.property.AppBaseProperty
 import pl.jwizard.jwl.property.BaseEnvironment

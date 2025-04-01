@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerListProperty
 import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
-import pl.jwizard.jwa.http.route.oauth.DiscordOAuthService
-import pl.jwizard.jwa.http.route.oauth.dto.LoginResponseData
+import pl.jwizard.jwa.gateway.http.route.oauth.DiscordOAuthService
+import pl.jwizard.jwa.gateway.http.route.oauth.dto.LoginResponseData
 import pl.jwizard.jwa.service.crypto.EncryptService
 import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService

@@ -2,8 +2,8 @@ package pl.jwizard.jwa.service
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.http.rest.route.join.JoinService
-import pl.jwizard.jwa.http.rest.route.join.dto.JoinInstanceResDto
+import pl.jwizard.jwa.gateway.http.rest.route.join.JoinService
+import pl.jwizard.jwa.gateway.http.rest.route.join.dto.JoinInstanceResDto
 import pl.jwizard.jwa.service.instance.BotInstancesService
 import pl.jwizard.jwa.service.instance.DiscordBotApiService
 import pl.jwizard.jwl.property.AppBaseListProperty

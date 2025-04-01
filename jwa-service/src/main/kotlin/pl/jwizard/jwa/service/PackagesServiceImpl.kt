@@ -3,8 +3,8 @@ package pl.jwizard.jwa.service
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.cache.CacheEntity
 import pl.jwizard.jwa.core.cache.CacheFacade
-import pl.jwizard.jwa.http.rest.route.packages.PackagesService
-import pl.jwizard.jwa.http.rest.route.packages.dto.PackageRowResDto
+import pl.jwizard.jwa.gateway.http.rest.route.packages.PackagesService
+import pl.jwizard.jwa.gateway.http.rest.route.packages.dto.PackageRowResDto
 import pl.jwizard.jwa.service.spi.ProjectPackagesSupplier
 
 @Component

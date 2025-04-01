@@ -8,8 +8,8 @@ import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.base64encode
 import pl.jwizard.jwa.core.util.timeDifference
-import pl.jwizard.jwa.http.rest.route.session.SessionService
-import pl.jwizard.jwa.http.rest.route.session.dto.*
+import pl.jwizard.jwa.gateway.http.rest.route.session.SessionService
+import pl.jwizard.jwa.gateway.http.rest.route.session.dto.*
 import pl.jwizard.jwa.service.crypto.EncryptService
 import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService
