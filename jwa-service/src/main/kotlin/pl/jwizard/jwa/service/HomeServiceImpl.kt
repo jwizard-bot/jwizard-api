@@ -39,8 +39,8 @@ internal class HomeServiceImpl(
 				description = i18n.tRaw(
 					I18nAppFragmentSource.KEY_FEATURE_DESCRIPTION, arrayOf(textId), args, language
 				),
-				isActive,
+				active = isActive,
 			)
-		}.sortedByDescending(FeaturesResDto::isActive)
+		}.sortedByDescending(FeaturesResDto::active)
 	}
 }
