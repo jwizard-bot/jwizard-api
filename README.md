@@ -35,7 +35,7 @@ RabbitMQ message queue.
 | jwa-app         | Application entrypoint, configuration files and i18n local content.                 |
 | jwa-core        | Server loader, exception handlers and session management.                           |
 | jwa-persistence | Communication via RDBMS (SQL) with loosely coupled binding beans (provided by SPI). |
-| jwa-rest        | Javalin API endpoint definitions.                                                   |
+| jwa-gateway     | Rest API endpoints, HTTP API interfaces, WS and AMQP gateway.                       |
 | jwa-service     | Services as loosely coupled binding beans for different handlers (HTTP, WS etc.).   |
 
 ## Clone and install
@@ -51,10 +51,11 @@ $ git clone https://github.com/jwizard-bot/jwizard-tools
 3. Configure and run all necessary containers defined in `README.md` file in this repository. You
    must have up these containers:
 
-| Name             | Port(s) | Description                  |
-|------------------|---------|------------------------------|
-| jwizard-vault    | 8761    | Secret keys storage service. |
-| jwizard-mysql-db | 8762    | MySQL database.              |
+| Name             | Port(s)    | Description                           |
+|------------------|------------|---------------------------------------|
+| jwizard-vault    | 8761       | Secret keys storage service.          |
+| jwizard-mysql-db | 8762       | MySQL database.                       |
+| jwizard-rabbitmq | 8771, 8772 | RabbitMQ server and management panel. |
 
 > [!IMPORTANT]
 > Don't forget to perform database migration after start DB (see
@@ -89,7 +90,7 @@ JWIZARD_VAULT_TOKEN=<vault token>
 where `<value token>` property is the Vault token stored in configured `.env` file
 in [jwizard-lib](https://github.com/jwizard-bot/jwizard-lib) repository.
 
-5. That's it. Now you can run via Intellij IDEA. Make sure, you have set JVM parameters:
+7. That's it. Now you can run via Intellij IDEA. Make sure, you have set JVM parameters:
 
 ```
 -Druntime.profiles=dev -Denv.enabled=true -Xms128m -Xmx128m
