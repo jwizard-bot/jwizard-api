@@ -2,9 +2,9 @@ package pl.jwizard.jwa.service.crypto
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.core.util.base64decode
-import pl.jwizard.jwa.core.util.base64encode
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.util.base64decode
+import pl.jwizard.jwl.util.base64encode
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 

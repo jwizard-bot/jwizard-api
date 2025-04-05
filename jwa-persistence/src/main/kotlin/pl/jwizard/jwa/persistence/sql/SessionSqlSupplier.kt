@@ -2,12 +2,12 @@ package pl.jwizard.jwa.persistence.sql
 
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.server.spi.SessionUser
-import pl.jwizard.jwa.core.util.base64decode
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwa.service.spi.dto.SessionDataRow
 import pl.jwizard.jwa.service.spi.dto.SessionExpirationState
 import pl.jwizard.jwl.persistence.sql.JdbiQuery
 import pl.jwizard.jwl.persistence.sql.SqlColumn
+import pl.jwizard.jwl.util.base64decode
 import java.sql.JDBCType
 import java.time.LocalDateTime
 import java.time.ZoneOffset

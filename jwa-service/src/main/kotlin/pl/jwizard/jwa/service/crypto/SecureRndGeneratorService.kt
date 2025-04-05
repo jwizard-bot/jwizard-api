@@ -1,7 +1,7 @@
 package pl.jwizard.jwa.service.crypto
 
 import org.springframework.stereotype.Component
-import pl.jwizard.jwa.core.util.base64encode
+import pl.jwizard.jwl.util.base64encode
 import java.security.SecureRandom
 
 @Component

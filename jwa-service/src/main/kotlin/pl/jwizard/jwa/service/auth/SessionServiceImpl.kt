@@ -6,7 +6,6 @@ import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.core.server.ApiHttpHeader
 import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
-import pl.jwizard.jwa.core.util.base64encode
 import pl.jwizard.jwa.core.util.timeDifference
 import pl.jwizard.jwa.gateway.http.rest.route.session.SessionService
 import pl.jwizard.jwa.gateway.http.rest.route.session.dto.*
@@ -16,6 +15,7 @@ import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwa.service.spi.dto.SessionDataRow
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.util.base64encode
 import pl.jwizard.jwl.util.logger
 import java.time.LocalDateTime
 import java.time.ZoneOffset
