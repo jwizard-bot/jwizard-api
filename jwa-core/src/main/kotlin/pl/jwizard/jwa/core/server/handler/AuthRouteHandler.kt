@@ -6,6 +6,7 @@ import pl.jwizard.jwa.core.server.Role
 import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwl.server.getAttribute
 import pl.jwizard.jwl.server.route.RouteMethod
+import pl.jwizard.jwl.server.route.handler.RouteDataHandler
 
 class AuthRouteHandler(
 	override val callback: (Context, LoggedUser) -> Unit,
