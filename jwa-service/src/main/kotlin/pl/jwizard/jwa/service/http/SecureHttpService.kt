@@ -45,7 +45,7 @@ internal class SecureHttpService(
 			)
 			.header(HttpHeader.CONTENT_TYPE.asString(), contentType.mime)
 			.apply {
-				if (proxyVerificationToken.isNotBlank()) {
+				if (proxyVerificationToken.isNotBlank() && withProxyVerification) {
 					header(proxyVerificationHeaderName, proxyVerificationToken)
 				}
 				authToken?.let { header(HttpHeader.AUTHORIZATION.asString(), authTokenType.type + it) }
