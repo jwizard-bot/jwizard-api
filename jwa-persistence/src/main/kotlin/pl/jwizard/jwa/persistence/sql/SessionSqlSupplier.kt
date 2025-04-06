@@ -27,10 +27,10 @@ class SessionSqlSupplier(private val jdbiQuery: JdbiQuery) : SessionSupplier {
 	override fun getMySessions(userSnowflake: Long): List<SessionDataRow> {
 		val sql = """
 			SELECT session_id, last_login_utc, device_system, device_mobile, geolocation_info
-			FROM user_sessions WHERE session_expired_at_utc > ?
+			FROM user_sessions WHERE session_expired_at_utc > ? AND user_snowflake = ?
 		"""
 		val now = LocalDateTime.now(ZoneOffset.UTC)
-		return jdbiQuery.queryForList(sql, SessionDataRow::class, now)
+		return jdbiQuery.queryForList(sql, SessionDataRow::class, now, userSnowflake)
 	}
 
 	override fun getSessionEndTime(sessionId: String): LocalDateTime? {
