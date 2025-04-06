@@ -39,11 +39,6 @@ class SessionController(private val sessionService: SessionService) : HttpContro
 		ctx.status(HttpStatus.NO_CONTENT)
 	}
 
-	private val geolocationProviderInfo = RouteHandler { ctx ->
-		val resDto = sessionService.geolocationProviderInfo()
-		ctx.json(resDto)
-	}
-
 	private val revalidate = RouteHandler { ctx ->
 		// could be null, we must check, if session exists
 		val sessionId = ctx.cookie(ServerCookie.SID)
@@ -74,7 +69,6 @@ class SessionController(private val sessionService: SessionService) : HttpContro
 		.get("/@me/csrf", getCsrfToken)
 		.delete("/@me/<sessionId>", deleteMySessionBasedSessionId)
 		.delete("/@me/all", deleteAllMySessions)
-		.get("/geolocation/info", geolocationProviderInfo)
 		.get("/revalidate", revalidate)
 		.patch("/update", update)
 		.delete("/logout", logout)

@@ -25,13 +25,6 @@ discord:
     sid-token-length: 32 # in bytes
     csrf-token-length: 32 # in bytes
 
-geolocation:
-  api:
-    url: https://api.ipgeolocation.io/ipgeo
-    key: ${vault:V_GEOLOCATION_API_KEY}
-    name: IPGeolocation
-    website: https://ipgeolocation.io/
-
 yauaa:
   cache-max-elements: 1000
 

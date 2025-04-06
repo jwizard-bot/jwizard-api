@@ -26,12 +26,6 @@ enum class ServerProperty(
 	DISCORD_OAUTH_CSRF_TOKEN_LENGTH("discord.oauth.csrf-token-length", Int::class),
 	DISCORD_OAUTH_COOKIE_DOMAIN("discord.oauth.cookie.domain"),
 
-	// geolocation api
-	GEOLOCATION_API_URL("geolocation.api.url"),
-	GEOLOCATION_API_KEY("geolocation.api.key"),
-	GEOLOCATION_API_NAME("geolocation.api.name"),
-	GEOLOCATION_API_WEBSITE("geolocation.api.website"),
-
 	// lavalink
 	LAVALINK_API_VERSION("lavalink.api.version"),
 

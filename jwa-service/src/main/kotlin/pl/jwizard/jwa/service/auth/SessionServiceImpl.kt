@@ -8,13 +8,17 @@ import pl.jwizard.jwa.core.server.filter.LoggedUser
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.timeDifference
 import pl.jwizard.jwa.gateway.http.rest.route.session.SessionService
-import pl.jwizard.jwa.gateway.http.rest.route.session.dto.*
+import pl.jwizard.jwa.gateway.http.rest.route.session.dto.CsrfTokenResDto
+import pl.jwizard.jwa.gateway.http.rest.route.session.dto.RevalidateStateResDto
+import pl.jwizard.jwa.gateway.http.rest.route.session.dto.SessionData
+import pl.jwizard.jwa.gateway.http.rest.route.session.dto.SessionsDataResDto
 import pl.jwizard.jwa.service.crypto.EncryptService
 import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwa.service.spi.dto.SessionDataRow
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.server.useragent.GeolocationProvider
 import pl.jwizard.jwl.util.base64encode
 import pl.jwizard.jwl.util.logger
 import java.time.LocalDateTime
@@ -26,7 +30,8 @@ internal class SessionServiceImpl(
 	private val discordApiService: DiscordApiService,
 	private val encryptService: EncryptService,
 	private val secureRndGeneratorService: SecureRndGeneratorService,
-	private val environment: BaseEnvironment,
+	private val geolocationProvider: GeolocationProvider,
+	environment: BaseEnvironment,
 ) : SessionService {
 	companion object {
 		private val log = logger<SessionServiceImpl>()
@@ -53,19 +58,17 @@ internal class SessionServiceImpl(
 				geolocationInfo = it.geolocationInfo,
 			)
 		}
+		val (name, url) = geolocationProvider.geolocationApiInfo
 		return SessionsDataResDto(
 			current = objectMapper(currentSession),
 			sessions = sessions
 				.sortedBy(SessionDataRow::lastLoginUtc)
 				.filter { base64encode(it.sessionId) != loggedUser.sessionId }
-				.map(objectMapper)
+				.map(objectMapper),
+			geolocationProviderName = name,
+			geolocationProviderWebsiteUrl = url,
 		)
 	}
-
-	override fun geolocationProviderInfo() = GeolocationProviderInfoResDto(
-		name = environment.getProperty(ServerProperty.GEOLOCATION_API_NAME),
-		website = environment.getProperty(ServerProperty.GEOLOCATION_API_WEBSITE)
-	)
 
 	override fun deleteMySessionBasedSessionId(
 		toDeleteSessionId: String,

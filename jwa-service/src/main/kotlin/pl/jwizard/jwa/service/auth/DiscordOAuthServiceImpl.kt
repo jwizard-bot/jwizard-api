@@ -13,6 +13,7 @@ import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.server.useragent.GeolocationProvider
 import pl.jwizard.jwl.util.logger
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -24,8 +25,8 @@ internal class DiscordOAuthServiceImpl(
 	private val sessionSupplier: SessionSupplier,
 	private val encryptService: EncryptService,
 	private val secureRndGeneratorService: SecureRndGeneratorService,
-	private val geolocationService: GeolocationService,
 	private val userAgentAnalyzer: UserAgentAnalyzer,
+	private val geolocationProvider: GeolocationProvider,
 ) : DiscordOAuthService {
 	companion object {
 		private val log = logger<DiscordOAuthServiceImpl>()
@@ -61,7 +62,7 @@ internal class DiscordOAuthServiceImpl(
 	) = try {
 		val csrfToken = encryptService.encrypt(secureRndGeneratorService.generate(csrfTokenLength))
 		val sessionTimeAsLong = sessionTtlSec.toLong()
-		val geolocationInfo = geolocationService.extractGeolocationBasedIp(ipAddress)
+		val geolocationInfo = geolocationProvider.getGeolocationInfo(ipAddress)
 
 		val analyzerResult = userAgentAnalyzer.parse(userAgent)
 		val deviceSystem = analyzerResult.getValue(UserAgent.OPERATING_SYSTEM_NAME)
