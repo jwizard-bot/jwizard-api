@@ -25,7 +25,5 @@ springContextSupport = { module = "org.springframework:spring-context-support", 
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
-kotlinNoArg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlinVersion" }
-kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinVersion" }
 kotlinSpring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlinVersion" }
 shadowJar = { id = "com.github.johnrengelman.shadow", version.ref = "shadowJarVersion" }
