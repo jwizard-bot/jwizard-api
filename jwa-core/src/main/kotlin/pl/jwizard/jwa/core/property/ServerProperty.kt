@@ -36,8 +36,5 @@ enum class ServerProperty(
 	// server
 	SERVER_AES_SECRET_KEY("server.aes-secret-key"),
 	SERVER_SELF_URL("server.self-url"),
-
-	// yauaa
-	YAUAA_CACHE_MAX_ELEMENTS("yauaa.cache-max-elements", Int::class),
 	;
 }

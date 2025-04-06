@@ -9,7 +9,6 @@ log4jCoreVersion = "2.24.3"
 logbackVersion = "1.5.7"
 shadowJarVersion = "8.1.1"
 springVersion = "6.1.14"
-yauaaVersion = "7.30.0"
 
 [libraries]
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeineVersion" }
@@ -23,7 +22,6 @@ kotlinReflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = 
 log4jCore = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4jCoreVersion" }
 logbackClassic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion" }
 springContextSupport = { module = "org.springframework:spring-context-support", version.ref = "springVersion" }
-yauaa = { module = "nl.basjes.parse.useragent:yauaa", version.ref = "yauaaVersion" }
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }

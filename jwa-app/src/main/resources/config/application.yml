@@ -25,9 +25,6 @@ discord:
     sid-token-length: 32 # in bytes
     csrf-token-length: 32 # in bytes
 
-yauaa:
-  cache-max-elements: 1000
-
 lavalink:
   api:
     version: v4

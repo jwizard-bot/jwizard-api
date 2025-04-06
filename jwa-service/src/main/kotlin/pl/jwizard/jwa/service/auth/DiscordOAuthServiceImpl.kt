@@ -1,7 +1,5 @@
 package pl.jwizard.jwa.service.auth
 
-import nl.basjes.parse.useragent.UserAgent
-import nl.basjes.parse.useragent.UserAgentAnalyzer
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerListProperty
 import pl.jwizard.jwa.core.property.ServerProperty
@@ -14,6 +12,7 @@ import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.server.useragent.GeolocationProvider
+import pl.jwizard.jwl.server.useragent.UserAgentExtractor
 import pl.jwizard.jwl.util.logger
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -25,8 +24,8 @@ internal class DiscordOAuthServiceImpl(
 	private val sessionSupplier: SessionSupplier,
 	private val encryptService: EncryptService,
 	private val secureRndGeneratorService: SecureRndGeneratorService,
-	private val userAgentAnalyzer: UserAgentAnalyzer,
 	private val geolocationProvider: GeolocationProvider,
+	private val userAgentExtractor: UserAgentExtractor,
 ) : DiscordOAuthService {
 	companion object {
 		private val log = logger<DiscordOAuthServiceImpl>()
@@ -64,14 +63,7 @@ internal class DiscordOAuthServiceImpl(
 		val sessionTimeAsLong = sessionTtlSec.toLong()
 		val geolocationInfo = geolocationProvider.getGeolocationInfo(ipAddress)
 
-		val analyzerResult = userAgentAnalyzer.parse(userAgent)
-		val deviceSystem = analyzerResult.getValue(UserAgent.OPERATING_SYSTEM_NAME)
-		val deviceType = analyzerResult.getValue(UserAgent.DEVICE_CLASS)
-		val deviceMobile = when (deviceType?.lowercase()) {
-			"phone" -> true
-			"desktop" -> false
-			else -> null
-		}
+		val (deviceSystem, deviceMobile) = userAgentExtractor.analyzeAndExtract(userAgent)
 		val now = LocalDateTime.now(ZoneOffset.UTC)
 
 		val noSessionOrSessionExpired = if (sessionId != null) {
