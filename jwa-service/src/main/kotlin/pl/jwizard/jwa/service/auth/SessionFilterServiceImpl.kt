@@ -43,6 +43,11 @@ internal class SessionFilterServiceImpl(
 		log.debug("Refresh access token for session ID: \"{}\".", sessionId)
 		Pair(sessionTtlSec, tokenData.accessToken)
 	} catch (ex: IOException) {
+		log.error(
+			"Unable to refresh access token for session ID: \"{}\". Cause: \"{}\".",
+			sessionId,
+			ex.message,
+		)
 		Pair(sessionTtlSec, null)
 	}
 
