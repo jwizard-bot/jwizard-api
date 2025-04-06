@@ -3,7 +3,6 @@ package pl.jwizard.jwa.service.auth
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerListProperty
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.core.util.UrlSearchParamsBuilder
 import pl.jwizard.jwa.gateway.http.route.oauth.DiscordOAuthService
 import pl.jwizard.jwa.gateway.http.route.oauth.dto.LoginResponseData
 import pl.jwizard.jwa.service.crypto.EncryptService
@@ -11,6 +10,7 @@ import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.server.UrlSearchParamsBuilder
 import pl.jwizard.jwl.server.useragent.GeolocationProvider
 import pl.jwizard.jwl.server.useragent.UserAgentExtractor
 import pl.jwizard.jwl.util.logger
