@@ -14,7 +14,7 @@ import pl.jwizard.jwl.server.route.handler.RouteHandler
 
 @Component
 class SessionController(private val sessionService: SessionService) : HttpControllerBase {
-	override val basePath = "/session"
+	override val basePath = "/v1/session"
 
 	private val mySessions = AuthRouteHandler { ctx, loggedUser ->
 		val resDto = sessionService.mySessions(loggedUser)
