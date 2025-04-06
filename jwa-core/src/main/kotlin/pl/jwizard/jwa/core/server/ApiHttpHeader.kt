@@ -8,7 +8,7 @@ enum class ApiHttpHeader(val headerName: String) {
 
 	// custom
 	X_CSRF_TOKEN("X-Csrf-Token"),
-	X_FORWARDED_FOR("X-Forwarded-For"),
+	CF_CONNECTING_IP("CF-Connecting-IP"),
 	;
 
 	companion object {
