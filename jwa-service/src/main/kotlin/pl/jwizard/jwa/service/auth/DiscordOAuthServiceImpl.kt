@@ -9,8 +9,8 @@ import pl.jwizard.jwa.service.crypto.EncryptService
 import pl.jwizard.jwa.service.crypto.SecureRndGeneratorService
 import pl.jwizard.jwa.service.discord.DiscordApiService
 import pl.jwizard.jwa.service.spi.SessionSupplier
+import pl.jwizard.jwl.http.UrlSearchParamsBuilder
 import pl.jwizard.jwl.property.BaseEnvironment
-import pl.jwizard.jwl.server.UrlSearchParamsBuilder
 import pl.jwizard.jwl.server.useragent.GeolocationProvider
 import pl.jwizard.jwl.server.useragent.UserAgentExtractor
 import pl.jwizard.jwl.util.logger

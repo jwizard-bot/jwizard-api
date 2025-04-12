@@ -3,14 +3,14 @@ package pl.jwizard.jwa.service.audionode
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.service.http.SecureHttpService
+import pl.jwizard.jwl.http.SecureHttpClientService
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.vault.VaultClient
 import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupProperties
 
 @Component
 internal class AudioNodeService(
-	private val secureHttpService: SecureHttpService,
+	private val secureHttpClientService: SecureHttpClientService,
 	environment: BaseEnvironment,
 ) {
 	private val vaultClient = VaultClient(environment)
@@ -45,7 +45,7 @@ internal class AudioNodeService(
 			scheme += "s"
 		}
 		val gatewayHost = properties.get<String>(AudioNodeProperty.GATEWAY_HOST)
-		return secureHttpService.prepareAndRunSecureHttpRequest(
+		return secureHttpClientService.prepareAndRunSecureHttpRequest(
 			url = "$scheme://$gatewayHost/$apiVersion$urlSuffix",
 			authToken = properties.get(AudioNodeProperty.PASSWORD),
 			silent = true,

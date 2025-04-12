@@ -6,18 +6,18 @@ import org.eclipse.jetty.http.HttpMethod
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.core.server.ApiHttpHeader
-import pl.jwizard.jwa.service.http.ApiContentType
-import pl.jwizard.jwa.service.http.AuthTokenType
-import pl.jwizard.jwa.service.http.SecureHttpService
 import pl.jwizard.jwa.service.instance.DiscordBotApiService
+import pl.jwizard.jwl.http.ApiContentType
+import pl.jwizard.jwl.http.AuthTokenType
+import pl.jwizard.jwl.http.SecureHttpClientService
+import pl.jwizard.jwl.http.UrlSearchParamsBuilder
 import pl.jwizard.jwl.property.BaseEnvironment
-import pl.jwizard.jwl.server.UrlSearchParamsBuilder
 import pl.jwizard.jwl.util.logger
 import java.io.IOException
 
 @Component
 internal class DiscordApiService(
-	private val secureHttpService: SecureHttpService,
+	private val secureHttpClientService: SecureHttpClientService,
 	environment: BaseEnvironment,
 ) {
 	companion object {
@@ -91,7 +91,7 @@ internal class DiscordApiService(
 		contentType: ApiContentType = ApiContentType.APPLICATION_JSON,
 		body: String? = null,
 	): JsonNode = try {
-		val response = secureHttpService.prepareAndRunSecureHttpRequest(
+		val response = secureHttpClientService.prepareAndRunSecureHttpRequest(
 			url = "$discordApiUrl$urlSuffix",
 			authToken = authToken,
 			authTokenType = authTokenType,

@@ -3,11 +3,11 @@ package pl.jwizard.jwa.service.instance
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
-import pl.jwizard.jwa.service.http.SecureHttpService
 import pl.jwizard.jwa.service.instance.domain.DevProcessDomainDefinition
 import pl.jwizard.jwa.service.instance.domain.ProcessDefinition
 import pl.jwizard.jwa.service.instance.domain.ProdProcessDomainDefinition
 import pl.jwizard.jwl.IrreparableException
+import pl.jwizard.jwl.http.SecureHttpClientService
 import pl.jwizard.jwl.property.AppBaseListProperty
 import pl.jwizard.jwl.property.BaseEnvironment
 import pl.jwizard.jwl.vault.VaultClient
@@ -15,7 +15,7 @@ import pl.jwizard.jwl.vault.kvgroup.VaultKvGroupProperties
 
 @Component
 internal class BotInstancesService(
-	private val secureHttpService: SecureHttpService,
+	private val secureHttpClientService: SecureHttpClientService,
 	environment: BaseEnvironment,
 ) {
 	private val vaultClient = VaultClient(environment)
@@ -71,7 +71,7 @@ internal class BotInstancesService(
 
 	fun performHttpRequest(domain: String, urlSuffix: String, instanceId: Int): JsonNode? {
 		val properties = getSafetyProperties(instanceId)
-		return secureHttpService.prepareAndRunSecureHttpRequest(
+		return secureHttpClientService.prepareAndRunSecureHttpRequest(
 			url = "$domain/api/v1/status$urlSuffix",
 			authToken = properties.get<String>(InstanceProperty.REST_API_TOKEN),
 			silent = true,
