@@ -2,7 +2,6 @@ package pl.jwizard.jwa.core.server.filter
 
 import io.javalin.http.Context
 import io.javalin.http.UnauthorizedResponse
-import io.javalin.security.RouteRole
 import org.springframework.stereotype.Component
 import pl.jwizard.jwa.core.property.ServerProperty
 import pl.jwizard.jwa.core.server.ApiServerAttribute
@@ -12,6 +11,7 @@ import pl.jwizard.jwa.core.server.ServerCookie.Companion.cookie
 import pl.jwizard.jwa.core.server.ServerCookie.Companion.removeCookie
 import pl.jwizard.jwa.core.server.spi.SessionFilterService
 import pl.jwizard.jwl.property.BaseEnvironment
+import pl.jwizard.jwl.server.filter.FilterRole
 import pl.jwizard.jwl.server.filter.RoleFilterBase
 import pl.jwizard.jwl.server.setAttribute
 import pl.jwizard.jwl.util.logger
@@ -27,7 +27,7 @@ class AuthenticationFilter(
 		private val log = logger<AuthenticationFilter>()
 	}
 
-	override val roles = arrayOf<RouteRole>(Role.AUTHENTICATED)
+	override val roles = arrayOf<FilterRole>(Role.AUTHENTICATED)
 	override val runIndex = 1
 
 	private val cookieDomain = environment
