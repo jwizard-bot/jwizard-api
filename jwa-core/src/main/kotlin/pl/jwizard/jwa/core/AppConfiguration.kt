@@ -64,7 +64,7 @@ internal class AppConfiguration {
 	@Bean
 	fun secureHttpClientService(
 		objectMapper: ObjectMapper,
-		environment: BaseEnvironment
+		environment: BaseEnvironment,
 	): SecureHttpClientService {
 		val httpClient = HttpClient.newHttpClient()
 		return SecureHttpClientService(httpClient, objectMapper, environment)
