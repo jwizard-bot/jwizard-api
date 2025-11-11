@@ -5,7 +5,7 @@ jsoupVersion = "1.18.3"
 junitJupiterVersion = "5.11.4"
 jwizardLibVersion = "latest"
 kotlinVersion = "2.0.20"
-logbackVersion = "1.5.7"
+logbackVersion = "1.5.20"
 shadowJarVersion = "8.1.1"
 springVersion = "6.1.14"
 
