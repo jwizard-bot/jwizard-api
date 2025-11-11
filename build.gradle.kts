@@ -11,6 +11,18 @@ extra["mavenName"] = getEnv("MAVEN_NAME")
 extra["mavenSecret"] = getEnv("MAVEN_SECRET")
 extra["initProjectName"] = "jwa-app"
 
+// only for java classes
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+kotlin {
+	compilerOptions {
+		jvmTarget.set(JvmTarget.JVM_21)
+	}
+}
+
 allprojects {
 	repositories {
 		mavenCentral()
@@ -38,18 +50,6 @@ subprojects {
 	// apply library plugin only for submodules without main class
 	if (project.name != getProperty("initProjectName")) {
 		apply(plugin = "java-library")
-	}
-
-	// only for java classes
-	java {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
-	}
-
-	kotlin {
-		compilerOptions {
-			jvmTarget.set(JvmTarget.JVM_21)
-		}
 	}
 
 	dependencies {
