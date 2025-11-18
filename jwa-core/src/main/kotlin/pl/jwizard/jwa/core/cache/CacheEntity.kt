@@ -7,5 +7,6 @@ enum class CacheEntity(override val key: String) : Property {
 	PROJECT_PACKAGES("ProjectPackages.Cache"),
 	REPOSITORIES("Repositories.Cache"),
 	OLDEST_REPOSITORY_DATE("OldestRepositoryDate.Cache"),
+	GLOBAL_STATUS("GlobalStatus.Cache"),
 	;
 }

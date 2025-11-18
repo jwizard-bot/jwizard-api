@@ -2,6 +2,8 @@ package pl.jwizard.jwa.service
 
 import org.jsoup.Jsoup
 import org.springframework.stereotype.Component
+import pl.jwizard.jwa.core.cache.CacheEntity
+import pl.jwizard.jwa.core.cache.CacheFacade
 import pl.jwizard.jwa.core.util.BlockingThreadsExecutor
 import pl.jwizard.jwa.core.util.convertMillisToDtf
 import pl.jwizard.jwa.gateway.http.rest.route.status.StatusService
@@ -23,24 +25,37 @@ internal class StatusServiceImpl(
 	private val botInstancesService: BotInstancesService,
 	private val discordBotApiService: DiscordBotApiService,
 	private val audioNodeService: AudioNodeService,
+	private val cacheFacade: CacheFacade,
 ) : StatusService {
 	companion object {
 		private const val STATUS_PAGE_URL = "https://status.jwizard.pl"
 	}
 
+	// global services possible statuses (UP - gree, DOWN - red, UNKNOWN - unable to connect to
+	// server temporary down, etc.
+	private enum class ServiceStatus { UP, DOWN, UNKNOWN }
+
 	override fun getGlobalStatus(): GlobalStatusResDto {
 		// get other instances state
-		val document = Jsoup.connect("$STATUS_PAGE_URL/badge").get()
-		val svgIcon = document.selectFirst("svg#root")
-		var operational: Boolean? = null
-		if (svgIcon != null) {
-			val classNames = svgIcon.classNames()
-			operational = when {
-				classNames.contains("text-statuspage-green") -> true
-				classNames.contains("text-statuspage-red") -> false
-				else -> null
-			}
-		}
+		// (cache for 1 minute: retention for BetterStack and fix 429 issue)
+		val operational = cacheFacade.getCachedWithTTL(
+			cacheKey = CacheEntity.GLOBAL_STATUS,
+			computeOnAbsent = {
+				val document = Jsoup.connect("$STATUS_PAGE_URL/badge").get()
+				val svgIcon = document.selectFirst("svg#root")
+				var operational = ServiceStatus.UNKNOWN
+				if (svgIcon != null) {
+					val classNames = svgIcon.classNames()
+					operational = when {
+						classNames.contains("text-statuspage-green") -> ServiceStatus.UP
+						classNames.contains("text-statuspage-red") -> ServiceStatus.DOWN
+						else -> ServiceStatus.UNKNOWN
+					}
+				}
+				operational
+			},
+			ttl = 60,
+		)
 		// get bot instances (processes and shards) state
 		var shardsDown = 0
 		for ((instanceKey, domains) in botInstancesService.instanceDomains.entries) {
@@ -55,14 +70,14 @@ internal class StatusServiceImpl(
 				shardsDown += (domainDefinition.countOfShards - shardsUp)
 			}
 		}
-		val globalStatus = if (operational == null) {
+		val globalStatus = if (operational == ServiceStatus.UNKNOWN) {
 			// some other services state are unknown
 			null
 		} else {
-			if (shardsDown == 0 && operational == true) {
+			if (shardsDown == 0 && operational == ServiceStatus.UP) {
 				// all shards and other instances are up
 				true
-			} else if (shardsDown > 0 || operational == false) {
+			} else if (shardsDown > 0 || operational == ServiceStatus.DOWN) {
 				// some shards are down or other instances are down
 				false
 			} else {
@@ -235,7 +250,7 @@ internal class StatusServiceImpl(
 					futures.forEach { it.cancel(true) }
 				}
 				result
-			} catch (e: Exception) {
+			} catch (_: Exception) {
 				false
 			}
 		}

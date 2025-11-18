@@ -59,6 +59,27 @@ class CacheFacade(environment: BaseEnvironment) {
 		return cachedData
 	}
 
+	// used for time management cache (delete after certain of time, not after passed some statement)
+	final inline fun <reified T : Serializable> getCachedWithTTL(
+		cacheKey: CacheEntity,
+		computeOnAbsent: () -> T,
+		ttl: Long,
+		ttlUnit: TimeUnit = TimeUnit.SECONDS,
+	): T {
+		val ttlMillis = ttlUnit.toMillis(ttl)
+		val cachedState = getCached(
+			cacheKey,
+			computeOnAbsent = {
+				TimestampedStatus(data = computeOnAbsent())
+			},
+			revalidateData = { cachedContainer ->
+				val diff = System.currentTimeMillis() - cachedContainer.fetchedAt
+				diff < ttlMillis
+			}
+		)
+		return cachedState.data
+	}
+
 	final inline fun <reified T : Serializable> getCachedList(
 		cacheKey: CacheEntity,
 		computeOnAbsent: () -> List<T>,
