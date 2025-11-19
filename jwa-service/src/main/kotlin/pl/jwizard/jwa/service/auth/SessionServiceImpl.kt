@@ -40,6 +40,9 @@ internal class SessionServiceImpl(
 	private val csrfTokenLength = environment
 		.getProperty<Int>(ServerProperty.DISCORD_OAUTH_CSRF_TOKEN_LENGTH)
 
+	override val cookieDomain = environment
+		.getProperty<String>(ServerProperty.DISCORD_OAUTH_COOKIE_DOMAIN)
+
 	override fun mySessions(loggedUser: LoggedUser): SessionsDataResDto {
 		val sessions = sessionSupplier.getMySessions(loggedUser.userSnowflake)
 		val currentSession = sessions

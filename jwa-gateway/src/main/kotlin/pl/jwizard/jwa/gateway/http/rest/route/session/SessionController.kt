@@ -44,7 +44,7 @@ class SessionController(private val sessionService: SessionService) : HttpContro
 		val sessionId = ctx.cookie(ServerCookie.SID)
 		val resDto = sessionService.revalidate(sessionId)
 		if (!resDto.loggedIn) {
-			ctx.removeCookie(ServerCookie.SID)
+			ctx.removeCookie(ServerCookie.SID, sessionService.cookieDomain)
 		}
 		ctx.json(resDto)
 	}
@@ -60,7 +60,7 @@ class SessionController(private val sessionService: SessionService) : HttpContro
 			// unable to revoke, probably session not persisted anymore
 			throw BadRequestResponse()
 		}
-		ctx.removeCookie(ServerCookie.SID)
+		ctx.removeCookie(ServerCookie.SID, sessionService.cookieDomain)
 		ctx.status(HttpStatus.NO_CONTENT)
 	}
 

@@ -6,6 +6,8 @@ import pl.jwizard.jwa.gateway.http.rest.route.session.dto.RevalidateStateResDto
 import pl.jwizard.jwa.gateway.http.rest.route.session.dto.SessionsDataResDto
 
 interface SessionService {
+	val cookieDomain: String
+
 	fun mySessions(loggedUser: LoggedUser): SessionsDataResDto
 
 	// return true, if session exists, otherwise false

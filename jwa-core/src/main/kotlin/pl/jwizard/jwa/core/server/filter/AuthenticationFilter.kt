@@ -37,7 +37,7 @@ class AuthenticationFilter(
 		val sessionId = ctx.cookie(ServerCookie.SID) ?: throw UnauthorizedResponse()
 		val session = sessionFilterService.getUserSession(sessionId)
 		if (session == null) {
-			ctx.removeCookie(ServerCookie.SID)
+			ctx.removeCookie(ServerCookie.SID, cookieDomain)
 			log.debug("Not found active session with session ID: \"{}\". Delete cookie.", sessionId)
 			throw UnauthorizedResponse()
 		}
@@ -46,7 +46,7 @@ class AuthenticationFilter(
 		// if session expired, remove it from db and return 401
 		if (session.sessionExpiredAtUtc.isBefore(now)) {
 			sessionFilterService.deleteExpiredSession(sessionId, session.userSnowflake)
-			ctx.removeCookie(ServerCookie.SID)
+			ctx.removeCookie(ServerCookie.SID, cookieDomain)
 			log.debug("Session with session ID: \"{}\" is expired. Delete cookie.", sessionId)
 			throw UnauthorizedResponse()
 		}
