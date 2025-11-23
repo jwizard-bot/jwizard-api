@@ -40,7 +40,7 @@ RabbitMQ message queue.
 
 ## Clone and install
 
-1. Make sure you have at least JDK 17 and Kotlin 2.0.
+1. Make sure you have at least JDK 21 and Kotlin 2.2.
 2. Clone **JWizard Lib** and **JWizard Tools** from organization repository via:
 
 ```bash
